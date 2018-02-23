@@ -1,0 +1,198 @@
+.timer {
+  display: flex;
+  justify-content: center;
+
+  .timers {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    width: 2.8em;
+    height: 3.5em;
+    padding: 0.2em;
+    font-size: 3em;
+    margin: 0 0.6em 0.3em 0;
+    @include dropShadow($erLtGrey, 6px);
+    @include screenBackgroundColors();
+  }
+
+  :nth-child(4) {
+    margin-right: 0;
+  }
+
+  .timerTime {
+    display: flex;
+    align-items: center;
+    font-size: 1.8em;
+    margin-bottom: 0.2em;
+  }
+
+  .timerTitle {
+    display: flex;
+    justify-content: center;
+    width: 2.6em;
+    font-size: 0.9em;
+    padding: 0.2em;
+    margin: 0.1em;
+    align-items: center;
+    background-color: white;
+    @include screenColors();
+  }
+}
+
+@media (max-width: $desktop) {
+  .timer {
+    margin-right: 0.8em;
+
+    .timers {
+      width: 1.8em;
+      height: 1.9em;
+      padding: 0.1em;
+      margin: 0 0.4em 0.1em 0;
+    }
+
+    :nth-child(4) {
+      margin-right: 0;
+    }
+
+    .timerTime {
+      font-size: 1.1em;
+    }
+
+    .timerTitle {
+      font-size: 0.5em;
+    }
+  }
+}
+
+@media (max-width: $laptop) {
+  .timer {
+    .timers {
+      width: 1.7em;
+      height: 1.8em;
+    }
+
+    .timerTime {
+      font-size: 01em;
+      margin-bottom: 0;
+    }
+
+    .timerTitle {
+      font-size: 0.45em;
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .timer {
+
+    .timers {
+      width: 1.6em;
+      height: 1.8em;
+    }
+
+    .timerTime {
+      font-size: 1em;
+      margin-bottom: 0;
+    }
+
+    .timerTitle {
+      font-size: 0.45em;
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .timer {
+    flex-wrap: wrap;
+    margin: 0 auto 0 auto;
+    width: 80%;
+
+    .timers {
+      width: 1.4em;
+      height: 1.6em;
+      margin: 0 0.35em 0.35em 0;
+    }
+
+    :nth-child(2) {
+      margin-right: 0;
+    }
+
+    :nth-child(3) {
+      margin-bottom: 0.1em;
+    }
+
+    :nth-child(4) {
+      margin-bottom: 0.1em;
+      margin-right: 0em;
+    }
+
+    .timerTime {
+      font-size: 0.9em;
+    }
+
+    .timerTitle {
+      //width: 3em;
+      font-size: 0.4em;
+    }
+  }
+}
+/*
+@media (min-width: 801px) {//full screen
+  .timers {
+
+    width: 2em;
+  }
+  .timerTitle {
+    width: 3em;
+  }
+}
+@media (max-width: 800px) and (min-width: 401px) {//tablet
+  .timer {
+    flex-wrap: wrap;
+  }
+  .timers {
+    width: 2em;
+  }
+  .timerTitle {
+    width: 3em;
+  }
+}
+@media (max-width: 400px) {//mobile
+  .timer {
+    flex-wrap: wrap;
+  }
+  .timers {
+    width: 1.8em;
+  }
+  .timerTitle {
+    width: 3em;
+  }
+}
+.timers {
+  align-items: center;
+  margin: 0.2em;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 3em;
+
+}
+
+.timerTitle {
+  display: flex;
+  justify-content: center;
+  padding: 3px;
+  background-color: white;
+  font-size: 0.4em;
+  //min-width: 45px;
+  //
+}
+
+.timerTime {
+  display: flex;
+  height: 55px;
+  align-items: center;
+}
+*/

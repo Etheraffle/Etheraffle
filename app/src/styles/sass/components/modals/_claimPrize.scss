@@ -1,0 +1,96 @@
+.claimPrizeModal {
+  display: flex;
+  @include screenDropShadows();
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  outline: none;
+  top: 12%;
+  left: 30%;
+  right: 30%;
+  bottom: 50%;
+  background-color: white;
+  padding: 3em;
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  p {
+    font-size: 1.2em;
+  }
+
+  .loadingIcon {
+    margin: 1em auto 1em auto;
+  }
+}
+
+@media (max-width: $desktop) {
+  .claimPrizeModal {
+    top: 12%;
+    left: 25%;
+    right: 25%;
+    bottom: 40%;
+
+    h2 {
+      font-size: 1.3em;
+    }
+    p {
+      font-size: 1em;
+    }
+  }
+}
+
+@media (max-width: $laptop) {
+  .claimPrizeModal {
+    top: 10%;
+    left: 18%;
+    right: 18%;
+    bottom: 22%;
+    h2 {
+      font-size: 1.3em;
+    }
+    p {
+      font-size: 1em;
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .claimPrizeModal {
+    top: 12%;
+    left: 12%;
+    right: 12%;
+    bottom: 28%;
+    padding: 1em;
+    h2 {
+      font-size: 1.2em;
+    }
+    p {
+      font-size: 0.95em;
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .claimPrizeModal {
+    top: 15%;
+    left: 8%;
+    right: 8%;
+    bottom: 20%;
+    padding: 1.5em;
+    h2 {
+      font-size: 1em;
+    }
+    p {
+      font-size: 0.8em;
+    }
+  }
+}
+
+@media (max-width: $mini) {
+  .claimPrizeModal {
+    padding: 0.5em;
+  }
+}

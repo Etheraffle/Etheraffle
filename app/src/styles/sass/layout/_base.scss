@@ -1,0 +1,37 @@
+html {
+  height: 101%;
+  background-color: #aaaaaa;
+}
+
+body {
+  height: 101%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-attachment: fixed;
+  font-family: 'Jockey One', sans-serif;
+  @include bgGrad(white, #aaaaaa, 58%, 100%);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.invisible {//to hide the link text, which react needs for the link to still work
+  visibility: hidden;
+}
+
+.code {
+  font-family: monospace;
+  color: #717171;
+  font-weight: bold;
+  @include dropShadow($erLtGrey);
+  //#dropShadowandborder(4px, -4px, 0px, 0px, lightgrey);
+  padding: 2em;
+  width: 60%;
+  margin: 5em;
+  background-color: #eeeeee;
+}

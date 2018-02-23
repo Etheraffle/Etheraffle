@@ -1,0 +1,139 @@
+.subNav {
+  width: 100%;
+  height: 2em;
+  display: flex;
+  flex-direction: row;
+
+  h3 {
+    font-size: 1.5em;
+  }
+
+  .subNav-item:not(.spacerOne):not(.spacerTwo) {
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 1em;
+    background-color: white;
+  }
+
+  .play {
+    @include dropShadow($erLtGrey, $borderWidth: 3px);
+    border-bottom-style: hidden;
+    order: 1;
+    flex: 3;
+    cursor: pointer;
+    h3 {color: #d3d3d3;}
+    &:hover {
+      @include dropShadow($erPink, $borderWidth: 3px);
+      border-bottom-style: hidden;
+      h3 {color: rgba(236,60,226,1);}
+      }
+    &.active-subNav {
+      flex: 7;
+      @include dropShadow($erPink, $borderWidth: 3px);
+      border-bottom-style: hidden;
+      cursor: default;
+      h3 {color: rgba(236,60,226,1);}
+    }
+  }
+
+  .spacerOne {
+    order: 2;
+    width: 1em;
+    border-bottom-style: solid;
+    border-bottom-color: lightgrey;
+  }
+
+  .results {
+    @include dropShadow($erLtGrey, $borderWidth: 3px);
+    border-bottom-style: hidden;
+    order: 3;
+    flex: 3;
+    outline: none;
+    cursor: pointer;
+    h3 {color: #d3d3d3;}
+    &:hover {
+      @include dropShadow($erGreen, $borderWidth: 3px);
+      border-bottom-style: hidden;
+      h3 {color: rgba(62,214,126,1);}
+    }
+    &.active-subNav {
+      flex: 7;
+      @include dropShadow($erGreen, $borderWidth: 3px);
+      border-bottom-style: hidden;
+      h3 {color: rgba(62,214,126,1);}
+    }
+  }
+
+  .spacerTwo {
+    order: 4;
+    width: 1em;
+    border-bottom-style: solid;
+    border-bottom-color: lightgrey;
+  }
+
+  .help {
+    @include dropShadow($erLtGrey, $borderWidth: 3px);
+    border-bottom-style: hidden;
+    order: 5;
+    flex: 3;
+    cursor: pointer;
+    h3 {color: #d3d3d3;}
+    &:hover {
+      @include dropShadow($erBlue, $borderWidth: 3px);
+      border-bottom-style: hidden;
+      color: rgba(51,211,224,1);
+      h3 {color: rgba(51,211,224,1);}
+    }
+    &.active-subNav {
+      flex: 7;
+      @include dropShadow($erBlue, $borderWidth: 3px);
+      border-bottom-style: hidden;
+      cursor: default;
+      h3 {color: rgba(51,211,224,1);}
+    }
+  }
+}
+
+@media (max-width: $desktop) {
+  .subNav {
+    height: 1.5em;
+
+    h3 {
+      font-size: 1.1em;
+    }
+
+    .subNav-item:not(.spacerOne):not(.spacerTwo) {
+      padding: 0 0 0 0.6em;
+    }
+  }
+}
+
+/* We stop using the wider active tab as of mobile screens */
+@media (max-width: $mobile) {
+  .subNav {
+    .subNav-item:not(.spacerOne):not(.spacerTwo) {
+      padding: 0 0 0 0.3em;
+    }
+
+    .play {
+      flex: 3;
+      &.active-subNav {
+        flex: 3;
+      }
+    }
+
+    .results {
+      flex: 3;
+      &.active-subNav {
+        flex: 3;
+      }
+    }
+
+    .help {
+      flex: 3;
+      &.active-subNav {
+        flex: 3;
+      }
+    }
+  }
+}

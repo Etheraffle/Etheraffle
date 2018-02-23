@@ -1,0 +1,73 @@
+.clipBoardButtonClaimPrize {
+  cursor: pointer;
+  font-family: "Trebuchet MS";
+  font-weight: bold;
+  font-size: 1em;
+  color: inherit;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+.claimButton {
+  cursor: pointer;
+  font-family: "Trebuchet MS";
+  font-weight: bold;
+  font-size: 1em;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  outline: none;
+  color: #666B85;
+  margin-top: 0.2em;
+  &.screen1 {
+    @include dropShadow(#1aac57, 3px);
+    background-color: #f4fcf7;
+    &:hover {
+      @include dropShadow(white, 3px);
+      background-color: rgba(62,214,126,1);
+      color: white;
+    }
+  }
+  &.screen2 {
+    @include dropShadow(#776690, 3px);
+    background-color: #f9f9f9;
+    &:hover {
+      @include dropShadow(white, 3px);
+      background-color: rgba(150,137,170,1);
+      color: white;
+    }
+  }
+  &.screen3 {
+    @include dropShadow(#d127c7, 3px);
+    background-color: #fbe9fa;
+    &:hover {
+      @include dropShadow(white, 3px);
+      background-color: rgba(236,60,226,1);
+      color: white;
+    }
+  }
+  &.screen4 {
+    @include dropShadow(#8961d8, 3px);
+    background-color: #f8f5fe;
+    &:hover {
+      @include dropShadow(white, 3px);
+      background-color: rgba(158,123,226,1);
+      color: white;
+    }
+  }
+  &.screen5 {
+    @include dropShadow(#238aa4, 3px);
+    background-color: #f1fafb;
+    &:hover {
+      @include dropShadow(white, 3px);
+      background-color: rgba(51,211,224,1);
+      color: white;
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .claimButton {
+    margin: 0.5em 0 0 0;
+  }
+}

@@ -1,0 +1,95 @@
+.ticketBoughtModal {
+  display: flex;
+  @include screenDropShadows();
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  outline: none;
+  top: 18%;
+  left: 30%;
+  right: 30%;
+  bottom: 65%;
+  background-color: white;
+  padding: 3em;
+
+  h2 {
+    font-size: 2em;
+  }
+
+  p {
+    font-size: 1.5em;
+  }
+
+  .loadingIcon {
+    margin: 1em auto 1em auto;
+  }
+}
+
+@media (max-width: $desktop) {
+  .ticketBoughtModal {
+    top: 18%;
+    left: 25%;
+    right: 25%;
+    bottom: 55%;
+    h2 {
+      font-size: 1.5em;
+    }
+    p {
+      font-size: 1.1em;
+    }
+  }
+}
+
+@media (max-width: $laptop) {
+  .ticketBoughtModal {
+    top: 18%;
+    left: 20%;
+    right: 20%;
+    bottom: 55%;
+    h2 {
+      font-size: 1.4em;
+    }
+    p {
+      font-size: 1.1em;
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .ticketBoughtModal {
+    top: 18%;
+    left: 12%;
+    right: 12%;
+    bottom: 55%;
+    padding: 1em;
+    h2 {
+      font-size: 1.2em;
+    }
+    p {
+      font-size: 1em;
+    }
+  }
+}
+
+@media (max-width: $mobile) {
+  .ticketBoughtModal {
+    top: 18%;
+    left: 8%;
+    right: 8%;
+    bottom: 35%;
+    padding: 1.5em;
+    h2 {
+      font-size: 1.2em;
+    }
+    p {
+      font-size: 1em;
+    }
+  }
+}
+
+@media (max-width: $mini) {
+  .ticketBoughtModal {
+    padding: 0.5em;
+  }
+}

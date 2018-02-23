@@ -1,0 +1,78 @@
+@mixin dropShadow($col, $width: 5px, $width2: -5px, $borderWidth: 2px) {
+	border-color: $col;
+	-webkit-box-shadow: $width $width2 0px 0px $col;
+	-moz-box-shadow: $width $width2 0px 0px $col;
+	box-shadow: $width $width2 0px 0px $col;
+	border-style: solid;
+	border-width: $borderWidth;
+}
+
+@mixin shadColors($width: 5px, $borderWidth:2px) {
+	&.blue {@include dropShadow($erBlue, $width, $borderWidth);}
+	&.pink {@include dropShadow($erPink, $width, $borderWidth);}
+	&.green {@include dropShadow($erGreen, $width, $borderWidth);}
+	&.purple {@include dropShadow($erPurple, $width, $borderWidth);}
+	&.blueGrey {@include dropShadow($erBlueGrey, $width, $borderWidth);}
+}
+
+@mixin textColors() {
+	&.blue {color: $erBlue;}
+	&.pink {color: $erPink;}
+	&.green {color: $erGreen;}
+	&.bold {font-weight: bold;}
+	&.purple {color: $erPurple;}
+	&.blueGrey {color: $erBlueGrey;}
+	&.greyPurple {color: $erGreyPurple;}
+}
+
+@mixin screenColors() {
+	&.screen1 {color: $erGreen;}
+	&.screen2 {color: $erBlueGrey;}
+	&.screen3 {color: $erPink;}
+	&.screen4 {color: $erPurple;}
+	&.screen5 {color: $erBlue;}
+}
+
+@mixin screenBackgroundColors() {
+	&.screen1 {background-color: $erGreen;}
+	&.screen2 {background-color: $erBlueGrey;}
+	&.screen3 {background-color: $erPink;}
+	&.screen4 {background-color: $erPurple;}
+	&.screen5 {background-color: $erBlue;}
+}
+
+@mixin hoverColors() {
+	&.screen1:hover {color: $erGreen;}
+	&.screen2:hover {color: $erBlueGrey;}
+	&.screen3:hover {color: $erPink;}
+	&.screen4:hover {color: $erPurple;}
+	&.screen5:hover {color: $erBlue;}
+}
+
+@mixin screenDropShadows($width: 5px, $width2: -5px, $borderWidth: 2px, $hover:false) {
+	@if $hover == false {
+		&.screen5 {@include dropShadow($erBlue, $width, $width2, $borderWidth);}
+		&.screen3 {@include dropShadow($erPink, $width, $width2, $borderWidth);}
+		&.screen1 {@include dropShadow($erGreen, $width, $width2, $borderWidth);}
+		&.screen4 {@include dropShadow($erPurple, $width, $width2, $borderWidth);}
+		&.screen2 {@include dropShadow($erBlueGrey, $width, $width2, $borderWidth);}
+	} @else {
+		&.screen5:hover {@include dropShadow($erBlue, $width, $width2, $borderWidth);}
+		&.screen3:hover {@include dropShadow($erPink, $width, $width2, $borderWidth);}
+		&.screen1:hover {@include dropShadow($erGreen, $width, $width2, $borderWidth);}
+		&.screen4:hover {@include dropShadow($erPurple, $width, $width2, $borderWidth);}
+		&.screen2:hover {@include dropShadow($erBlueGrey, $width, $width2, $borderWidth);}
+	}
+}
+
+//No ie support. Oh well.
+@mixin bgGrad($start, $end, $pct1, $pct2) {
+  background: $start;
+  background: -moz-linear-gradient(top, $start $pct1, $end $pct2);
+  background: -webkit-linear-gradient(top, $start $pct1, $end $pct2);
+  background: linear-gradient(to bottom, $start $pct1, $end $pct2);
+  //get hex
+  //create string
+  //$string = 'startColorstr=' + $start + ' endColorstr=' + $end + ' , GradientType=0';
+  //filter: progid:DXImageTransform.Microsoft.gradient($string);
+}

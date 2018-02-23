@@ -1,0 +1,56 @@
+.accordion {
+  margin: 0 1.2em 1.2em 1.2em;
+
+  .accordion__title {
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .accordion__body {
+    border: none;
+    outline: none;
+    margin: 1em 0 1em 0;
+  }
+
+  .image {
+    max-width: 100%;
+
+    &.mist {
+      margin-right: 1em;
+    }
+
+    &.metamask {
+      margin-right: 1em;
+    }
+
+    &.centred {
+      display: block;
+      margin: 0.9em auto 0.9em auto;
+    }
+
+    &.border {
+      @include dropShadow($erLtGrey, 4px, -4px);
+    }
+  }
+}
+@media (max-width: $laptop) {
+  .accordion {
+  }
+}
+
+@media (max-width: $mobile) {
+  .accordion {
+    margin: 0;
+
+    .image {
+      &.mist {
+        margin-right: 0;
+      }
+
+      &.metamask {
+        margin-right: 0;
+      }
+    }
+  }
+}

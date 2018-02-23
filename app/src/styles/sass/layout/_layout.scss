@@ -1,0 +1,263 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.appLogo {
+  margin: 1em;
+  width: 35em;
+}
+
+/* Everything except logo */
+.app-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Outer shell */
+.main-content {
+  justify-content: center;
+  align-items: center;
+  width: 60em;
+  order: 1;
+
+  p {
+    font-size: 1.5em;
+  }
+
+  /* For contact page etc */
+  .simpleContent {
+    @include dropShadow($erLtGrey);
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    margin: 0.5em auto 0.5em auto;
+    min-height: 30em;
+    width: 98%;
+
+  }
+
+  /* Wraps the invidual pages' content */
+  .contentWrapper {
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    &.si1 {@include bgGrad(white, $erGreen, 35%, 100%);}
+    &.si2 {@include bgGrad(white, $erBlueGrey, 35%, 100%);}
+    &.si3 {@include bgGrad(white, $erPink, 35%, 100%);}
+    &.si4 {@include bgGrad(white, $erPurple, 35%, 100%);}
+    &.si5 {@include bgGrad(white, $erBlue, 35%, 100%);}
+
+    /* Inner shell */
+    .content {
+      @include dropShadow($erLtGrey);
+      margin: 2em 4em 4em 4em;
+      background-color: white;
+      min-height: 30em;
+      padding: 2em;
+      width: 98%;
+
+      .aboveContent {
+        display: flex;
+        height: 0px;//if i even chose to keep this section
+        align-items: center;
+        padding-left: 10px;
+      }
+
+      .centreContent {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .belowContent {
+        display: flex;
+        flex-direction: column;
+        padding: 0 4em 0 4em;
+      }
+    }
+  }
+}
+
+/* Info at bottom of page */
+.underInfo {
+  display: flex;
+  font-size: 1em;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+@media (max-width: $desktop) {
+  .appLogo {
+    width: 22em;
+    margin: 0.5em;
+  }
+
+  .main-content {
+    width: 45em;
+
+    p {
+      font-size: 1.1em;
+    }
+
+    .simpleContent {
+      min-height: 24em;
+    }
+
+    .contentWrapper {
+      .content {
+        margin: 1em 1.5em 1.5em 1.5em;
+        min-height: 24em;
+        padding: 1em;
+        width: 94%;
+
+        .belowContent {
+          padding: 0 0.5em 0 0.5em;
+        }
+      }
+    }
+  }
+
+  .underInfo {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: $laptop) {
+  .main-content {
+
+    .simpleContent {
+      min-height: 21.5em;
+    }
+
+    .contentWrapper {
+      .content {
+        margin: 0.8em 1.2em 1.2em 1.2em;
+        min-height: 21.5em;
+      }
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .appLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20em;
+    margin: 0.4em auto 0.4em auto;
+  }
+
+
+  .app-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-content {
+    min-width: 90%;
+
+    p {
+      font-size: 1em;
+    }
+
+    .simpleContent {
+      min-height: 19em;
+      width: 95%;
+    }
+
+    .contentWrapper {
+      .content {
+        margin: 1em 1.5em 1.5em 1.5em;
+        min-height: 19em;
+        padding: 1em;
+        width: 94%;
+
+        .belowContent {
+          padding: 0 1em 0 1em;
+        }
+      }
+    }
+  }
+
+  .underInfo {
+    justify-content: center;
+    font-size: 0.8em;
+  }
+
+}
+
+@media (max-width: $mobile) {
+  .appLogo {
+    width: 80%;
+    margin: 0.4em auto 0.4em auto;
+  }
+
+  .main-content {
+    width: 90%;
+    margin: 0 auto 0 auto;
+
+    p {
+      font-size: 0.9em;
+    }
+
+    h2 {
+      font-size: 1.1em;
+    }
+
+    .simpleContent {
+      min-height: 18em;
+    }
+
+    .contentWrapper {
+      .content {
+        margin: 0.8em 1em 1em 1em;
+        min-height: 18em;
+        padding: 1.5em;
+        width: 94%;
+
+        .belowContent {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $mini) {
+  .main-content {
+    width: 95%;
+
+    p {
+      font-size: 0.9em;
+    }
+
+    h2 {
+      font-size: 1.1em;
+    }
+
+    .simpleContent {
+      min-height: 18em;
+    }
+
+    .contentWrapper {
+
+      .content {
+        margin: 0.8em 0.7em 0.7em 0.7em;
+        min-height: 18em;
+        padding: 1.5em 1em 1em 1em;
+        width: 95%;
+
+        .belowContent {
+          padding: 0;
+        }
+      }
+    }
+  }
+}

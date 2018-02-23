@@ -1,0 +1,14 @@
+{
+  "name": "etheraffleEvents",
+  "version": "0.1.0",
+  "private": false,
+  "dependencies": {
+    "mailgun-js": "^0.13.1",
+    "moment": "^2.18.1",
+    "mongodb": "^2.2.30",
+    "node-cron": "^1.2.1",
+    "solidity-sha3": "^0.4.1",
+    "web3": "^0.20.1",
+    "web3-provider-engine": "^13.3.3"
+  }
+}

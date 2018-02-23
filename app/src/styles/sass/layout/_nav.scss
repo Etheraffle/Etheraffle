@@ -1,0 +1,159 @@
+.app-nav {
+  display: flex;
+  flex-direction: column;
+  order: 1;
+}
+
+.nav-item {
+  background-size: 65%;
+  margin: 0 1em 0.5em 0.5em;
+  width: 9em;
+  height: 3em;
+  @include dropShadow($erLtGrey);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 1.3em;
+  &.screen1 {
+    background-image: url('../../images/nowg.svg');
+
+    &:hover:not(.active-nav) {
+      @include dropShadow($erGreen);
+      background-image: url('../../images/now.svg');
+    }
+    &.active-nav {
+      @include dropShadow($erGreen);
+      background-image: url('../../images/now.svg');
+      cursor: default;
+      a:hover {cursor: default;}
+      }
+  }
+  &.screen2 {
+    background-image: url('../../images/icog.svg');
+    &:hover:not(.active-nav) {
+      @include dropShadow($erBlueGrey);
+      background-image: url('../../images/ico.svg');
+    }
+    &.active-nav {
+      @include dropShadow($erBlueGrey);
+      background-image: url('../../images/ico.svg');//halp!
+      cursor: default;
+      a:hover {cursor: default;}
+      }
+  }
+  &.screen3 {
+    background-image: url('../../images/wedg.svg');
+    &:hover:not(.active-nav) {
+      @include dropShadow($erPink);
+      background-image: url('../../images/wed.svg');
+    }
+    &.active-nav{
+      @include dropShadow($erPink);
+      background-image: url('../../images/wed.svg');
+      cursor: default;
+      a:hover {cursor: default;}
+      }
+  }
+  &.screen5 {
+    background-image: url('../../images/satg.svg');
+    &:hover:not(.active-nav) {
+      @include dropShadow($erBlue);
+      background-image: url('../../images/sat.svg');
+    }
+    &.active-nav {
+      @include dropShadow($erBlue);
+      background-image: url('../../images/sat.svg');
+      cursor: default;
+      a:hover {cursor: default;}
+    }
+  }
+}
+
+@media (max-width: $desktop) {
+  .app-nav {
+    .nav-item {
+      background-size: 75%;
+      margin: 0 1em 0.5em 0.5em;
+      width: 5em;
+      height: 2em;
+    }
+  }
+}
+
+@media (max-width: $desktop) {
+  .app-nav {
+    .nav-item {
+      margin: 0 0.7em 0.5em 0.5em;
+    }
+  }
+}
+
+@media (max-width : $tablet) {
+  .app-nav {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    order: 1;
+    width: 100%;
+    margin: 0.3em 0 0.3em 0;
+
+    .nav-item {
+      background-size: 68%;
+      margin: 0 0.5em 0.5em 0.5em;
+      width: 4.5em;
+      height: 1.5em;
+    }
+  }
+}
+
+
+@media (max-width: $mobile) {
+  .app-nav {
+    width: 70%;
+
+    margin: 0.4em auto 0.4em auto;
+
+    .nav-item {
+      background-size: 64%;
+      width: 5.5em;
+      margin: 0 1.2em 0.7em 0;
+    }
+    /* Nav now in a quadrant so bottom two need no margin-bottom */
+    :nth-child(even) {
+      margin-right: 0;
+    }
+
+    :nth-child(3) {
+      margin-bottom: 0.4em;
+    }
+
+    :nth-child(4) {
+      margin-bottom: 0.4em;
+    }
+  }
+}
+
+@media (max-width: $mini) {
+  .app-nav {
+
+    .nav-item {
+      background-size: 70%;
+      width: 4.5em;
+      margin: 0 1.2em 0.5em 0;
+    }
+
+    :nth-child(even) {
+      margin-right: 0;
+    }
+
+  }
+}
+
+@media(max-width: $nano) {
+  .app-nav {
+    width: 100%;
+  }
+}

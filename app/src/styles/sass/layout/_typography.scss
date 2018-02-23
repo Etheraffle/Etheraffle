@@ -1,0 +1,119 @@
+a {
+  text-decoration: none;
+  font-size: 1.05em;
+  color: #717171;
+  @include hoverColors();
+  &.button:hover{cursor: pointer;}
+  &.invert{
+    &.screen1{color: rgba(62,214,126,1); &:hover{color: #717171;}}
+    &.screen2{color: rgba(150,137,170,1); &:hover{color: #717171;}}
+    &.screen3{color: rgba(236,60,226,1); &:hover{color: #717171;}}
+    &.screen4{color: rgba(158,123,226,1); &:hover{color: #717171;}}
+    &.screen5{color: rgba(51,211,224,1); &:hover{color: #717171;}}
+  }
+  &.largerFont{font-size: 1.1em;}
+}
+
+h1 {
+  margin: 0px;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: normal;
+  @include screenColors();
+  &.centred {text-align: center;}
+  &.underlined {text-decoration: underline;}
+}
+
+h2 {
+  margin: 0px;
+  text-decoration: none;
+  //padding: 8px;
+  font-size: 1.25em;
+  font-weight: normal;
+  @include screenColors();
+  &.centred {text-align: center;}
+  &.underlined {text-decoration: underline;}
+}
+
+h3 {
+  margin: 0px;
+  text-decoration: none;
+  font-weight: normal;
+  &.screen1 {color: rgba(62,214,126,1);}
+  &.screen2 {color: rgba(150,137,170,1);}
+  &.screen3 {color: rgba(236,60,226,1);}
+  &.screen4 {color: rgba(158,123,226,1);}
+  &.screen5 {color: rgba(51,211,224,1);}
+  &.centred {text-align: center;}
+  &.underlined {text-decoration: underline;}
+}
+
+p {
+  color: #717171;
+  margin: 0px;
+  font-size: 1.05em;
+  padding: 4px;
+  &.left{text-align: left;}
+  &.justify{text-align: justify;}
+  &.centred{text-align: center;}
+  &.rightAlign{text-align: right;}
+  &.largerFont{font-size: 1.1em;}
+  &.smallerFont{font-size: 0.9em;}
+}
+
+@media (max-width: 400px) {
+  p {
+    font-size: 0.9em;
+  }
+}
+
+select {
+  border:0;
+  font-family: 'Jockey One', sans-serif;
+  padding: 2px;
+  font-size: 1.2em;
+  cursor: pointer;
+  @include screenColors();
+}
+
+input {
+  @include dropShadow($erDkGrey);
+  font-family: monospace;
+  font-weight: bold;
+  color: $erDkGrey;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 1.2em;
+  margin: 8px;
+  @include screenColors();
+  &:focus {outline: none;}
+}
+
+.routerLink {
+  text-decoration: none;
+  color: $erDkGrey;
+  @include hoverColors();
+  &.button:hover{cursor: pointer;}
+  &.invert{
+    &.screen1{color: rgba(62,214,126,1); &:hover{color: #717171;}}
+    &.screen2{color: rgba(150,137,170,1); &:hover{color: #717171;}}
+    &.screen3{color: rgba(236,60,226,1); &:hover{color: #717171;}}
+    &.screen4{color: rgba(158,123,226,1); &:hover{color: #717171;}}
+    &.screen5{color: rgba(51,211,224,1); &:hover{color: #717171;}}
+  }
+  &.largerFont{font-size: 1.1em;}
+}
+
+.styledSpan {
+  @include screenColors();
+  &.largerFont{font-size: 1.1em;}
+  &.centred {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  &.leftAlign {text-align: left;}
+  &.underlined {text-decoration: underline;}
+  &.rightAlign {text-align: right;}
+  &.justify {text-align: justify;}
+}

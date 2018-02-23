@@ -1,0 +1,139 @@
+.welcomeModal {
+  display: flex;
+  flex-direction: column;
+  @include screenDropShadows();
+  text-align: center;
+  padding: 3em;
+  position: absolute;
+  outline: none;
+  top: 10%;
+  left: 30%;
+  right: 30%;
+  bottom: 40%;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+
+  .welcomeLogoBig {
+    height: 22%;
+    margin: 0 0 2.5em 0;
+  }
+
+  .boilerplate {
+    font-size: 0.8em;
+    margin-top: 1em;
+    padding: 2em;
+  }
+
+  .accountLocked {
+    margin: 2em;
+  }
+
+  .playButton {
+    width: 7em;
+    cursor: pointer;
+    padding: 0.7em;
+    margin: 1.5em 0 1em 0;
+    @include dropShadow($erLtGrey);
+    @include screenDropShadows($width: 5px, $width2: -5px, $borderWidth: 2px, $hover:true);
+  }
+}
+
+@media (max-width: $desktop) {
+  .welcomeModal {
+    top: 10%;
+    left: 20%;
+    right: 20%;
+    bottom: 15%;
+    padding: 2.5em;
+
+    .welcomeLogoBig {
+      height: 22%;
+      margin: 0 0 1em 0;
+    }
+  }
+}
+
+@media (max-width: $laptop) {
+  .welcomeModal {
+    top: 12%;
+    left: 15%;
+    right: 15%;
+    bottom: 12%;
+    padding: 1.5em;
+
+    .welcomeLogoBig {
+      height: 18%;
+      margin: 0 0 0.5em 0;
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .welcomeModal {
+    top: 9%;
+    left: 10%;
+    right: 10%;
+    bottom: 9%;
+    padding: 2em;
+
+    .welcomeLogoBig {
+      height: 19%;
+      margin: 0.8em 0 0.8em 0;
+    }
+
+  }
+}
+
+/* Logo changes to smaller e logo for the following ones */
+@media (max-width: $mobile) {
+  .welcomeModal {
+    padding: 0.4em 2em 2em 2em;
+
+    h2 {
+      font-size: 1em;
+    }
+
+    h3 {
+      font-size: 0.9em;
+    }
+
+    p {
+      font-size: 0.8em;
+    }
+
+    .welcomeLogoSmall {
+      width: 20%;
+      height: 20%;
+    }
+
+    .boilerplate {
+      font-size: 0.6em;
+      margin-top: 0.2em;
+    }
+
+    .playButton {
+      width: 6.5em;
+      margin: 1em 0 0.3em 0;
+      padding: 0.5em;
+    }
+  }
+}
+
+@media (max-width: $mini) {//neaten it up for extra small screens
+  .welcomeModal {
+    top: 8%;
+    left: 8%;
+    right: 8%;
+    bottom: 8%;
+    padding: 0 1em 1em 1em;
+
+    .boilerplate {
+      margin: 0.3em 0 0 0;
+    }
+
+    .playButton {
+      margin: 1em 0 0.5em 0;
+    }
+  }
+}

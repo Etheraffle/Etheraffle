@@ -1,0 +1,60 @@
+.contactForm {
+  width: 80%;
+  margin: 2em;
+  padding: 2em;
+  color: #717171;
+  font-weight: bold;
+  font-family: monospace;
+  background-color: #eeeeee;
+  @include dropShadow($erLtGrey, 4px);
+  @include screenDropShadows(4px, -4px, 2px, true);
+
+  &.query {
+    width: 80%;
+    height: 12em;
+    margin: 0.4em;
+    outline: none;
+    padding: 0.4em;
+    background-color: white;
+    @include screenDropShadows(4px, -4px, 2px, true);
+  }
+
+  &.email {
+    width: 50%;
+    margin: 0.4em;
+    outline: none;
+    padding: 0.4em;
+    background-color: white;
+    @include screenDropShadows(4px, -4px, 2px, true);
+  }
+}
+
+.formsy {
+  color: $erDkGrey;
+  font-family: monospace;
+}
+
+@media (max-width: $mobile) {
+  .contactForm {
+    display: flex;
+    justify-content: center;
+    width: 95%;
+    //padding: 1em;
+    //margin: 0.6em;
+
+    &.email {
+      width: 90%;
+    }
+
+    &.query {
+      width: 90%;
+    }
+  }
+}
+
+@media (max-width: $mini) {
+  .contactForm {
+    width: 98%;
+    margin: 1.4em;
+  }
+}
