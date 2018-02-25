@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
     "decimal.js": "^7.2.3",
     "eslint": "^4.2.0",
     "eslint-plugin-react": "^7.1.0",
