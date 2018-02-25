@@ -24,7 +24,7 @@ app.use('/ethrelief/whitepaper',  (req,res) => {
   res.sendFile((__dirname + '/whitepaper/ethReliefWhitePaper.pdf'))
 })
 /* Requests to etheraffle.com/ico picks up the ico react app from this location */
-app.use('/ico', express.static('home/gregkapka/ico/build/'))
+app.use('/ico', express.static('/home/gregkapka/ico/build/'))
 /* All other reqs pick up this apps build */
 app.use(express.static(__dirname + '/build/'))
 app.use(bodyParser.urlencoded({extended: true}))
