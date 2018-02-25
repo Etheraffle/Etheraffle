@@ -18,13 +18,14 @@ use pm2 for clustering/load balancing
 //process.setMaxListeners(Infinity)//Will silence warning but first I need to know why...
 process.on('unhandledRejection', err => {console.log('unhandledRejection', err.stack)})//TODO: remove!
 app.use('/ico/whitepaper',  (req,res) => {
-  res.sendFile((__dirname + '/ico/whitepaper/etheraffleWhitePaper.pdf'))
+  res.sendFile((__dirname + '/whitepaper/etheraffleWhitePaper.pdf'))
 })
 app.use('/ethrelief/whitepaper',  (req,res) => {
-  res.sendFile((__dirname + '/ico/whitepaper/ethReliefWhitePaper.pdf'))
+  res.sendFile((__dirname + '/whitepaper/ethReliefWhitePaper.pdf'))
 })
-//app.use('/ico', express.static(__dirname + '/ico/build/'))
+/* Requests to etheraffle.com/ico picks up the ico react app from this location */
 app.use('/ico', express.static('home/gregkapka/ico/build/'))
+/* All other reqs pick up this apps build */
 app.use(express.static(__dirname + '/build/'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
