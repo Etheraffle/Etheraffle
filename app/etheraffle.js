@@ -37,7 +37,7 @@ app.use('/onepager/token',  (req,res) => {
 })
 /* Requests to etheraffle.com/ico picks up the ico react app from this location */
 app.use('/ico', express.static('/home/gregkapka/ico/build/'))
-app.use('/public', express.static(path.join(__dirname + '/public/')));
+app.use('/public', express.static(__dirname + '/public/'));
 /* All other reqs pick up this apps build */
 app.use(express.static(__dirname + '/build/'))
 app.use(bodyParser.urlencoded({extended: true}))
