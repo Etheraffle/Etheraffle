@@ -23,7 +23,7 @@ app.use('/ico/whitepaper',  (req,res) => {
 app.use('/ethrelief/whitepaper',  (req,res) => {
   res.sendFile((__dirname + '/whitepaper/ethReliefWhitePaper.pdf'))
 })
-app.use('/onepager',  (req,res) => {
+app.use('/onepager/full',  (req,res) => {
   res.sendFile((__dirname + '/onePagers/LOTOnePager.jpg'))
 })
 app.use('/onepager/features',  (req,res) => {
