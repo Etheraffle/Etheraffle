@@ -35,7 +35,6 @@ app.use('/onepager/ico',  (req,res) => {
 app.use('/onepager/token',  (req,res) => {
   res.sendFile((__dirname + '/onePagers/LOTOnePagerToken.jpg'))
 })
-
 /* Requests to etheraffle.com/ico picks up the ico react app from this location */
 app.use('/ico', express.static('/home/gregkapka/ico/build/'))
 /* All other reqs pick up this apps build */
