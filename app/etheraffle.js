@@ -23,7 +23,18 @@ app.use('/ico/whitepaper',  (req,res) => {
 app.use('/ethrelief/whitepaper',  (req,res) => {
   res.sendFile((__dirname + '/whitepaper/ethReliefWhitePaper.pdf'))
 })
-app.use('/public', express.static(path.join(__dirname + '/public')));
+app.use('/onepager/full',  (req,res) => {
+  res.sendFile((__dirname + '/onePagers/LOTOnePager.jpg'))
+})
+app.use('/onepager/features',  (req,res) => {
+  res.sendFile((__dirname + '/onePagers/LOTOnePagerFeatures.jpg'))
+})
+app.use('/onepager/ico',  (req,res) => {
+  res.sendFile((__dirname + '/onePagers/LOTOnePagerICO.jpg'))
+})
+app.use('/onepager/token',  (req,res) => {
+  res.sendFile((__dirname + '/onePagers/LOTOnePagerToken.jpg'))
+})
 
 /* Requests to etheraffle.com/ico picks up the ico react app from this location */
 app.use('/ico', express.static('/home/gregkapka/ico/build/'))
