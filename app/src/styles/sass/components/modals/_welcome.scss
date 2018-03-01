@@ -88,6 +88,10 @@
 /* Logo changes to smaller e logo for the following ones */
 @media (max-width: $mobile) {
   .welcomeModal {
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
     padding: 0.4em 2em 2em 2em;
 
     h2 {
@@ -122,10 +126,6 @@
 
 @media (max-width: $mini) {//neaten it up for extra small screens
   .welcomeModal {
-    top: 8%;
-    left: 8%;
-    right: 8%;
-    bottom: 8%;
     padding: 0 1em 1em 1em;
 
     .boilerplate {

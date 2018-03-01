@@ -229,7 +229,7 @@ export default class Saturdayentryform extends React.Component{
                         target="_blank"
                         className={"screen" + this.props.screenIndex}
                         href={"https://etherscan.io/tx/" + this.state.txHash}>
-                        {this.state.txHash.substring(0, 30) + ' . . .'}
+                        {this.state.txHash.substring(0, 20) + ' . . .'}
                       </a>
                     </p>
                   </div>

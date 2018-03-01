@@ -1,5 +1,13 @@
 # dependencies
 /app/node_modules
+/app/src/styles/sass-cache
+
+#Npm's index.html files
+/public/favicon.ico
+/public/faviconold.ico
+/public/faviconwhitecorners.ico
+/public/index.html
+/public/manifest.json
 
 # testing
 /app/coverage

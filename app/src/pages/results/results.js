@@ -867,7 +867,7 @@ export default class Results extends React.Component {
                     rel="noopener noreferrer"
                     href={"https:/www.etherscan.io/tx/" + this.state.txHash}
                     >
-                    {this.state.txHash.substring(0,30) + '. . .'}
+                    {this.state.txHash.substring(0,20) + '. . .'}
                     </a>
                   </p>
                   <br/>

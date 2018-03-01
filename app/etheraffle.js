@@ -25,7 +25,6 @@ app.use('/ethrelief/whitepaper',  (req,res) => {
   res.sendFile((__dirname + '/public/ethReliefWhitePaper.pdf'))
 })
 /* Requests to etheraffle.com/ico picks up the ico react app static files from this location */
-//app.use('/ico', express.static('/home/gregkapka/ico/build/'))
 app.use('/ico', express.static(__dirname + '/../../ico/build/'))
 /* Public folder for serving static images/miscellany */
 app.use('/public', express.static(__dirname + '/public/'));
@@ -38,7 +37,6 @@ app.use((err, req, res, next) => {//Allows custom error handling of the bodyPars
   return res.status(500).send("Internal Server Error!")
 })
 /* Specific pathways come first... */
-//app.get('/ico', (req, res) => res.sendFile('/home/gregkapka/ico/build/index.html'))
 app.get('/ico', (req, res) => res.sendFile(__dirname + '/../../ico/build/index.html'))
 /* Before the catch all version grabs the other requests! */
 app.get('/', (req, res) => res.sendFile(__dirname + '/build/index.html'))
