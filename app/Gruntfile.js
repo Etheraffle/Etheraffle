@@ -3,37 +3,27 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     // Tasks
-    sass: { // Begin Sass Plugin
-      dist: {
-        files: [{
-          expand: true,
-          cwd: 'src/styles',
-          src: ['**/*.scss'],
-          dest: 'css',
-          ext: '.css'
-        }]
-      }
-    },
-    postcss: { // Begin Post CSS Plugin
+    postcss: {//Post CSS (autoprefixer) Plugin
       options: {
         map: false,
         processors: [
-      require('autoprefixer')({
+          require('autoprefixer')({
             browsers: ['last 2 versions']
           })
-    ]
+        ]
       },
       dist: {
-        src: 'src/styles/css/main.css'
+        src: 'src/styles/css/main.css',
+        dest: 'src/styles/css/main.css'
       }
     },
-    cssmin: { // Begin CSS Minify Plugin
+    cssmin: {//CSS Minify Plugin
       target: {
         files: [{
           expand: true,
           cwd: 'src/styles/css',
           src: ['*.css', '!*.min.css'],
-          dest: 'css',
+          dest: 'src/styles/css',
           ext: '.min.css'
         }]
       }
@@ -47,9 +37,10 @@ module.exports = function (grunt) {
     },
     */
     watch: {// Compile everything into one task with Watch Plugin
+      grunt: { files: ['Gruntfile.js'] },
       css: {
         files: '**/*.scss',
-        tasks: ['sass', 'postcss', 'cssmin']
+        tasks: ['postcss', 'cssmin']
       }//,
       //js: {
       //  files: '**/*.js',

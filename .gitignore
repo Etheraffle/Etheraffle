@@ -1,6 +1,6 @@
 # dependencies
 /app/node_modules
-/app/src/styles/sass-cache
+/app/src/styles/.sass-cache
 
 #Npm's index.html files
 /public/favicon.ico

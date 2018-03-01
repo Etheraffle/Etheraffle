@@ -1,7 +1,7 @@
 import React from 'react'
 import Nav from './nav/nav'
 import ReactDOM from 'react-dom'
-import './styles/css/main.css'
+import './styles/css/main.min.css'
 import {EventEmitter} from 'events'
 import Screen1 from './nav/Screen1'
 import Screen3 from './nav/Screen3'
