@@ -17,28 +17,18 @@ use pm2 for clustering/load balancing
 //process.on('warning', e => console.warn(e.stack))//give me the stack trace on the event emitter warning...
 //process.setMaxListeners(Infinity)//Will silence warning but first I need to know why...
 process.on('unhandledRejection', err => {console.log('unhandledRejection', err.stack)})//TODO: remove!
-app.use('/ico/whitepaper',  (req,res) => {
-  res.sendFile((__dirname + '/whitepaper/etheraffleWhitePaper.pdf'))
+/* Various pathways to serve the whitepaper */
+app.use(['/whitepaper','/ico/whitepaper'],  (req,res) => {
+  res.sendFile((__dirname + '/public/etheraffleWhitePaper.pdf'))
 })
 app.use('/ethrelief/whitepaper',  (req,res) => {
-  res.sendFile((__dirname + '/whitepaper/ethReliefWhitePaper.pdf'))
+  res.sendFile((__dirname + '/public/ethReliefWhitePaper.pdf'))
 })
-app.use('/onepager/full',  (req,res) => {
-  res.sendFile((__dirname + '/onePagers/LOTOnePager.jpg'))
-})
-app.use('/onepager/features',  (req,res) => {
-  res.sendFile((__dirname + '/onePagers/LOTOnePagerFeatures.jpg'))
-})
-app.use('/onepager/ico',  (req,res) => {
-  res.sendFile((__dirname + '/onePagers/LOTOnePagerICO.jpg'))
-})
-app.use('/onepager/token',  (req,res) => {
-  res.sendFile((__dirname + '/onePagers/LOTOnePagerToken.jpg'))
-})
-/* Requests to etheraffle.com/ico picks up the ico react app from this location */
+/* Requests to etheraffle.com/ico picks up the ico react app static files from this location */
 app.use('/ico', express.static('/home/gregkapka/ico/build/'))
+/* Public folder for serving static images/miscellany */
 app.use('/public', express.static(__dirname + '/public/'));
-/* All other reqs pick up this apps build */
+/* All other reqs pick up this app's build */
 app.use(express.static(__dirname + '/build/'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
@@ -47,7 +37,6 @@ app.use((err, req, res, next) => {//Allows custom error handling of the bodyPars
   return res.status(500).send("Internal Server Error!")
 })
 /* Specific pathways come first... */
-//app.get('/ico', (req, res) => res.sendFile(__dirname + '/ico/build/index.html'))
 app.get('/ico', (req, res) => res.sendFile('/home/gregkapka/ico/build/index.html'))
 /* Before the catch all version grabs the other requests! */
 app.get('/', (req, res) => res.sendFile(__dirname + '/build/index.html'))
