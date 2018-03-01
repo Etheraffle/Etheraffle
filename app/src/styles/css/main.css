@@ -1316,6 +1316,9 @@ input {
           flex-wrap: wrap;
       font-size: 1.5em;
       padding: 0.3em 0.5em 0.3em 0.5em; }
+      .entryForm .pickNumbersForm .numberPicker select {
+        /* Stops cipher bg being grey */
+        background-color: white !important; }
   .entryForm .entryButton {
     display: -webkit-box;
     display: -ms-flexbox;
