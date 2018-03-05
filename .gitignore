@@ -21,7 +21,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
-/misc
+/etheraffleMisc
 /app/solidity
 
 npm-debug.log*
