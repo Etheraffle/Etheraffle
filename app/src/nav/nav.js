@@ -46,7 +46,7 @@ export default class Nav extends React.Component {
           <a
             href='https://www.etheraffle.com/ico'
             style={{color: 'white'}}
-            target='_blank'
+            target={window.innerWidth > 1000 ? '_blank' : ''}
             rel='noopener noreferrer'
             >
             <p className="invisible">
@@ -59,28 +59,3 @@ export default class Nav extends React.Component {
     )
   }
 }
-
-/*
-<div
-  className={this.props.screenIndex === 2 ? "nav-item screen2 active-nav" : "nav-item screen2"}>
-    <Link
-      to="/ico"
-      style={{color: 'white'}}
-      >
-      <p className="invisible">
-        <b>SCREEEEEEN2</b>
-      </p>
-    </Link>
-</div>
-<div
-  className={this.props.screenIndex === 4 ? "nav-item screen4 active-nav" : "nav-item screen4"}>
-    <Link
-      to="/ico"
-      style={{color: 'lightgrey'}}
-      >
-      <p className="invisible">
-        <b>SCREEEEEEN4</b>
-      </p>
-    </Link>
-</div>
-*/
