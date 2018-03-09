@@ -12,7 +12,7 @@ export default class HowDoIEnterARaffle extends Component {
           <span className={'styledSpan screen' + this.props.screenIndex}>
             <b>&emsp; &#x274d; &ensp;</b>
           </span>
-          To enter a raffle first make sure you are visiting the ĐApp using an ethererum-enabled browser, otherwise the entry form will not appear. Once you are succesfully connected to the ethereum network, you will see the entry form. Simply select your six lucky numbers using the drop menus above the "Buy Ticket" button and then click the "Buy Ticket" button:
+          To enter a raffle first make sure you are visiting the ĐApp using an ethereum-enabled browser, otherwise the entry form will not appear. Once you are succesfully connected to the ethereum network, you will see the entry form. Simply select your six lucky numbers using the drop menus above the "Buy Ticket" button and then click the "Buy Ticket" button:
         </p>
 
         <div className='image centred'>

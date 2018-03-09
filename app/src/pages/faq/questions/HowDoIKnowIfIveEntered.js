@@ -21,7 +21,7 @@ export default (props) => {
       <img className='image border centred' src={entered} alt='The entry table'/>
 
       <p>
-        The second method to check your entry is succesful is to click on the transaction hash that appears in the pop-up after you've confirmed your purchase via your ethererum client:
+        The second method to check your entry is succesful is to click on the transaction hash that appears in the pop-up after you've confirmed your purchase via your ethereum client:
       </p>
 
       <img className='image border centred' src={txhash} alt='Ticket bought transaction hash example'/>

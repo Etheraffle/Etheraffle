@@ -11,7 +11,7 @@ export default class HowDoIKnowIfIveWon extends Component {
           <span className={'styledSpan screen' + this.props.screenIndex}>
             <b>&emsp; &#x274d; &ensp;</b>
           </span>
-          You don't need a username, a password or even to log in at all to play Etheraffle! All you need is an ethereum address, and then to visit the Etheraffle ÐApp in an ethereum-enabled browser. Two great options are either MetaMask - a plugin for the chrome browser, or Mist - an entirely new, ethererum based browser:
+          You don't need a username, a password or even to log in at all to play Etheraffle! All you need is an ethereum address, and then to visit the Etheraffle ÐApp in an ethereum-enabled browser. Two great options are either MetaMask - a plugin for the chrome browser, or Mist - an entirely new, ethereum based browser:
         </p>
 
         <div className="row">

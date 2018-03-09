@@ -107,7 +107,7 @@ export default class WelcomeModal extends React.Component {
 
               {window.innerWidth <= 450 &&
               <p className='justify'>
-                If you are seeing this on mobile, please make sure your ethererum account is unlocked and authorized to interact with the Etheraffle ÐApp.
+                If you are seeing this on mobile, please make sure your ethereum account is unlocked and authorized to interact with the Etheraffle ÐApp.
                 <a className={"centred screen" + this.props.screenIndex} style={{cursor: 'pointer'}} onClick={() => this.closeModal()}>
                   &nbsp; Just want a peek? Click to view the
                   <span className={"styledSpan screen" + this.props.screenIndex}>

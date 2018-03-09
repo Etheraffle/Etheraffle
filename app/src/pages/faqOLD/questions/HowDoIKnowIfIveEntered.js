@@ -35,7 +35,7 @@ export default class HowDoIKnowIfIveEntered extends Component {
         <span className={'styledSpan screen' + this.props.screenIndex}>
           <b>&emsp; &#x274d; &ensp;</b>
         </span>
-          The second method to check your entry is succesful is to click on the transaction hash that appears in the pop-up after you've confirmed your purchase via your ethererum client:
+          The second method to check your entry is succesful is to click on the transaction hash that appears in the pop-up after you've confirmed your purchase via your ethereum client:
         </p>
 
         <div className='image centred'>

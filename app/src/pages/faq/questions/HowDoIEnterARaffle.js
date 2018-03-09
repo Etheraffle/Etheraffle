@@ -8,7 +8,7 @@ export default () => {
       <div>
 
       <p className="justify">
-        To enter a raffle first make sure you are visiting the ĐApp using an ethererum-enabled browser, otherwise the entry form will not appear. Once you are succesfully connected to the ethereum network, you will see the entry form. Simply select your six lucky numbers using the drop-down menus above the "Buy Ticket" button and then click "Buy Ticket":
+        To enter a raffle first make sure you are visiting the ĐApp using an ethereum-enabled browser, otherwise the entry form will not appear. Once you are succesfully connected to the ethereum network, you will see the entry form. Simply select your six lucky numbers using the drop-down menus above the "Buy Ticket" button and then click "Buy Ticket":
       </p>
 
       <img className='image border centred' src={selector} alt='The number selector'/>

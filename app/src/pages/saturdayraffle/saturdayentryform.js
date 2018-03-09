@@ -67,7 +67,7 @@ export default class Saturdayentryform extends React.Component{
         let txErr
         if(!(this.state.tktPrice > 0)) txErr = "Cannot retreive ticket price from the smart contract!"
         if(window.ethAdd === null) txErr = "Ethereum account address inaccessible!"
-        if(window.web3.version.network > 1) txErr = 'Test network detected - please connect to the main ethererum network!'
+        if(window.web3.version.network > 1) txErr = 'Test network detected - please connect to the main ethereum network!'
         if(this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true, w3Con: true, txHash: null, txError: txErr})
       }
     } else {//No ethereum connection modal!
@@ -275,7 +275,7 @@ export default class Saturdayentryform extends React.Component{
          {(this.state.w3Con === false || window.ethAdd === null || window.ethAdd === undefined) &&
           <div className="entryFormNotConnected">
             <p className={"centred styledSpan screen" + this.props.screenIndex}>
-              No ethererum address detected!
+              No ethereum address detected!
               <br/>
               <a
                 className={"centred screen" + this.props.screenIndex}

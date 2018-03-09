@@ -70,7 +70,7 @@ export default class ICOButton extends React.Component{
         {(window.ethAdd === null) &&
           <div>
             <h3 className={'centred screen' + this.props.screenIndex}>
-              No Ethererum Address Detected!
+              No Ethereum Address Detected!
             </h3>
             <p className="centred">
               Please check your ethereum connection.
@@ -92,7 +92,7 @@ export default class ICOButton extends React.Component{
           <div>
           <div
             className="buyLOTsButton"
-            data-tip="This button will pop-up your ethererum<br>
+            data-tip="This button will pop-up your ethereum<br>
             client's transaction window, with a default <br>
             investment amount of 1 Ether. You can change<br>
             the number there to whatever you wish."
