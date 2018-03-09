@@ -165,7 +165,7 @@ export default class Results extends React.Component {
   parseResults(JSON){
     let tableArr = this.state.tableArr,
         arr      = JSON.raffleIDs.reverse()
-    for(let i = 0; i < arr.length; i++){
+    for(let i = 0; i < arr.length; i++) {
       const table = [],
             tHead = this.getTableHeads(arr[i], JSON.results[arr[i]]),
             tRows = this.getTableRows(JSON.results[arr[i]], arr[i], JSON.entries[arr[i]])
