@@ -1,7 +1,10 @@
 const {fork}      = require('child_process'),
       utils       = require('../modules/utils'),
       getWinEvent = require('../modules/getwinningevent')
-
+/*
+> const x = require('/getmatchesinit')
+> x.manualInit(args)
+*/
 /* For running via node manually... _period is number of days to search over... */
 const manualInit = (_weekNo, _period) => {
   const period   = _period == undefined ? 7 : _period,
