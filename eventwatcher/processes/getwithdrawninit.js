@@ -1,11 +1,12 @@
 const {fork} = require('child_process'),
       utils  = require('../modules/utils')
 /*
-> import x from 'getwithdrawninit'
-> x()
+This method is called in the main eventwatcher.js file via a daily cron job. Can also be run when needed via node in this directory:
+> const whatever = require('./getmissingprocess')
+> whatever.init(args)
 */
 /* Init withdrawn process - defaults to 6 hour period & correct path */
-export default (_period, _path) => {
+const init = function(_period, _path) {
   const period = _period == undefined ? 6 : _period,
         getWithdrawals = _path == undefined ? fork("./getwithdrawnprocess") : fork(_path)
   console.log("getWithdrawals Process Spawned on", utils.getTime())
@@ -20,3 +21,6 @@ export default (_period, _path) => {
   })
 }
 
+module.exports = {
+  init: init
+}
