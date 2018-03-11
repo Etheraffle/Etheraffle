@@ -13,7 +13,7 @@ const manualInit = function(_period) {
 /* Already running processes call this function (Defaults to 6 hour period)*/
 const init = function(_period, _path) {
   const period = _period == undefined ? 6 : _period
-  const getWithdrawals = _path == undefined ? fork("./processes/getwithdrawnprocess") : fork(_path)
+  const getWithdrawals = _path == undefined ? fork("./getwithdrawnprocess") : fork(_path)
   console.log("getWithdrawals Process Spawned on", utils.getTime())
   getWithdrawals.send(period)
   getWithdrawals.on("message", msg => {
