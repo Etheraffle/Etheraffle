@@ -5,7 +5,6 @@ This method is called in the main eventwatcher.js file via a daily cron job. Can
 > const whatever = require('./getmissingprocess')
 > whatever.init(args)
 */
-/* Init withdrawn process - defaults to 6 hour period & correct path */
 const init = function(_period, _path) {
   const period = _period == undefined ? 6 : _period,
         getWithdrawals = _path == undefined ? fork("./getwithdrawnprocess") : fork(_path)

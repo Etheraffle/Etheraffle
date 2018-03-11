@@ -5,7 +5,6 @@ This method is called in the main eventwatcher.js file via a daily cron job. Can
 > const whatever = require('./getweeklyeventsinit')
 > whatever.manualInit(args)
 */
-/* Already running processes call this function instead of the above one */
 const init = (_weekNo, _path, _period) => {
   const period   = _period == undefined ? 7 : _period,
         raffleID = _weekNo == undefined ? (utils.getWeekNo() - 1) : _weekNo,

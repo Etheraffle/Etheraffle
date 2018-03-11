@@ -3,9 +3,9 @@ const {fork}      = require('child_process'),
       getWinEvent = require('../modules/getwinningevent')
 
 /* For running via node manually... _period is number of days to search over... */
-const manualInit = function(_weekNo, _period){
-  const period   = _period == undefined ? 7 : _period
-  const raffleID = _weekNo == undefined ? utils.getWeekNo() : _weekNo
+const manualInit = (_weekNo, _period) => {
+  const period   = _period == undefined ? 7 : _period,
+        raffleID = _weekNo == undefined ? utils.getWeekNo() : _weekNo
   return utils.getBlockNum()
   .then(block => {
     return getWinEvent(block, raffleID, period)
@@ -17,8 +17,8 @@ const manualInit = function(_weekNo, _period){
 }
 
 /* Else running processes call this function instead */
-const init = function(_wObj, _path){
-  const getMatches = _path == undefined ? fork('./processes/getmatchesprocess') : fork(_path)
+const init = (_wObj, _path) => {
+  const getMatches = _path == undefined ? fork('./getmatchesprocess') : fork(_path)
   console.log("getMatches Process Spawned on: ", utils.getTime())
   getMatches.send(_wObj)
   getMatches.on('message', msg => {
