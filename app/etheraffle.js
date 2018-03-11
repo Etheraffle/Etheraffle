@@ -1,6 +1,7 @@
 const express          = require('express'),
       app              = express(),
       port             = 3000,
+      cors             = require('cors'),
       bodyParser       = require('body-parser'),
       utils            = require('./modules/utils'),
       getLowGas        = require('./pathways/getlowgas'),
@@ -18,6 +19,8 @@ please works
 //process.on('warning', e => console.warn(e.stack))//give me the stack trace on the event emitter warning...
 //process.setMaxListeners(Infinity)//Will silence warning but first I need to know why...
 process.on('unhandledRejection', err => {console.log('unhandledRejection', err.stack)})//TODO: remove!
+/* Add cors support */
+app.use(cors())
 /* Various pathways to serve the whitepaper */
 app.use(['/whitepaper','/ico/whitepaper'],  (req,res) => {
   res.sendFile((__dirname + '/public/etheraffleWhitePaper.pdf'))
