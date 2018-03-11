@@ -4,6 +4,7 @@ const {fork} = require('child_process'),
 This method is called in the main eventwatcher.js file via a daily cron job. Can also be run when needed via node in this directory:
 > const whatever = require('./getmissingprocess')
 > whatever.init(args)
+where args can be ommitted
 */
 const init = function(_period, _path) {
   const period = _period == undefined ? 6 : _period,

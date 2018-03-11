@@ -72,9 +72,10 @@ cron.schedule('30 5 * * *', function() {
   return getMissing.init()
 })
 /* Retrieves any manual withdrawals, runs every 3 hours */
-cron.schedule('0 */3 * * *', function() {
+//cron.schedule('0 */3 * * *', function() {
+cron.schedule('10 20 * * *', function() {
   console.log("Cron: getWithdrawnProcess() Begun on", utils.getTime())
-  return getWithdrawn.init()
+  return getWithdrawn.init(6,'./processes/getwithdrawnprocess')
 })
 /* Retrieves any weekly events, runs 5am Sunday morning. */
 cron.schedule('0 5 * * 0', function() {
