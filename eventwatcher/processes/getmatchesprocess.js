@@ -28,7 +28,7 @@ process.on('unhandledRejection', err => {//catches errors in my catches :/
 function start(_wObj){
   return mongo.init()
   .then(result => {
-    if(result != true) throw new Error("Mong init() returned false!")
+    if(result != true) throw new Error("Mongo init() returned false!")
     return mongo.getEntriesArr(_wObj.raffleID)
     .then(entriesArr => {
       _wObj["entriesArr"] = entriesArr == null  ? [] : entriesArr
