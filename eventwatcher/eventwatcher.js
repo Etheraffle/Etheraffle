@@ -73,7 +73,7 @@ cron.schedule('30 5 * * *', function() {
 })
 /* Retrieves any manual withdrawals, runs every 3 hours */
 //cron.schedule('0 */3 * * *', function() {
-cron.schedule('18 21 * * *', function() {
+cron.schedule('22 21 * * *', () => {
   console.log("Cron: getWithdrawnProcess() Begun on", utils.getTime())
   return getWithdrawn.init(6,'./etheraffle/eventwatcher/processes/getwithdrawnprocess')
 })
