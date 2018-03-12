@@ -22,7 +22,7 @@ process.on('unhandledRejection', err => {console.log('unhandledRejection', err.s
 /* Add cors support */
 app.use(cors())
 /* Various pathways to serve the whitepaper */
-app.use(['/whitepaper','/ico/whitepaper'],  (req,res) => {
+app.use(['/whitepaper','/icowhitepaper'],  (req,res) => {
   res.sendFile((__dirname + '/public/etheraffleWhitePaper.pdf'))
 })
 app.use('/ethrelief/whitepaper',  (req,res) => {
