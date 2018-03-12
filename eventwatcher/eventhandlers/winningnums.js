@@ -1,6 +1,6 @@
 const getMatches = require('../processes/getmatchesinit')
 
-module.exports = function(_data){
+module.exports = (_data) => {
   const winningNums = [0,0,0,0,0,0],
         raffleID    = JSON.parse(_data.args.forRaffle),
         numEntries  = JSON.parse(_data.args.numberOfEntries),
@@ -12,5 +12,5 @@ module.exports = function(_data){
     numEntries: numEntries,
     prizePool: prizePool
   }
-  return getMatches.init(obj)
+  return getMatches.init(obj, './etheraffle/eventwatcher/processes/getmatchesprocess')
 }

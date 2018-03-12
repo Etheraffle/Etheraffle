@@ -5,10 +5,10 @@ This method is called in the main eventwatcher.js file via a daily cron job. Can
 > const whatever = require('./getmissinginit')
 > whatever.init(args)
 */
-const init = (_weekNo, _path) => { //requires at least one entry already in db!
+const init = (_path, _weekNo) => { //requires at least one entry already in db!
   console.log("Week number according to function: ", utils.getWeekNo())
-  const raffleID = _weekNo == undefined ? utils.getWeekNo() : _weekNo,
-        getMissingEntries = _path == undefined ? fork("./getmissingprocess") : fork(_path)
+  const getMissingEntries = _path == undefined ? fork("./getmissingprocess") : fork(_path),
+        raffleID = _weekNo == undefined ? utils.getWeekNo() : _weekNo
   console.log("getMissingEntries Process Spawned on", utils.getTime())
   getMissingEntries.send(raffleID)
   getMissingEntries.on("message", msg => {

@@ -5,10 +5,10 @@ This method is called in the main eventwatcher.js file via a daily cron job. Can
 > const whatever = require('./getweeklyeventsinit')
 > whatever.manualInit(args)
 */
-const init = (_weekNo, _path, _period) => {
+const init = (_period, _path, _weekNo) => {
   const period   = _period == undefined ? 7 : _period,
-        raffleID = _weekNo == undefined ? (utils.getWeekNo() - 1) : _weekNo,
-        getOrac  = _path   == undefined ? fork("./getweeklyeventsprocess") : fork(_path)
+        getOrac  = _path   == undefined ? fork("./getweeklyeventsprocess") : fork(_path),
+        raffleID = _weekNo == undefined ? (utils.getWeekNo() - 1) : _weekNo
   console.log("getWeeklyEvents Process Spawned on", utils.getTime())
   getOrac.send([raffleID, period])
   getOrac.on("message", msg => {

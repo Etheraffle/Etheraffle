@@ -67,18 +67,18 @@ prizePoolsEvent.watch((err, res) => {//TODO: what is this function for?
 })
 /* Cron Jobs */
 /* Retrieves any missing entries once a day @ 5:30 am */
-cron.schedule('30 5 * * *', function() {
+cron.schedule('30 5 * * *', () => {
   console.log("Cron: getMissingProcess() Begun on", utils.getTime())
-  return getMissing.init()
+  return getMissing.init("./etheraffle/eventwatcher/processes/getmissingprocess")
 })
 /* Retrieves any manual withdrawals, runs every 3 hours */
-//cron.schedule('0 */3 * * *', function() {
-cron.schedule('22 21 * * *', () => {
+cron.schedule('0 */3 * * *', () => {
   console.log("Cron: getWithdrawnProcess() Begun on", utils.getTime())
   return getWithdrawn.init(6,'./etheraffle/eventwatcher/processes/getwithdrawnprocess')
 })
 /* Retrieves any weekly events, runs 5am Sunday morning. */
-cron.schedule('0 5 * * 0', function() {
+//cron.schedule('0 5 * * 0', () => {
+cron.schedule('0 5 * * 1', () => {
   console.log("Cron: getOraclizeEventsProcess() Begun on", utils.getTime())
-  return getOrac.init()
+  return getOrac.init(7, "./etheraffle/eventwatcher/processes/getweeklyeventsprocess")
 })

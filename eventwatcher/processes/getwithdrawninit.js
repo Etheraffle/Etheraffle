@@ -6,7 +6,7 @@ This method is called in the main eventwatcher.js file via a daily cron job. Can
 > whatever.init(args)
 where args can be ommitted
 */
-const init = function(_period, _path) {
+const init = (_period, _path) => {
   const period = _period == undefined ? 6 : _period,
         getWithdrawals = _path == undefined ? fork("./getwithdrawnprocess") : fork(_path)
   console.log("getWithdrawals Process Spawned on", utils.getTime())
