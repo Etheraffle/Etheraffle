@@ -201,7 +201,7 @@ export default class Results extends React.Component {
             <th data-tip="This is your personal entry<br>number for raffle." className={"column-entryNum textCenter screen" + this.props.screenIndex}>Entry</th>
             <th data-tip="These are your chosen<br>numbers for this raffle." className={"column-chosenNums textCenter screen" + this.props.screenIndex}>Chosen Numbers</th>
             <th data-tip="When the results are drawn<br>your number of matches will appear<br>here. Three or more means you win ether!" className={"column-matches textCenter screen" + this.props.screenIndex}>Matches</th>
-            <th data-tip="When the results are drawn,<br>the amont of ether your raffle<br> ticket won will appear here." className={"column-prize textCenter screen" + this.props.screenIndex}>Prize</th>
+            <th data-tip="When the results are drawn,<br>the amount of ether your raffle<br> ticket won will appear here." className={"column-prize textCenter screen" + this.props.screenIndex}>Prize</th>
             <th data-tip="If you win ether, a<br>button will appear in this<br>column so you can claim it!" className={"column-claim textCenter screen" + this.props.screenIndex}>Withdraw</th>
           </tr>
         </thead>
