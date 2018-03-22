@@ -6,7 +6,7 @@ export default (props) => {
     return(
         <div className="underInfo">
             <p className='info'>
-            <b>&#x274d;</b> v 0.9.1 Beta <b>&#x274d;</b>
+            <b>&#x274d;</b> v 0.9.2 Beta <b>&#x274d;</b>
             &nbsp;
             <Link className={'routerLink screen' + props.screenIndex} to='/contact'>
                 Contact
