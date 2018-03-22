@@ -1,8 +1,15 @@
-module.exports = function (grunt) {
+module.exports = (grunt) => {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
     // Tasks
+    /*
+    sass: {
+			dist: {
+				files: {
+          'src/styles/css/main.css' : 'src/styles/sass/main.scss'
+			}
+		},*/
     postcss: {//Post CSS (autoprefixer) Plugin
       options: {
         map: false,
@@ -28,33 +35,19 @@ module.exports = function (grunt) {
         }]
       }
     },
-    /*
-    uglify: { // Begin JS Uglify Plugin
-      build: {
-        src: ['src/*.js'],
-        dest: 'js/script.min.js'
-      }
-    },
-    */
-    watch: {// Compile everything into one task with Watch Plugin
+    watch: {//Compile everything into one task with Watch Plugin
       grunt: { files: ['Gruntfile.js'] },
       css: {
-        files: '**/*.scss',
-        tasks: ['postcss', 'cssmin']
-      }//,
-      //js: {
-      //  files: '**/*.js',
-      //  tasks: ['uglify']
-      //}
+        files: 'src/styles/**/*.scss',
+        tasks: ['postcss', 'cssmin']//['sass', 'postcss', 'cssmin']
+      }
     }
   });
   // Load Grunt plugins
   grunt.loadNpmTasks('grunt-contrib-sass')
+  grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-postcss')
   grunt.loadNpmTasks('grunt-contrib-cssmin')
-  //grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch')
-
   // Register Grunt tasks
   grunt.registerTask('default', ['watch'])
 };

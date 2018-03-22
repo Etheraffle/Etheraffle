@@ -9,12 +9,9 @@ import ClipboardButton from 'react-clipboard.js'
 import loadingIcon from '../../images/loadingIconGrey.svg'
 import NotConnectedInfo from '../../components/modals/notconnectedinfo'
 
-/*
-TODO: Remove the updating of details in the db? Since the event watcher will do it when the tx is actually mined? The problem is that the user will see the "claim prize" button until it's mined...? Maybe not? If it errors we can manually update the db to undo their attempted withdraw as far as the app is concerned...?
-*/
 export default class Results extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       data: null,
@@ -29,29 +26,28 @@ export default class Results extends React.Component {
     }
   this.getPrize         = this.getPrize.bind(this)
   this.openModal        = this.openModal.bind(this)
+  this.raffleWin        = this.raffleWin.bind(this)
   this.toDollars        = this.toDollars.bind(this)
   this.closeModal       = this.closeModal.bind(this)
   this.getResults       = this.getResults.bind(this)
+  this.raffleNoWin      = this.raffleNoWin.bind(this)
+  this.parseMobile      = this.parseMobile.bind(this)
   this.parseResults     = this.parseResults.bind(this)
   this.getTableRows     = this.getTableRows.bind(this)
   this.updateDetails    = this.updateDetails.bind(this)
   this.getTableHeads    = this.getTableHeads.bind(this)
   this.getTableResArr   = this.getTableResArr.bind(this)
-
-  this.parseMobile      = this.parseMobile.bind(this)
   this.raffleNotDrawn   = this.raffleNotDrawn.bind(this)
-  this.raffleNoWin      = this.raffleNoWin.bind(this)
-  this.raffleWin        = this.raffleWin.bind(this)
-  this.raffleWinClaimed = this.raffleWinClaimed.bind(this)
   this.parseEntriesMob  = this.parseEntriesMob.bind(this)
+  this.raffleWinClaimed = this.raffleWinClaimed.bind(this)
   }
 
   componentWillMount(){
     this.setState({mounted: true})
-    if(window.web3 !== null && window.web3.isConnected() === true) this.setState({w3Con: true, ethAdd: window.ethAdd})
+    if (window.web3 !== null && window.web3.isConnected() === true) this.setState({w3Con: true, ethAdd: window.ethAdd})
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getResults()
   }
 
@@ -62,36 +58,29 @@ export default class Results extends React.Component {
         if(this.state.mounted) this.setState({safeLow: safeLow})
       }).catch (err => console.log('Error retrieving safe low gas rate: ', err))
       /* Get Prize */
-
-      console.log('get prize details: ', e.target.getAttribute("data-raffleID"),
-      e.target.getAttribute("data-entryNum"),
-      e.target.getAttribute("data-entryNumArr"))
-
-
-
       this.getPrize(
         e.target.getAttribute("data-raffleID"),
         e.target.getAttribute("data-entryNum"),
         e.target.getAttribute("data-entryNumArr")
       )
       /* Open Modal */
-      if(this.state.mounted) return this.setState({modalIsOpen: true})
+      if (this.state.mounted) return this.setState({modalIsOpen: true})
     } else {
       /* Eth connection dropped! */
-      if(this.state.mounted) return this.setState({modalIsOpen: true, w3Con: false})
+      if (this.state.mounted) return this.setState({modalIsOpen: true, w3Con: false})
     }
   }
 
-  closeModal(){
+  closeModal() {
     /* Modal was open for prize claiming purposes */
-    if(window.web3 !== null && window.web3.isConnected() === true) {
+    if (window.web3 !== null && window.web3.isConnected() === true) {
       /* Reset the tx hash since we're done with it */
-      if(this.state.mounted) this.setState({modalIsOpen: false, txHash: "pending", tableArr: [], numRaffles: 0})
-      /* Rerender results table since it's updated now */
+      if (this.state.mounted) this.setState({modalIsOpen: false, txHash: "pending", tableArr: [], numRaffles: 0})
+      /* Re-render results table since it's updated now */
       return this.getResults()
     } else {
       /* Modal was open for dropped connection purposes */
-      if(this.state.mounted) this.setState({modalIsOpen: false, txHash: "pending"})
+      if (this.state.mounted) this.setState({modalIsOpen: false, txHash: "pending"})
     }
   }
 
@@ -100,16 +89,16 @@ export default class Results extends React.Component {
     claimPrize("Saturday", window.ethAdd, raffleID, entryNum)
     .then(txHash => {
       /* Put txhash in state */
-      if(this.state.mounted) this.setState({txHash: txHash})
+      if (this.state.mounted) this.setState({txHash: txHash})
       /* Update details in the database */
       return this.updateDetails(txHash, raffleID, entryNum, entryNumArr, window.ethAdd)
     }).catch(err => {
       console.log("Error claiming prize: ", err)
-      if(this.state.mounted) this.setState({txHash: null})
+      if (this.state.mounted) this.setState({txHash: null})
     })
   }
 
-  updateDetails(txHash, raffleID, entryNum, entryNumArr, userAdd){
+  updateDetails(txHash, raffleID, entryNum, entryNumArr, userAdd) {
     return fetch("https://etheraffle.com/api/updateonwithdraw", {
       method:  "POST",
       headers: {'content-type': 'application/JSON'},
@@ -122,20 +111,20 @@ export default class Results extends React.Component {
       })
     })
     .then(res => {
-      if(res.status === 503) return this.setState({database: 503})
-      if(res.status !== 200) return this.setState({database: 0})
+      if (res.status === 503) return this.setState({database: 503})
+      if (res.status !== 200) return this.setState({database: 0})
       return res.json()
       .then(json => {
-        if(json.success === false) throw new Error("Error in updateDetails - Mongo responded false!")
+        if (json.success === false) throw new Error("Error in updateDetails - Mongo responded false!")
         return
       })
     }).catch(err => {
       console.log("Error updating details: ", err.stack)
-      if(this.state.mounted) this.setState({database: 0})//database down...
+      if (this.state.mounted) this.setState({database: 0})//database down...
     })
   }
 
-  getResults(){
+  getResults() {
     return fetch("https://etheraffle.com/api/ethaddress", {
       method: "POST",
       headers: {'content-type': 'application/JSON'},
@@ -149,7 +138,7 @@ export default class Results extends React.Component {
         if(json.raffleIDs === undefined) {//None entered...
           if(this.state.mounted) this.setState({numRaffles: null})
         } else {
-          console.log("db res: ", json)
+          //console.log("db res: ", json)
           if(this.state.mounted) this.setState({numRaffles: json.raffleIDs.length, data: json})
           if(window.innerWidth < 450) return this.parseMobile(json)//no tooltips to rebuild
           this.parseResults(json)
@@ -162,13 +151,13 @@ export default class Results extends React.Component {
     })
   }
 
-  parseResults(JSON){
-    let tableArr = this.state.tableArr,
-        arr      = JSON.raffleIDs.reverse()
-    for(let i = 0; i < arr.length; i++) {
-      const table = [],
-            tHead = this.getTableHeads(arr[i], JSON.results[arr[i]]),
-            tRows = this.getTableRows(JSON.results[arr[i]], arr[i], JSON.entries[arr[i]])
+  parseResults(JSON) {
+    let tableArr = this.state.tableArr
+      , arr      = JSON.raffleIDs.reverse()
+    for (let i = 0; i < arr.length; i++) {
+      const table = []
+          , tHead = this.getTableHeads(arr[i], JSON.results[arr[i]])
+          , tRows = this.getTableRows(JSON.results[arr[i]], arr[i], JSON.entries[arr[i]])
       table.push(
         <div className="tableDiv">
           <table className={"tableFill screen" + this.props.screenIndex}>
@@ -181,13 +170,13 @@ export default class Results extends React.Component {
         )
       tableArr.push(table)
     }
-    if(this.state.mounted) this.setState({tableArr: tableArr})
+    if (this.state.mounted) this.setState({tableArr: tableArr})
   }
 
-  getTableHeads(raffleID, resultsArr){
-    let tableHead = [],
-        timeStamp = moment().day('Saturday').format('dddd MMMM Do YYYY')//returns next occurring saturday
-    if(resultsArr.timeStamp === null){//results not drawn yet...
+  getTableHeads(raffleID, resultsArr) {
+    let tableHead = []
+      , timeStamp = moment().day('Saturday').format('dddd MMMM Do YYYY')//returns next occurring saturday
+    if (resultsArr.timeStamp === null) {//results not drawn yet...
       tableHead.push(
         <thead key={raffleID + 1}>
           <tr key={raffleID + 2}>
@@ -209,7 +198,7 @@ export default class Results extends React.Component {
     } else {//results are in...
       const winningNums = resultsArr.winningNumbers
       let temp = []
-      for(let j = 0; j < winningNums.length; j++){//add leading zeros
+      for (let j = 0; j < winningNums.length; j++) {//add leading zeros
         temp[j] = winningNums[j] < 10 ? "0" + winningNums[j] : winningNums[j]
       }
       timeStamp = moment.unix(resultsArr.timeStamp).format("Do MMM YYYY [at] h:mm a")
@@ -223,11 +212,31 @@ export default class Results extends React.Component {
             </th>
           </tr>
           <tr key={raffleID + 3}>
-            <th data-tip="This is how many times you<br>have entered into this raffle." className={"column-entryNum textCenter screen" + this.props.screenIndex}>Entry</th>
-            <th data-tip="These are your chosen<br>numbers for this raffle ticket." className={"column-chosenNums textCenter screen" + this.props.screenIndex}>Chosen Numbers</th>
-            <th data-tip="This is how many<br>numbers you have matched.<br>Three or more means you win ether!" className={"column-matches textCenter screen" + this.props.screenIndex}>Matches</th>
-            <th data-tip="This is how much ether<br>you won with this ticket." className={"column-prize textCenter screen" + this.props.screenIndex}>Prize</th>
-            <th data-tip="If you won a prize<br>you can claim it here." className={"column-claim textCenter screen" + this.props.screenIndex}>Withdraw</th>
+            <th 
+              data-tip="This is how many times you<br>have entered into this raffle." 
+              className={"column-entryNum textCenter screen" + this.props.screenIndex}>
+              Entry
+            </th>
+            <th 
+              data-tip="These are your chosen<br>numbers for this raffle ticket." 
+              className={"column-chosenNums textCenter screen" + this.props.screenIndex}>
+              Chosen Numbers
+            </th>
+            <th 
+              data-tip="This is how many<br>numbers you have matched.<br>Three or more means you win ether!" 
+              className={"column-matches textCenter screen" + this.props.screenIndex}>
+              Matches
+            </th>
+            <th 
+              data-tip="This is how much ether<br>you won with this ticket." 
+              className={"column-prize textCenter screen" + this.props.screenIndex}>
+              Prize
+            </th>
+            <th 
+              data-tip="If you won a prize<br>you can claim it here." 
+              className={"column-claim textCenter screen" + this.props.screenIndex}>
+              Withdraw
+            </th>
           </tr>
         </thead>
       )
@@ -235,14 +244,14 @@ export default class Results extends React.Component {
     return tableHead
   }
 
-  getTableResArr(resultsArr, raffleID, entriesArr){
+  getTableResArr(resultsArr, raffleID, entriesArr) {
     const tableResultsArr =[]
-    for(let i = 0; i < entriesArr.length; i++){//loop over entries array building an object at each iteration...
+    for (let i = 0; i < entriesArr.length; i++){//loop over entries array building an object at each iteration...
       let matches, prize, amountWei, withdrawn, txHash, txHashTimeStamp, entryNum = entriesArr[i][7], entryNumArr = entriesArr[i], chosenNumbers = entriesArr[i].slice(0,6)
-      for(let j = 0; j < chosenNumbers.length; j++){
-        if(chosenNumbers[j] < 10) chosenNumbers[j] = "0" + chosenNumbers[j]//add leading zeros
+      for (let j = 0; j < chosenNumbers.length; j++){
+        if (chosenNumbers[j] < 10) chosenNumbers[j] = "0" + chosenNumbers[j]//add leading zeros
       }
-      if(resultsArr.timeStamp === null){//no results drawn yet...
+      if (resultsArr.timeStamp === null){//no results drawn yet...
         matches = "Pending"
         prize   = "Pending"
       } else {//results drawn...
@@ -250,7 +259,7 @@ export default class Results extends React.Component {
         prize     = utils.toDecimals(window.web3.fromWei(resultsArr.winningAmounts[matches],'ether'), 3)
         amountWei = resultsArr.winningAmounts[matches]
       }
-      if(matches < 3){//no prize
+      if (matches < 3){//no prize
         withdrawn       = null
         txHash          = null
         txHashTimeStamp = null
@@ -272,11 +281,11 @@ export default class Results extends React.Component {
     return tableResultsArr
   }
 
-  getTableRows(resultsArr, raffleID, entriesArr){
+  getTableRows(resultsArr, raffleID, entriesArr) {
     const tableResultsArr = this.getTableResArr(resultsArr, raffleID, entriesArr)
-    const tRows = []
-    for(let i = 0; i < tableResultsArr.length; i++){
-      if(tableResultsArr[i].matches >= 3 && tableResultsArr[i].withdrawn === false){//claim prize button...
+        , tRows = []
+    for (let i = 0; i < tableResultsArr.length; i++) {
+      if (tableResultsArr[i].matches >= 3 && tableResultsArr[i].withdrawn === false) {//claim prize button...
         tRows.push(
           <tr key={tableResultsArr[i].entryNum + raffleID}>
             <td className={"textCenter screen" + this.props.screenIndex}><b>{tableResultsArr[i].entryNum}</b></td>
@@ -305,7 +314,7 @@ export default class Results extends React.Component {
           </tr>
         )
       }
-      if(tableResultsArr[i].matches >= 3 && tableResultsArr[i].withdrawn === true){//prize claimed with tooltip deets...
+      if (tableResultsArr[i].matches >= 3 && tableResultsArr[i].withdrawn === true) {//prize claimed with tooltip deets...
         tRows.push(
           <tr key={tableResultsArr[i].entryNum + raffleID}>
             <td className={"textCenter screen" + this.props.screenIndex}>{tableResultsArr[i].entryNum}</td>
@@ -331,7 +340,7 @@ export default class Results extends React.Component {
           </tr>
         )
       }
-      if(tableResultsArr[i].matches === "Pending"){//Results not drawn yet...
+      if (tableResultsArr[i].matches === "Pending") {//Results not drawn yet...
         tRows.push(
           <tr key={tableResultsArr[i].entryNum + raffleID}>
             <td className={"textCenter screen" + this.props.screenIndex}>{tableResultsArr[i].entryNum}</td>
@@ -349,7 +358,7 @@ export default class Results extends React.Component {
           </tr>
         )
       }
-      if(tableResultsArr[i].matches < 3){//else drawn but unwinning ticket...
+      if (tableResultsArr[i].matches < 3) {//else drawn but unwinning ticket...
         tRows.push(
           <tr key={tableResultsArr[i].entryNum + raffleID}>
             <td className={"textCenter screen" + this.props.screenIndex}>{tableResultsArr[i].entryNum}</td>
@@ -372,7 +381,7 @@ export default class Results extends React.Component {
   }
 
   toDollars(_amount){
-    if(window.exRate !== null && window.exRate > 0){
+    if (window.exRate !== null && window.exRate > 0) {
       let num = utils.toDecimals((window.web3.fromWei(_amount, "ether") * window.exRate), 2)
       return '<br>Approximately $' + num + '!'
     }
@@ -380,24 +389,23 @@ export default class Results extends React.Component {
   }
 
   /* Mobile table logic follows */
-
   parseMobile(_data) {
-    let tables  = [],
-        results = _data.results,
-        entries = _data.entries,
-        rIDs    = _data.raffleIDs
+    let tables  = []
+      , results = _data.results
+      , entries = _data.entries
+      , rIDs    = _data.raffleIDs
     /* Loop over raffle IDs sending corresponding entry & results arrays for parsing */
-    for(let i = 0; i < rIDs.length; i++) {
+    for (let i = 0; i < rIDs.length; i++) {
       tables.push(this.parseEntriesMob(rIDs[i], entries[rIDs[i]].reverse(), results[rIDs[i]]))
     }
-    if(this.state.mounted) this.setState({tableArr: tables})
+    if (this.state.mounted) this.setState({tableArr: tables})
   }
 
   parseEntriesMob(_rafID, _entArr, _resObj) {
     console.log('ParseEntries rafID: ', _rafID, ' entArr: ', _entArr, ' _resObj: ', _resObj)
     let table = []
     /* Loop over each entry building obj needed for table */
-    for(let i = 0; i < _entArr.length; i++) {
+    for (let i = 0; i < _entArr.length; i++) {
       let obj = {rafID: _rafID, entArr: _entArr[i]}
       /* If _resObj timeStamp === null then raffle not drawn yet... */
       obj['rafTimeStamp']   = _resObj['timeStamp'] !== null ? _resObj['timeStamp'] : null
@@ -412,12 +420,12 @@ export default class Results extends React.Component {
       let num               = _resObj['timeStamp'] !== null ? obj['winningAmounts'][obj['matches']] : 0
       obj['prize']          = _resObj['timeStamp'] !== null ? utils.toDecimals(window.web3.fromWei(num,'ether'), 3) : null
       /* Retrieve table html */
-      if(_resObj['timeStamp'] === null) table.push(this.raffleNotDrawn(obj)) //not drawn
-      else if(obj['matches'] < 3) table.push(this.raffleNoWin(obj)) //drawn but no win
-      else if(!obj['claimed']) table.push(this.raffleWin(obj)) //drawn, won but not claimed
+      if (_resObj['timeStamp'] === null) table.push(this.raffleNotDrawn(obj)) //not drawn
+      else if (obj['matches'] < 3) table.push(this.raffleNoWin(obj)) //drawn but no win
+      else if (!obj['claimed']) table.push(this.raffleWin(obj)) //drawn, won but not claimed
       else table.push(this.raffleWinClaimed(obj)) //won and claimed
       }
-    console.log('table: ', table)
+    //console.log('table: ', table)
     return table
   }
 
@@ -660,7 +668,7 @@ export default class Results extends React.Component {
     this.setState({mounted: false})
   }
 
-  render(){
+  render() {
     return(
       <div className={"contentWrapper si" + this.props.screenIndex}>
         <div className={"content ssi" + this.props.subScreenIndex}>
@@ -927,191 +935,3 @@ export default class Results extends React.Component {
     )
   }
 }
-/*
-
-<div className='resultsTable screen5'>
-<table className='tableFill screen5'>
-<thead>
-<tr>
-<th className='textCentre screen5' colSpan={"2"}> Lottery Odds
-</th>
-</tr>
-
-<tr>
-<th className='textCentre screen5'>Matches</th>
-<th className='textCentre screen5'>Odds</th>
-</tr>
-</thead>
-<tbody className='tableHover screen5'>
-<tr>
-<td className='textCenter screen5'>0</td>
-<td className='textCenter screen5'>1 in 2.29</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>1</td>
-<td className='textCenter screen5'>1 in 2.42</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>2</td>
-<td className='textCenter screen5'>1 in 7.55</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>3</td>
-<td className='textCenter screen5'>1 in 56.6</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>4</td>
-<td className='textCenter screen5'>1 in 1032</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>5</td>
-<td className='textCenter screen5'>1 in 54200</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>6</td>
-<td className='textCenter screen5'>1 in 13983816</td>
-</tr>
-
-</tbody>
-</table>
-</div>
-
-
-
-<div className='resultsTable screen5' style={{'width':'70%'}}>
-<table className='tableFill screen5'>
-<thead>
-<tr>
-<th className='textCentre screen5' colSpan={"4"}>Etheraffle ICO Particulars
-</th>
-</tr>
-
-<tr>
-<th className='textCentre screen5' style={{'width':'20%'}}>Tier</th>
-<th className='textCentre screen5' style={{'width':'40%'}}>Exchange Rate (LOT/ETH)</th>
-<th className='textCentre screen5' style={{'width':'20%'}}>Length (Weeks)</th>
-<th className='textCentre screen5' style={{'width':'20%'}}>Cap (ETH)</th>
-</tr>
-</thead>
-<tbody className='tableHover screen5' style={{'fontSize':'1em'}}>
-<tr>
-<td className='textCenter screen5'>0</td>
-<td className='textCenter screen5'>110,000</td>
-<td className='textCenter screen5'>1</td>
-<td className='textCenter screen5'>700</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>1</td>
-<td className='textCenter screen5'>100,000</td>
-<td className='textCenter screen5'>2</td>
-<td className='textCenter screen5'>2,500</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>2</td>
-<td className='textCenter screen5'>90,000</td>
-<td className='textCenter screen5'>3</td>
-<td className='textCenter screen5'>7,000</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>3</td>
-<td className='textCenter screen5'>80,000</td>
-<td className='textCenter screen5'>4</td>
-<td className='textCenter screen5'>20,000</td>
-</tr>
-<tr>
-<td className='textCenter screen5'>All</td>
-<td className='textCenter screen5'>1,500 Bonus LOT<br/>per ETH per Tier</td>
-<td className='textCenter screen5'>n/a</td>
-<td className='textCenter screen5'>n/a</td>
-</tr>
-
-</tbody>
-</table>
-</div>
-
-<div className="code" style={{'width':'75%'}}>
-  <span className={"styledSpan centred largerFont screen2"}>Example</span>
-  <br/>
-  Assume you purchase 1 ether's worth of LOT in during Pre-ICO
-  <br/>
-  Assume maximum ether is raised in each tier
-  <br/>
-  <br/>
-  LOT purchased from Pre-ICO
-  <br/>
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan largerFont screen2"}>
-    {1} Ether * {110000} LOT = {110000} LOT
-  </span>
-  <br/>
-  <br/>
-  Bonus LOT pool available from tier one:
-  <br/>
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan largerFont screen2"}>
-    {2500} Ether * {1500} Bonus LOT = {2500 * 1500} LOT
-  </span>
-  <br/>
-  <br/>
-  Bonus LOT pool available from tier two:
-  <br/>
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan largerFont screen2"}>
-    {7000} Ether * {1500} Bonus LOT = {7000 * 1500} LOT
-  </span>
-  <br/>
-  <br/>
-  Bonus LOT pool available from tier three:
-  <br/>
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan largerFont screen2"}>
-    {20000} Ether * {1500} Bonus LOT = {20000 * 1500} LOT
-    </span>
-  <br/>
-  <br/>
-  Your percentage share of bonus LOT:
-  <br/>
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan largerFont screen2"}>
-    1 / {700} Ether = {((1 / 700) * 100 + '').substring(0,5) + '..%'}
-  </span>
-  <br/>
-  <br/>
-  Your bonus LOT from tier one:
-  <br/>
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan largerFont screen2"}>
-    {((1 / 700) * 100 + '').substring(0,5) + '..%'} of {2500 * 1500} LOT ≈ {(((1 / 700)) * (2500 * 1500)+'').substring(0,4)} LOT
-  </span>
-  <br/>
-  <br/>
-  Your bonus LOT from tier two:
-  <br/>
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan largerFont screen2"}>
-    {((1 / 700) * 100 + '').substring(0,5) + '..%'} of {7000 * 15000} LOT ≈ {((1 / 700)) * (7000 * 1500)} LOT
-  </span>
-  <br/>
-  <br/>
-  Your bonus LOT from tier three:
-  <br/>
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan largerFont screen2"}>
-    {((1 / 700) * 100 + '').substring(0,5) + '..%'} of {20000 * 1500} LOT ≈ {(((1 / 700)) *(20000 * 1500)+'').substring(0,5)} LOT
-  </span>
-  <br/>
-  <br/>
-  Your total number of bonus LOT:
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan centred largerFont screen2"} styles={{'fontWeight':'bold', 'marginTop': '7px', 'fontSize': '1.2em'}}>
-    ≈ {((((1 / 700)) * (2500 * 1500) + ((1 / 700)) * (7000 * 1500)) + (((1 / 700)) * (20000 * 1500))+'').substring(0,2) + '000'} LOT
-  </span>
-  ∴ Your total LOT acquired:
-  &emsp;&emsp;&emsp;
-  <span className={"styledSpan centred largerFont screen2"} styles={{'fontSize':'1.2em', 'marginTop': '7px', 'fontSize': '1.2em'}}>
-    ≈ {173000} LOT
-  </span>
-
-</div>
-
-*/

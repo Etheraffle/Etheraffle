@@ -1,8 +1,6 @@
-const moment    = require('moment'),
-      getWeb3   = require('./getweb3'),
-      getStruct = require('./getqidstruct')
-//event LogOraclizeCallback(bytes32 queryID, string result, uint indexed forRaffle, uint atTime);
-
+const moment    = require('moment')
+    , getWeb3   = require('./getweb3')
+    , getStruct = require('./getqidstruct')
 /* Period in days, assumes block time of ~ 15s */
 module.exports = (_latestBlock, _period, _raffleID) => {
   let block = _latestBlock - Math.trunc((_period * 24 * 60 * 60) / 15)

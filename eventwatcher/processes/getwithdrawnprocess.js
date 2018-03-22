@@ -1,11 +1,11 @@
-const mongo   = require('../modules/mongo'),
-      utils   = require('../modules/utils'),
-      getWdEv = require('../modules/getwithdrawevent')
+const mongo   = require('../modules/mongo')
+    , utils   = require('../modules/utils')
+    , getWdEv = require('../modules/getwithdrawevent')
 
 process.on('message', period => {
   start(period)
 })
-process.on('unhandledRejection', err => {//catches errors in my catches :/
+process.on('unhandledRejection', err => {//catches errors in catches :p
   console.log('unhandledRejection', err.stack)//TODO: remove!
 })
 

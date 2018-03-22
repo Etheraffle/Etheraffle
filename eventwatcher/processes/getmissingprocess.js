@@ -1,8 +1,8 @@
 //const lupus = require('lupus')
-const mongo         = require('../modules/mongo'),
-      utils         = require('../modules/utils'),
-      getEntry      = require('../modules/getsingleentry')
-      getNumEntries = require('../modules/getrafflenumentries')
+const mongo         = require('../modules/mongo')
+    , utils         = require('../modules/utils')
+    , getEntry      = require('../modules/getsingleentry')
+    , getNumEntries = require('../modules/getrafflenumentries')
 
 process.on('message', raffleID => {
   fillMissingEntries(raffleID)

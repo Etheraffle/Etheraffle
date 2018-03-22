@@ -1,14 +1,14 @@
-const mongo   = require('mongodb').MongoClient,
-      object  = require('mongodb').ObjectID,
-      apikeys = require('./apikeys'),
-      utils   = require('./utils')
+const mongo   = require('mongodb').MongoClient
+    , object  = require('mongodb').ObjectID
+    , apikeys = require('./apikeys')
+    , utils   = require('./utils')
 
 /* Setup Connection */
 let db
-const init = function(){
+const init = () => {
   return new Promise((resolve, reject) => {
     mongo.connect(apikeys.mongo, (err, database) => {
-      if(err) return reject(false)//will hit the catch and email me
+      if(err) return reject(false)
       db = database
       console.log("App Database Initialised on", utils.getTime())
       return resolve(true)
@@ -18,7 +18,7 @@ const init = function(){
 init().catch(err => utils.errorHandler("init", "App's Mongo", "None", err))//TODO: kill cluster to force reboot?
 
 /* Api Key Check (Smart Contract) */
-const checkKey = function(_key) {
+const checkKey = (_key) => {
   if(typeof _key != "string") return false
   return db.collection("apikeys").findOne({apikey: _key})
   .then(results => {
@@ -27,7 +27,7 @@ const checkKey = function(_key) {
 }
 
 /* Update user details on withdraw (Front End) */
-const updateOnWithdraw = function (_data) {
+const updateOnWithdraw = (_data) => {
   let temp = _data.entryNumArr.split(',')//Arr comes through as string out of table data...
   for (a in temp){
     temp[a] = parseInt(temp[a], 10)
@@ -44,7 +44,7 @@ const updateOnWithdraw = function (_data) {
 }
 
 /* Get user's raffle results (front end) */
-const getResults = function(_ethAdd){
+const getResults = (_ethAdd) => {
   return db.collection("ethAdd").findOne({"ethAdd" : _ethAdd})
   .then(results => {
     if(results == null || results.raffleIDs == undefined) return null
@@ -68,8 +68,8 @@ const getResults = function(_ethAdd){
   }).catch(err => utils.errorHandler("getResults", "Mongo", _ethAdd, err))
 }
 
-/* Get user's individual raffle results (internal function) */
-const getRaffleResults = function(_raffleID){
+/* Get user's individual raffle results */
+const getRaffleResults = (_raffleID) => {
   return db.collection("entries").findOne({"raffleID" : _raffleID},{"_id" : 0, "resultsArr" : 1})
   .then(results => {
     if(results.resultsArr == undefined) return {timeStamp: null}//raffle not yet drawn...
@@ -82,7 +82,7 @@ const getRaffleResults = function(_raffleID){
 }
 
 /* Get Matches Array (Smart Contract) */
-const getMatchesArr = function (_raffleID) {
+const getMatchesArr = (_raffleID) => {
   return db.collection("entries").findOne({"raffleID" : _raffleID},{_id:0, "resultsArr.matches":1})
   .then(results => {
     let body = "For raffle: " + _raffleID + "<br><br>At time: " + utils.getTime()
@@ -106,9 +106,9 @@ const getMatchesArr = function (_raffleID) {
 }
 
 module.exports = {
-  getMatchesArr:    getMatchesArr,
+  init:             init,
   checkKey:         checkKey,
   getResults:       getResults,
-  updateOnWithdraw: updateOnWithdraw,
-  init:             init
+  getMatchesArr:    getMatchesArr,
+  updateOnWithdraw: updateOnWithdraw
 }

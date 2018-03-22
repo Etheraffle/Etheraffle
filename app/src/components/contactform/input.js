@@ -1,7 +1,8 @@
-import { withFormsy } from 'formsy-react'
 import React from 'react'
+import { withFormsy } from 'formsy-react'
 
 class Input extends React.Component {
+  
   constructor(props) {
     super(props)
     this.changeValue = this.changeValue.bind(this)

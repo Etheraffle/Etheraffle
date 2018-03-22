@@ -7,7 +7,7 @@ import Wednesdayraffle from '../pages/wednesdayraffle/wednesdayraffle'
 
 export default class Subnav extends React.Component{
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       mounted: false,
@@ -15,19 +15,19 @@ export default class Subnav extends React.Component{
     }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({mounted: true})
   }
 
-  handleClick(index){
-    if(this.state.mounted === true) this.setState({subScreenIndex: index})
+  handleClick(index) {
+    if (this.state.mounted) this.setState({subScreenIndex: index})
   }
 
-  componentWillUnmount(){
-    if(this.state.mounted === true) this.setState({mounted: false})
+  componentWillUnmount()  {
+    if (this.state.mounted) this.setState({mounted: false})
   }
 
-  render(){
+  render() {
     return(
       <div className="screen">
         <div className="subNav">
@@ -36,7 +36,7 @@ export default class Subnav extends React.Component{
             className ={this.state.subScreenIndex === 1 ? "subNav-item results active-subNav" : "subNav-item results"}
             onClick={(index) => this.handleClick(1)}
             style={this.state.subScreenIndex === 1 ? {color: 'rgba(62,214,126,1)'} : {color: 'lightgrey'}}>
-              <h3 className="subScreen1">Results</h3>
+            <h3 className="subScreen1">Results</h3>
           </div>
 
           <div className ="subNav-item spacerOne"></div>

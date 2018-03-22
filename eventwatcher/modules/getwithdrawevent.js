@@ -1,7 +1,6 @@
 const getWeb3 = require('./getweb3')
-
 /* Period in hours, and assumes block time of ~ 15s */
-module.exports = function(_period, _latestBlock){
+module.exports = (_period, _latestBlock) => {
   let block = _latestBlock - Math.trunc((_period * 60 * 60) / 15)
   return new Promise((resolve, reject) => {
     getWeb3.etheraffle.LogWithdraw({},{fromBlock: block, toBlock: 'latest'}).get((err, res) => {

@@ -1,9 +1,7 @@
-const moment  = require('moment'),
-      getWeb3 = require('./getweb3')
-
-//event LogPrizePoolsUpdated(uint newMainPrizePool, uint indexed forRaffle, uint unclaimedPrizePool, uint threeMatchWinAmt, uint fourMatchWinAmt, uint fiveMatchWinAmt, uint sixMatchwinAmt, uint atTime);
+const moment  = require('moment')
+    , getWeb3 = require('./getweb3')
 /* Period in days, assumes block time of ~ 15s */
-module.exports = function(_latestBlock, _period){
+module.exports = (_latestBlock, _period) => {
   let block = _latestBlock - Math.trunc((_period * 24 * 60 * 60) / 15)
   return new Promise ((resolve, reject) => {
     return getWeb3.etheraffle.LogPrizePoolsUpdated({},{fromBlock: block, toBlock: "latest"}).get((err,res) => {

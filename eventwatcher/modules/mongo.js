@@ -21,7 +21,7 @@ const init = function(){
 }
 init().catch(err => utils.errorHandler("init", "Mongo", "None", err))
 
-/* Setup Cron Job */
+/* Draing queue every five minutes */
 cron.schedule('*/5 * * * *', function(){
   drainQueue().catch(err => utils.errorHandler("cron.schedule", "Mongo", "None", err))
 })

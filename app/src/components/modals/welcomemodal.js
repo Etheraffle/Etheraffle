@@ -38,24 +38,24 @@ export default class WelcomeModal extends React.Component {
   }
 
   openModal() {
-    if(this.state.mounted) this.setState({modalIsOpen: true})
+    if (this.state.mounted) this.setState({modalIsOpen: true})
   }
 
   closeModal() {
-    if(this.state.mounted) this.setState({modalIsOpen: false})
+    if (this.state.mounted) this.setState({modalIsOpen: false})
   }
 
   render() {
     /* Choose which colour play button to display */
     let playButton, modalName
-    if(this.props.screenIndex === 1) playButton = playGreen
-    if(this.props.screenIndex === 2) playButton = playBlueGrey
-    if(this.props.screenIndex === 3) playButton = playPink
-    if(this.props.screenIndex === 4) playButton = playPurple
-    if(this.props.screenIndex === 5) playButton = playBlue
+    if (this.props.screenIndex === 1) playButton = playGreen
+    if (this.props.screenIndex === 2) playButton = playBlueGrey
+    if (this.props.screenIndex === 3) playButton = playPink
+    if (this.props.screenIndex === 4) playButton = playPurple
+    if (this.props.screenIndex === 5) playButton = playBlue
 
     /* Conditionally style the modal depending on eth cxn */
-    if((window.web3 === undefined || window.web3 === null || !window.web3.isConnected()) && this.props._key !== 'init') {
+    if ((window.web3 === undefined || window.web3 === null || !window.web3.isConnected()) && this.props._key !== 'init') {
       modalName = "welcomeModalNotConnected screen" + this.props.screenIndex
     } else {
       modalName = "welcomeModal screen" + this.props.screenIndex
@@ -146,7 +146,7 @@ export default class WelcomeModal extends React.Component {
               <p>
                 Ethereum Connection Detected - Have Fun!
                 <br/>
-                {/* Re-instate this bit once the prizepool is bigger!
+                {/* Re-instate once the prizepool matures
                 <br/>
                 Don't miss out on your share of the
                 <span className={"styledSpan screen" + this.props.screenIndex}>

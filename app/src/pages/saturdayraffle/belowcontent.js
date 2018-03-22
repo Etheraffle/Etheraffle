@@ -5,10 +5,10 @@ export default class BelowContent extends React.Component {
 
   render() {
     let status, closed
-    if(window.web3 === undefined || window.web3 === null) status = 'NoWeb3'
-    else if(window.web3 !== undefined && window.web3 !== null && !window.web3.isConnected()) status = 'NoWeb3'
-    else if(window.web3 !== undefined && window.web3 !== null && window.web3.isConnected()) status = 'Web3'
-    if(moment().weekday() === 6 && parseInt(moment().format('H'),10) >= 19) closed = true;//Saturday 7pm
+    if (window.web3 === undefined || window.web3 === null) status = 'NoWeb3'
+    else if (window.web3 !== undefined && window.web3 !== null && !window.web3.isConnected()) status = 'NoWeb3'
+    else if (window.web3 !== undefined && window.web3 !== null && window.web3.isConnected()) status = 'Web3'
+    if (moment().weekday() === 6 && parseInt(moment().format('H'),10) >= 19) closed = true;//Saturday 7pm
 
     return (
       <div className={"belowContent screen" + this.props.screenIndex}>

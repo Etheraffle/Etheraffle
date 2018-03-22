@@ -1,7 +1,7 @@
-const utils = require('../modules/utils'),
-      mongo = require('../modules/mongo')
+const utils = require('../modules/utils')
+    , mongo = require('../modules/mongo')
 
-module.exports = function(_data) {
+module.exports = (_data) => {
   return new Promise((resolve, reject) => {
     return mongo.getResults(_data.ethAdd)
     .then(results => {

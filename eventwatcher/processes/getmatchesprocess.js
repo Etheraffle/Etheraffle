@@ -1,22 +1,8 @@
 //const lupus = require('lupus')
-const mongo    = require('../modules/mongo'),
-      utils    = require('../modules/utils'),
-      getEntry = require('../modules/getsingleentry')
-/*
-https://www.npmjs.com/package/incache - to share memory if needed
-https://stackoverflow.com/questions/44052913/pass-large-array-to-node-child-process/44091211
-^ how to use shared memory via passing a key instead of the object...
-https://medium.freecodecamp.org/node-js-child-processes-everything-you-need-to-know-e69498fe970a
-http://www.andygup.net/node-js-moving-intensive-tasks-to-a-child-process/
-^ how to use child processes
+const mongo    = require('../modules/mongo')
+    , utils    = require('../modules/utils')
+    , getEntry = require('../modules/getsingleentry')
 
-ps -e|grep node  (to list node processes)
-
-Maybe have this re run thre times or something?
-
-Can do huge matches array loops nearly instantly on my laptop but not via here - why not?
-^ Answer: runs out of memory and crashes out of Node. Have used swap memory to increase capabilities...
-*/
 process.on('message', (wObj) => {
   start(wObj)
 })

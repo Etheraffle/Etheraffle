@@ -90,7 +90,44 @@
   font-size: 1em;
   flex-direction: row;
   justify-content: flex-end;
-}
+  
+  .socials {
+    align-self: flex-end;
+  }
+
+  .info {
+    align-self: flex-end;
+  }
+  
+  
+  a {
+    
+    .icon {
+      font-size: 2em;
+      margin: 0 0 0 0.3em;
+      @include hoverColors();
+    }
+
+    .LOT {
+      height: 2em;
+      vertical-align: top;
+      margin: 0 0 0 0.5em;
+    }
+    
+    svg {
+      &.LOT {
+        &.screen1 {#LOTToken {fill: $erGreen;}}
+        &.screen2 {#LOTToken {fill: $erBlueGrey;}}
+        &.screen3 {#LOTToken {fill: $erPink;}}
+        &.screen4 {#LOTToken {fill: $erPurple;}}
+        &.screen5 {#LOTToken {fill: $erBlue;}}
+        &:hover #LOTToken { 
+          fill: #717171;
+        }  
+      }
+    }
+  }
+} 
 
 @media (max-width: $desktop) {
   .appLogo {
@@ -185,10 +222,20 @@
       }
     }
   }
-
+  //Centred now for smaller screens
   .underInfo {
     justify-content: center;
+    flex-direction: column;
     font-size: 0.8em;
+
+    .socials {
+      align-self: center;
+    }
+  
+    .info {
+      align-self: center;
+    }
+
   }
 
 }

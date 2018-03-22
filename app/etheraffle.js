@@ -1,24 +1,20 @@
-const express          = require('express'),
-      app              = express(),
-      port             = 3000,
-      cors             = require('cors'),
-      bodyParser       = require('body-parser'),
-      utils            = require('./modules/utils'),
-      getLowGas        = require('./pathways/getlowgas'),
-      retrieveResults  = require('./pathways/retrieveResults'),
-      retrieveMatches  = require('./pathways/retrieveMatches'),
-      updateOnWithdraw = require('./pathways/updateonwithdraw')
+const express          = require('express')
+    , app              = express()
+    , port             = 3000
+    , cors             = require('cors')
+    , bodyParser       = require('body-parser')
+    , utils            = require('./modules/utils')
+    , getLowGas        = require('./pathways/getlowgas')
+    , retrieveResults  = require('./pathways/retrieveResults')
+    , retrieveMatches  = require('./pathways/retrieveMatches')
+    , updateOnWithdraw = require('./pathways/updateonwithdraw')
 
 /*
 Notes:
 Tweet entries for funsies?
 use pm2 for clustering/load balancing
-please works
 */
-
-//process.on('warning', e => console.warn(e.stack))//give me the stack trace on the event emitter warning...
-//process.setMaxListeners(Infinity)//Will silence warning but first I need to know why...
-process.on('unhandledRejection', err => {console.log('unhandledRejection', err.stack)})//TODO: remove!
+process.on('unhandledRejection', err => { console.log('unhandledRejection', err.stack)} )//TODO: remove!
 /* Add cors support */
 app.use(cors())
 /* Various pathways to serve the whitepaper */

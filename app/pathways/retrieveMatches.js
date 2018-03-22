@@ -1,7 +1,7 @@
-const mongo = require('../modules/mongo'),
-      utils = require('../modules/utils')
+const mongo = require('../modules/mongo')
+    , utils = require('../modules/utils')
 
-module.exports = function(_data) {
+module.exports = (_data) => {
   return new Promise((resolve, reject) => {
     if(_data.k == undefined || _data.r == undefined) return resolve([0,0,0,0])
     return mongo.checkKey(_data.k)

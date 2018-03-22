@@ -6,7 +6,6 @@ import utils from '../../components/utils'
 import buyTicket from '../../web3/buyTicket'
 import getPrizePool from '../../web3/getPrizePool'
 import getTktPrice from '../../web3/getTicketPrice'
-//import txPendingGif from '../../images/txpending.gif'
 import loadingIcon from '../../images/loadingIconGrey.svg'
 import NotConnectedInfo from '../../components/modals/notconnectedinfo'
 
@@ -37,72 +36,72 @@ export default class Saturdayentryform extends React.Component{
     this.getPriceAndPrize = this.getPriceAndPrize.bind(this)
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({mounted: true})
-    if(window.web3 !== null && window.web3 !== undefined && this.state.mounted && this.state.killDiv !== 1)
+    if  (window.web3 !== null && window.web3 !== undefined && this.state.mounted && this.state.killDiv !== 1)
       this.setState({w3Con: window.web3.isConnected()})
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getPriceAndPrize()
     this.getOptionsArrays()
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.setState({mounted: false})
   }
 
   openModal() {
-    if(this.state.w3Con === true && window.web3 !== null && window.web3.isConnected() === true){//Eth connection good...
-      if(this.state.tktPrice > 0 && window.ethAdd !== null){//Everything fine, buy ticket...
+    if (this.state.w3Con === true && window.web3 !== null && window.web3.isConnected() === true){//Eth connection good...
+      if (this.state.tktPrice > 0 && window.ethAdd !== null){//Everything fine, buy ticket...
 
         lowGas().then(safeLow => {
-          if(this.state.mounted) this.setState({safeLow: safeLow})
+          if (this.state.mounted) this.setState({safeLow: safeLow})
         }).catch (err => console.log('Error retrieving safe low gas rate: ', err))
 
         this.sendTransaction()
 
-        if(this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true})
+        if (this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true})
       } else {//Either tktPrice or ethAdd are missing...
         let txErr
-        if(!(this.state.tktPrice > 0)) txErr = "Cannot retreive ticket price from the smart contract!"
-        if(window.ethAdd === null) txErr = "Ethereum account address inaccessible!"
-        if(window.web3.version.network > 1) txErr = 'Test network detected - please connect to the main ethereum network!'
-        if(this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true, w3Con: true, txHash: null, txError: txErr})
+        if (!(this.state.tktPrice > 0)) txErr = "Cannot retreive ticket price from the smart contract!"
+        if (window.ethAdd === null) txErr = "Ethereum account address inaccessible!"
+        if (window.web3.version.network > 1) txErr = 'Test network detected - please connect to the main ethereum network!'
+        if (this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true, w3Con: true, txHash: null, txError: txErr})
       }
     } else {//No ethereum connection modal!
-      if(this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true, w3Con: false, txHash: null})
+      if (this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true, w3Con: false, txHash: null})
     }
   }
 
   closeModal() {
-    if(this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: false, txHash: "pending"})//reset the txHash
+    if (this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: false, txHash: "pending"})//reset the txHash
     this.getPriceAndPrize()
   }
 
   getPriceAndPrize() {
-    let p1 = getPrizePool("Saturday"), p2 = getTktPrice("Saturday")
+    let p1 = getPrizePool("Saturday")
+      , p2 = getTktPrice("Saturday")
     return Promise.all([p1, p2])
     .then(([prize,price]) => {
-      let priceDol, poolDol,
-          pool = window.web3.fromWei(prize, 'ether'),
-          tkt  = window.web3.fromWei(price, 'ether')
-      priceDol = window.exRate > 0 ? 'Approximately $' + utils.toDecimals(window.exRate * tkt, 2) : 'Exchange rate currently unavailable'
-      poolDol = window.exRate > 0 ? 'Approximately $' + utils.toDecimals(window.exRate * pool, 2) : 'Exchange rate currently unavailable'
-      if(this.state.mounted && this.props.killDiv !== 1) {
+      let pool = window.web3.fromWei(prize, 'ether')
+        , tkt  = window.web3.fromWei(price, 'ether')
+        , poolDol = window.exRate > 0 ? 'Approximately $' + utils.toDecimals(window.exRate * pool, 2) : 'Exchange rate currently unavailable'
+        , priceDol = window.exRate > 0 ? 'Approximately $' + utils.toDecimals(window.exRate * tkt, 2) : 'Exchange rate currently unavailable'
+      if (this.state.mounted && this.props.killDiv !== 1) {
       this.setState({
         w3Con: true,
         tktPrice: tkt,
         prizePool: pool,
         poolDol: poolDol,
-        key: Math.random(),
-        priceDol: priceDol
+        priceDol: priceDol,
+        key: Math.random()
       })
       ReactTooltip.rebuild()
     }
     }).catch(err => {
       console.log("Err in getPriceAndPrize: ", err)
-      if(this.state.mounted && this.props.killDiv !== 1) {
+      if (this.state.mounted && this.props.killDiv !== 1) {
         this.setState({w3Con: false})
       }//will pop up eth connection modal
     })
@@ -112,25 +111,25 @@ export default class Saturdayentryform extends React.Component{
     let eNums = [this.state.n1,this.state.n2,this.state.n3,this.state.n4,this.state.n5, this.state.n6]
     buyTicket("Saturday", window.ethAdd, eNums, this.state.tktPrice)
     .then(txHash => {
-      if(this.state.mounted && this.props.killDiv !== 1) this.setState({txHash: txHash})
+      if (this.state.mounted && this.props.killDiv !== 1) this.setState({txHash: txHash})
     }).catch(err =>{//will popup the error buying ticket modal
-      if(this.state.mounted && this.props.killDiv !== 1) this.setState({w3Con: true, txHash: null})
+      if (this.state.mounted && this.props.killDiv !== 1) this.setState({w3Con: true, txHash: null})
     })
   }
 
   getOptionsArrays(changedNum, newNum){
     const selectedArr = [this.state.n1, this.state.n2, this.state.n3, this.state.n4, this.state.n5, this.state.n6]
-    if(changedNum === "n1") selectedArr[0] = newNum
-    if(changedNum === "n2") selectedArr[1] = newNum
-    if(changedNum === "n3") selectedArr[2] = newNum
-    if(changedNum === "n4") selectedArr[3] = newNum
-    if(changedNum === "n5") selectedArr[4] = newNum
-    if(changedNum === "n6") selectedArr[5] = newNum
+    if (changedNum === "n1") selectedArr[0] = newNum
+    if (changedNum === "n2") selectedArr[1] = newNum
+    if (changedNum === "n3") selectedArr[2] = newNum
+    if (changedNum === "n4") selectedArr[3] = newNum
+    if (changedNum === "n5") selectedArr[4] = newNum
+    if (changedNum === "n6") selectedArr[5] = newNum
     const allOptionsArr = []
-    for(let j = 0; j < 6; j++){
+    for (let j = 0; j < 6; j++){
       const optionsArr = []
-      for(let i = 0; i < 49; i++){
-        if(selectedArr.indexOf(i + 1) < 0) optionsArr.push(<option key={"num" + j + (i+1)}>{i + 1}</option>)
+      for (let i = 0; i < 49; i++){
+        if (selectedArr.indexOf(i + 1) < 0) optionsArr.push(<option key={"num" + j + (i+1)}>{i + 1}</option>)
       }
       optionsArr.unshift(<option key={"num" + j + "0"}>{selectedArr[j]}</option>)
       allOptionsArr.push(optionsArr)

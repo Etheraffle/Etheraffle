@@ -12,8 +12,13 @@
 # testing
 /app/coverage
 
-# production
+#app
+/app/node_modules
 /app/build
+/app/modules/apikeys.js
+
+#event watcher
+/eventwatcher/modules/apikeys.js
 
 # misc
 .DS_Store
@@ -21,8 +26,6 @@
 .env.development.local
 .env.test.local
 .env.production.local
-/etheraffleMisc
-/app/solidity
 
 npm-debug.log*
 yarn-debug.log*

@@ -4,7 +4,7 @@ import cipher from '../../images/cipherLogo.png'
 import metamask from '../../images/metamasklogo.jpg'
 
 export default class NotConnectedInfo extends React.Component {
-  render(){
+  render() {
     return(
       <div className={"modalNotConnectedInfo screen" + this.props.screenIndex}>
         <p className='noCxn'>

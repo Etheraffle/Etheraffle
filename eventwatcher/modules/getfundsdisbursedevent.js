@@ -1,9 +1,9 @@
-const moment  = require('moment'),
-      getWeb3 = require('./getweb3')
+const moment  = require('moment')
+    , getWeb3 = require('./getweb3')
 
 //event LogFundsDisbursed(uint indexed forRaffle, uint oraclizeTotal, uint amount, address indexed toAddress, uint atTime);
 /* Period in days, assumes block time of ~ 15s */
-module.exports = function(_latestBlock, _period){
+module.exports = (_latestBlock, _period) => {
   let block = _latestBlock - Math.trunc((_period * 24 * 60 * 60) / 15)
   return new Promise ((resolve, reject) => {
     return getWeb3.etheraffle.LogFundsDisbursed({},{fromBlock: block, toBlock: "latest"}).get((err,res) => {

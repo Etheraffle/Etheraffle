@@ -548,6 +548,41 @@ body {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end; }
+  .underInfo .socials {
+    -ms-flex-item-align: end;
+        align-self: flex-end; }
+  .underInfo .info {
+    -ms-flex-item-align: end;
+        align-self: flex-end; }
+  .underInfo a .icon {
+    font-size: 2em;
+    margin: 0 0 0 0.3em; }
+    .underInfo a .icon.screen1:hover {
+      color: #28e973; }
+    .underInfo a .icon.screen2:hover {
+      color: #9689aa; }
+    .underInfo a .icon.screen3:hover {
+      color: #ec3ce0; }
+    .underInfo a .icon.screen4:hover {
+      color: #9e7be2; }
+    .underInfo a .icon.screen5:hover {
+      color: #25dfdf; }
+  .underInfo a .LOT {
+    height: 2em;
+    vertical-align: top;
+    margin: 0 0 0 0.5em; }
+  .underInfo a svg.LOT.screen1 #LOTToken {
+    fill: #28e973; }
+  .underInfo a svg.LOT.screen2 #LOTToken {
+    fill: #9689aa; }
+  .underInfo a svg.LOT.screen3 #LOTToken {
+    fill: #ec3ce0; }
+  .underInfo a svg.LOT.screen4 #LOTToken {
+    fill: #9e7be2; }
+  .underInfo a svg.LOT.screen5 #LOTToken {
+    fill: #25dfdf; }
+  .underInfo a svg.LOT:hover #LOTToken {
+    fill: #717171; }
 
 @media (max-width: 1920px) {
   .appLogo {
@@ -621,7 +656,17 @@ body {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    font-size: 0.8em; } }
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    font-size: 0.8em; }
+    .underInfo .socials {
+      -ms-flex-item-align: center;
+          align-self: center; }
+    .underInfo .info {
+      -ms-flex-item-align: center;
+          align-self: center; } }
 @media (max-width: 450px) {
   .appLogo {
     width: 80%;
@@ -738,7 +783,7 @@ body {
   width: 25%; }
 .resultsTable tr {
   border-top: 1px solid #C1C3D1;
-  border-bottom-: 1px solid #C1C3D1;
+  border-bottom: 1px solid #C1C3D1;
   color: #666B85;
   font-size: 0.9em;
   font-family: "Trebuchet MS"; }
@@ -1919,7 +1964,7 @@ input {
     bottom: 30%;
     padding: 2.5em; }
     .welcomeModal .welcomeLogoBig {
-      height: 18%;
+      height: 24%;
       margin: 0 0 1em 0; } }
 @media (max-width: 1366px) {
   .welcomeModal {

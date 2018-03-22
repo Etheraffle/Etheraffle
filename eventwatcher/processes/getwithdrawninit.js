@@ -1,5 +1,5 @@
-const {fork} = require('child_process'),
-      utils  = require('../modules/utils')
+const {fork} = require('child_process')
+    , utils  = require('../modules/utils')
 /*
 This method is called in the main eventwatcher.js file via a daily cron job. Can also be run when needed via node in this directory:
 > const whatever = require('./getmissingprocess')

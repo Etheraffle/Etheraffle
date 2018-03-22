@@ -1,7 +1,6 @@
 const getWeb3 = require('./getweb3')
-
 /* Period in days, assumes block time of ~ 15s */
-module.exports = function(_latestBlock, _raffleID, _period){
+module.exports = (_latestBlock, _raffleID, _period) => {
   let block = _latestBlock - Math.trunc((_period * 24 * 60 * 60) / 15)
   return new Promise ((resolve, reject) => {
     return getWeb3.etheraffle.LogWinningNumbers({forRaffle: _raffleID},{fromBlock: block, toBlock: "latest"}).get((err,res) => {

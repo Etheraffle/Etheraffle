@@ -1,7 +1,7 @@
-const moment  = require('moment'),
-      mongo   = require('../modules/mongo')
+const moment  = require('moment')
+    , mongo   = require('../modules/mongo')
 
-module.exports = function(_data){
+module.exports = (_data) => {
   let obj = {
     timeStamp: JSON.parse(_data.args.atTime),
     raffleID : JSON.parse(_data.args.forRaffle),

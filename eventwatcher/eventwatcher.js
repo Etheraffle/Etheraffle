@@ -1,43 +1,30 @@
-const cron                = require('node-cron'),
-      utils               = require('./modules/utils'),
-      getMissing          = require('./processes/getmissinginit'),
-      getWithdrawn        = require('./processes/getwithdrawninit'),
-      getOrac             = require('./processes/getweeklyeventsinit')
-      ticketBought        = require('./eventhandlers/ticketbought'),
-      winningNums         = require('./eventhandlers/winningnums'),
-      prizePools          = require('./eventhandlers/prizepools'),
-      withdrawal          = require('./eventhandlers/withdrawal'),
-      paused              = require('./eventhandlers/functionspaused'),
-      web3Connect         = require('./modules/getweb3'),
-      web3                = web3Connect.web3,
-      etheraffle          = web3Connect.etheraffle,
-      ticketBoughtEvent   = etheraffle.LogTicketBought(),
-      winningNumbersEvent = etheraffle.LogWinningNumbers(),
-      prizePoolsEvent     = etheraffle.LogPrizePoolsUpdated(),
-      withdrawEvent       = etheraffle.LogWithdraw(),
-      functionsPaused     = etheraffle.LogFunctionsPaused()
+const cron                = require('node-cron')
+    , utils               = require('./modules/utils')
+    , getMissing          = require('./processes/getmissinginit')
+    , getWithdrawn        = require('./processes/getwithdrawninit')
+    , getOrac             = require('./processes/getweeklyeventsinit')
+    , ticketBought        = require('./eventhandlers/ticketbought')
+    , winningNums         = require('./eventhandlers/winningnums')
+    , prizePools          = require('./eventhandlers/prizepools')
+    , withdrawal          = require('./eventhandlers/withdrawal')
+    , paused              = require('./eventhandlers/functionspaused')
+    , web3Connect         = require('./modules/getweb3')
+    , web3                = web3Connect.web3
+    , etheraffle          = web3Connect.etheraffle
+    , ticketBoughtEvent   = etheraffle.LogTicketBought()
+    , winningNumbersEvent = etheraffle.LogWinningNumbers()
+    , prizePoolsEvent     = etheraffle.LogPrizePoolsUpdated()
+    , withdrawEvent       = etheraffle.LogWithdraw()
+    , functionsPaused     = etheraffle.LogFunctionsPaused()
 /*
 Notes:
-
-If this is run as a cluster, the cron jobs will get executed for each cluster there is running. So if needs be, function them out to their own file!
-
+If this is run as a cluster, the cron jobs will get executed for each cluster there is running. 
+So if needs be, function them out to their own file!
 All process.exit points also send an email warning of what happened.
-
 */
 //process.on('warning', e => console.warn(e.stack))
 process.on('unhandledRejection', err => console.log('unhandledRejection', err.stack))//TODO: remove!
 require('events').EventEmitter.defaultMaxListeners = 15
-//require('events').EventEmitter.prototype._maxListeners = 100;
-//process.setMaxListeners(Infinity)
-//process.setMaxListeners(0)
-//emitter.setMaxListeners(Infinity)
-
-/* Email alert when proces starts... */
-/*
-const init = () => {
-  utils.sendEmail('Eventwatcher process powered on!', 'At time: ' + utils.getTime())
-}
-*/
 
 /* Test for live eth connection */
 const block = web3.eth.getBlockNumber((err, res) => {

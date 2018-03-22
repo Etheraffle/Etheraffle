@@ -1,6 +1,6 @@
-const {fork}      = require('child_process'),
-      utils       = require('../modules/utils'),
-      getWinEvent = require('../modules/getwinningevent')
+const {fork}      = require('child_process')
+    , utils       = require('../modules/utils')
+    , getWinEvent = require('../modules/getwinningevent')
 /*
 > const x = require('/getmatchesinit')
 > x.manualInit(args)
@@ -18,7 +18,6 @@ const manualInit = (_weekNo, _period) => {
     })
   }).catch(err => utils.errorHandler("manualInit", "getMatchesInit", _weekNo, err))
 }
-
 /* Else running processes call this function instead */
 const init = (_wObj, _path) => {
   const getMatches = _path == undefined ? fork('./getmatchesprocess') : fork(_path)

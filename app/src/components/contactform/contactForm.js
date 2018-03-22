@@ -1,7 +1,7 @@
-import Formsy from 'formsy-react'
-import React, { Component } from 'react'
 import Input from './input'
+import Formsy from 'formsy-react'
 import TextArea from './textArea'
+import React, { Component } from 'react'
 
 export default class ContactForm extends Component {
 
@@ -31,12 +31,12 @@ export default class ContactForm extends Component {
       body: JSON.stringify(model)
     })
     .then(res => {
-      if(res.status === 503 && this.state.canSubmit) return this.setState({database: 503})
-      if(res.status !== 200 && this.state.canSubmit) return this.setState({database: 0})
+      if (res.status === 503 && this.state.canSubmit) return this.setState({database: 503})
+      if (res.status !== 200 && this.state.canSubmit) return this.setState({database: 0})
       return res.json()
       .then(json => {
-        if(json.success === true && this.state.canSubmit) return this.setState({database: 2})
-        if(json.success === false) throw new Error("Error in send email!")
+        if (json.success === true && this.state.canSubmit) return this.setState({database: 2})
+        if (json.success === false) throw new Error("Error in send email!")
       })
     }).catch(err => {
       console.log("Error updating details: ", err.stack)

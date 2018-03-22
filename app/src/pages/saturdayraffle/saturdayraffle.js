@@ -1,41 +1,41 @@
-import React, { Component } from 'react'
+import moment from 'moment'
+import React from 'react'
 import BelowContent from './belowcontent'
 import Saturdayclock from './saturdayclock'
 import Loading from '../../components/loadingIcon'
 import Saturdayentryform from './saturdayentryform'
 import closedButton from '../../images/closedButton.svg'
-import moment from 'moment'
 
-class Saturdayraffle extends Component{
+export default class Saturdayraffle extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      mounted: false,
-      placeHolder: 1,
       killDiv: 1,
+      mounted: false,
+      placeHolder: 1
     }
-    this.endTime = 'Saturday 19:00'//Raffle deadline
-    this.closedFor = 5 * 60 * 60//length of time (s) raffle is closed for
+    this.endTime      = 'Saturday 19:00'//Raffle deadline
+    this.closedFor    = 5 * 60 * 60//length of time (s) raffle is closed for
     this.getCallBacks = this.getCallBacks.bind(this)
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({mounted: true})
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.setState({mounted: false})
   }
 
-  getCallBacks(_killDiv, _placeHolder){
-    if(this.state.killDiv !== _killDiv)
-      if(this.state.mounted) this.setState({killDiv: _killDiv})
-    if(this.state.placeHolder !== _placeHolder)
-      if(this.state.mounted) this.setState({placeHolder: _placeHolder})
+  getCallBacks(_killDiv, _placeHolder) {
+    if (this.state.killDiv !== _killDiv)
+      if (this.state.mounted) this.setState({killDiv: _killDiv})
+    if (this.state.placeHolder !== _placeHolder)
+      if (this.state.mounted) this.setState({placeHolder: _placeHolder})
   }
 
-  render(){
+  render() {
     return(
       <div className={"contentWrapper si" + this.props.screenIndex}>
         <div className={"content ssi" + this.props.subScreenIndex}>
@@ -104,4 +104,3 @@ class Saturdayraffle extends Component{
     )
   }
 }
-export default Saturdayraffle

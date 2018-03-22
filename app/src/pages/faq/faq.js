@@ -13,21 +13,20 @@ import { Accordion,AccordionItem,AccordionItemTitle,AccordionItemBody } from 're
 
 
 export default class Help extends React.Component {
-  render(){
+
+  render() {
     return(
       <div className={"contentWrapper si" + this.props.screenIndex}>
         <div className={"content ssi" + this.props.subScreenIndex}>
 
           <h3 className={'centred screen' + this.props.screenIndex}>
-            {/*<span className='styledSpan'><b>&#x274d;&ensp;</b></span>*/}
               Frequently Asked Questions
-            {/*<span className='styledSpan'><b>&ensp;&#x274d;</b></span>*/}
           </h3>
 
           <br/>
 
           <Accordion>
-
+            
           <AccordionItem expanded={true}>
             <AccordionItemTitle>
               <p className={'screen' + this.props.screenIndex}>

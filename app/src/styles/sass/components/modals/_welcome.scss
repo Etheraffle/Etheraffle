@@ -48,8 +48,7 @@
     padding: 2.5em;
 
     .welcomeLogoBig {
-      height: 18%;
-      //height: 50%;
+      height: 24%;
       margin: 0 0 1em 0;
     }
   }
@@ -65,7 +64,6 @@
 
     .welcomeLogoBig {
       height: 18%;
-      //height: 50%;
       margin: 0 0 0.5em 0;
     }
   }
@@ -86,7 +84,6 @@
 
   }
 }
-
 /* Logo changes to smaller e logo for the following ones */
 @media (max-width: $mobile) {
   .welcomeModal {
@@ -126,7 +123,7 @@
   }
 }
 
-@media (max-width: $mini) {//neaten it up for extra small screens
+@media (max-width: $mini) {
   .welcomeModal {
     padding: 0 1em 1em 1em;
 
