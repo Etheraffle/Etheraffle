@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {//Allows custom error handling of the bodyPars
 /* Specific pathways come first... */
 app.get('/ico', (req, res) => res.sendFile(__dirname + '/../../ico/build/index.html'))
 /* Before the catch all version grabs the other requests! */
-app.get('/', (req, res) => res.sendFile(__dirname + '/build/index.html'))
+app.get('/*', (req, res) => res.sendFile(__dirname + '/build/index.html'))
 
 /* Get matches array for smart contract */
 app.post("/api/a", (req,res) => {
