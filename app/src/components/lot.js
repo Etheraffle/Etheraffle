@@ -1,11 +1,12 @@
 import React from 'react'
 
 export default (props) => {
+	let colours = ['','#28e973','#9689aa','#ec3ce0','#9e7be2','#25dfdf']
 	return(
-		<svg className={'LOT screen' + props.screenIndex} version="1.1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 1699.17 942.873" enable-background="new 0 0 1699.17 942.873">
+		<svg className={'LOT screen' + props.screenIndex} version="1.1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 1699.17 942.873" enableBackground="new 0 0 1699.17 942.873" height={props.height ? props.height : '2em'}>
 			<path 
 				id='LOTToken'
-				fill='#717171'
+				fill={props.fill ? colours[props.fill] : '#717171'}
 				d="M1486.358,0H212.813c0,117.533-95.28,212.813-212.813,212.813v516.415
 			c117.533,0,212.813,95.279,212.813,212.813c0,0.278-0.009,0.555-0.011,0.833h1273.566c-0.001-0.278-0.011-0.555-0.011-0.833
 			c0-117.533,95.279-212.813,212.813-212.813V212.813C1581.637,212.813,1486.358,117.533,1486.358,0z M1631.704,663.01
