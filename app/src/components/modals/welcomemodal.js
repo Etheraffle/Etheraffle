@@ -79,11 +79,11 @@ export default class WelcomeModal extends React.Component {
         }
 
         <h2 className={"screen" + this.props.screenIndex}>
-          Welcome to the Etheraffle ÐApp - The best Ether lottery on the blockchain!
+          Welcome to Etheraffle - The World's First Truly Decentralized Charitable Lottery!
         </h2>
 
         <p className='centre' >
-          So join in, buy a ticket, and win big all whilst helping charities worldwide!
+          So join in, buy a ticket and win big all whilst helping good causes worldwide!
         </p>
 
         {/* Placeholder whilst state is retrieved */}
@@ -101,7 +101,7 @@ export default class WelcomeModal extends React.Component {
                   Ethereum connection detected:
                 </h3>
                 <p>
-                  Please unlock your account to interact with this ÐApp
+                  Please unlock your account to interact with this ÐApp!
                 </p>
               </div>
 
@@ -120,11 +120,7 @@ export default class WelcomeModal extends React.Component {
 
               {window.innerWidth > 450 &&
                 <p className='justify'>
-                  If you are seeing this and using MetaMask, please make sure you unlock your account. If using the Mist browser or Parity, please make sure your ethereum account is connected and authorized to interact with the
-                  <span className={"styledSpan screen" + this.props.screenIndex}>
-                  &nbsp; Etheraffle &nbsp;
-                  </span>
-                   ÐApp.
+                  If you are seeing this and using MetaMask, please make sure you unlock your account. If using the Mist browser please make sure your ethereum account is connected and authorized to interact with the <span className={"styledSpan screen" + this.props.screenIndex}>Etheraffle</span> ÐApp.
                   <a className={"centred screen" + this.props.screenIndex} style={{cursor: 'pointer'}} onClick={() => this.closeModal()}>
                     &nbsp; Just want a peek? Click to view the
                     <span className={"styledSpan screen" + this.props.screenIndex}>
@@ -174,10 +170,6 @@ export default class WelcomeModal extends React.Component {
 
             <p>
               Want a peek? Click to visit <span style={{cursor: 'pointer'}} className={"invert styledSpan screen" + this.props.screenIndex} onClick={this.closeModal}>Etheraffle</span> anyway!<br/>
-              {/*
-              <a className={"centred screen" + this.props.screenIndex} style={{cursor: 'pointer'}} onClick={() => {window.location.reload()}}>
-              If you are seeing this in error, click here to attempt to reconnect to the eth network.</a>
-              */}
             </p>
           </div>
         }

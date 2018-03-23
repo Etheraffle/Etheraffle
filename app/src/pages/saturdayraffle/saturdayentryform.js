@@ -179,6 +179,10 @@ export default class Saturdayentryform extends React.Component{
               </label>
             </form>
           </div>
+          
+          <p className='centred'>
+            Pick your six lucky numbers then buy your ticket to enter the draw!
+          </p>
 
           <div className={"entryButton screen" + this.props.screenIndex} onClick={() => this.openModal()}>
 
@@ -273,16 +277,29 @@ export default class Saturdayentryform extends React.Component{
          {/* No entry form if no web3 connection OR eth address! */}
          {(this.state.w3Con === false || window.ethAdd === null || window.ethAdd === undefined) &&
           <div className="entryFormNotConnected">
-            <p className={"centred styledSpan screen" + this.props.screenIndex}>
-              No ethereum address detected!
-              <br/>
-              <a
-                className={"centred screen" + this.props.screenIndex}
-                style={{cursor: 'pointer'}}
-                onClick={()=>this.openModal()}>
-                Click here for connection issue solutions
-              </a>
-            </p>
+
+            {/* If no web3... */}
+            {this.state.w3Con === false &&
+              <p className={"centred styledSpan screen" + this.props.screenIndex}>
+                No ethereum connection detected!
+                <br/>
+                <a
+                  className={"centred screen" + this.props.screenIndex}
+                  style={{cursor: 'pointer'}}
+                  onClick={()=>this.openModal()}>
+                  Learn how to get connected to play Etheraffle!
+                </a>
+              </p>
+            }
+
+            {/* If web3 but no eth add... */}
+            {this.state.w3Con !== false &&
+              <p className='centred'>
+                <span className={'styledSpan screen' + this.props.screenIndex}>Cannot retreive your ethereum address!</span>
+                <br/>
+                Please unlock your account to play Etheraffle!
+              </p>
+            }
 
             <Modal
              isOpen={this.state.modalIsOpen}
@@ -294,7 +311,7 @@ export default class Saturdayentryform extends React.Component{
 
               <NotConnectedInfo screenIndex={this.props.screenIndex}/>
 
-              <p className="justify" style={{"padding" : "1em"}}>
+              <p className="justify">
                 If you were connected before seeing this message, your connection may have dropped or you may have rejected a transaction. Please check your ethereum connection method. If you're using Metamask, please make sure you are signed in. If using Mist, please make sure you have an account connected and have authorized it to interact with the <span className={"styledSpan screen" + this.props.screenIndex}>Etheraffle</span> ÐApp.
               </p>
               <p>

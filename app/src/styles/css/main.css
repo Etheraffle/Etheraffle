@@ -568,7 +568,6 @@ body {
     .underInfo a .icon.screen5:hover {
       color: #25dfdf; }
   .underInfo a .LOT {
-    height: 2em;
     vertical-align: top;
     margin: 0 0 0 0.5em; }
   .underInfo a svg.LOT.screen1 #LOTToken {
@@ -1064,7 +1063,6 @@ body {
 */
 a {
   text-decoration: none;
-  font-size: 1.05em;
   color: #717171; }
   a.screen1:hover {
     color: #28e973; }
@@ -1079,7 +1077,7 @@ a {
   a.button:hover {
     cursor: pointer; }
   a.invert.screen1 {
-    color: #3ed67e; }
+    color: #28e973; }
     a.invert.screen1:hover {
       color: #717171; }
   a.invert.screen2 {
@@ -1087,7 +1085,7 @@ a {
     a.invert.screen2:hover {
       color: #717171; }
   a.invert.screen3 {
-    color: #ec3ce2; }
+    color: #ec3ce0; }
     a.invert.screen3:hover {
       color: #717171; }
   a.invert.screen4 {
@@ -1095,13 +1093,14 @@ a {
     a.invert.screen4:hover {
       color: #717171; }
   a.invert.screen5 {
-    color: #33d3e0; }
+    color: #25dfdf; }
     a.invert.screen5:hover {
       color: #717171; }
   a.largerFont {
     font-size: 1.1em; }
 
 h1 {
+  color: #717171;
   margin: 0px;
   text-decoration: none;
   font-size: 1.5em;
@@ -1122,6 +1121,7 @@ h1 {
     text-decoration: underline; }
 
 h2 {
+  color: #717171;
   margin: 0px;
   text-decoration: none;
   font-size: 1.25em;
@@ -1142,19 +1142,20 @@ h2 {
     text-decoration: underline; }
 
 h3 {
+  color: #717171;
   margin: 0px;
   text-decoration: none;
   font-weight: normal; }
   h3.screen1 {
-    color: #3ed67e; }
+    color: #28e973; }
   h3.screen2 {
     color: #9689aa; }
   h3.screen3 {
-    color: #ec3ce2; }
+    color: #ec3ce0; }
   h3.screen4 {
     color: #9e7be2; }
   h3.screen5 {
-    color: #33d3e0; }
+    color: #25dfdf; }
   h3.centred {
     text-align: center; }
   h3.underlined {
@@ -1240,7 +1241,7 @@ input {
   .routerLink.button:hover {
     cursor: pointer; }
   .routerLink.invert.screen1 {
-    color: #3ed67e; }
+    color: #28e973; }
     .routerLink.invert.screen1:hover {
       color: #717171; }
   .routerLink.invert.screen2 {
@@ -1248,7 +1249,7 @@ input {
     .routerLink.invert.screen2:hover {
       color: #717171; }
   .routerLink.invert.screen3 {
-    color: #ec3ce2; }
+    color: #ec3ce0; }
     .routerLink.invert.screen3:hover {
       color: #717171; }
   .routerLink.invert.screen4 {
@@ -1256,7 +1257,7 @@ input {
     .routerLink.invert.screen4:hover {
       color: #717171; }
   .routerLink.invert.screen5 {
-    color: #33d3e0; }
+    color: #25dfdf; }
     .routerLink.invert.screen5:hover {
       color: #717171; }
   .routerLink.largerFont {
@@ -1964,7 +1965,7 @@ input {
     bottom: 30%;
     padding: 2.5em; }
     .welcomeModal .welcomeLogoBig {
-      height: 24%;
+      height: 18%;
       margin: 0 0 1em 0; } }
 @media (max-width: 1366px) {
   .welcomeModal {

@@ -38,9 +38,17 @@ export default class Saturdayraffle extends React.Component {
       <div className={"contentWrapper si" + this.props.screenIndex}>
         <div className={"content ssi" + this.props.subScreenIndex}>
 
-          <div className="aboveContent"></div>
+          <div className="aboveContent">
+          </div>
 
           <div className="centreContent">
+            {window.innerWidth <= 400 &&
+              <h2 className='centred'>
+                Welcome to the <span className={'styledSpan screen' + this.props.screenIndex}>Saturday Raffle!</span>
+              </h2>
+            }
+
+            <br />
 
             <Saturdayclock
               callBacks={this.getCallBacks}
@@ -48,6 +56,13 @@ export default class Saturdayraffle extends React.Component {
               mounted={this.state.mounted}
               endTime={this.endTime}
               closedFor={this.closedFor}/>
+
+              {window.innerWidth > 400 &&
+              <h1 className='centred'>
+                Welcome to the <span className={'styledSpan screen' + this.props.screenIndex}>Saturday Raffle!</span>
+              </h1>
+            }
+
 
             {(this.state.placeHolder === 1) &&
               <div className={"entryFormLoading screen" + this.props.screenIndex}>

@@ -393,10 +393,10 @@ export default class Results extends React.Component {
     let tables  = []
       , results = _data.results
       , entries = _data.entries
-      , rIDs    = _data.raffleIDs
+      , rIDs    = _data.raffleIDs.reverse()
     /* Loop over raffle IDs sending corresponding entry & results arrays for parsing */
     for (let i = 0; i < rIDs.length; i++) {
-      tables.push(this.parseEntriesMob(rIDs[i], entries[rIDs[i]].reverse(), results[rIDs[i]]))
+      tables.push(this.parseEntriesMob(rIDs[i], entries[rIDs[i]], results[rIDs[i]]))
     }
     if (this.state.mounted) this.setState({tableArr: tables})
   }
@@ -461,7 +461,7 @@ export default class Results extends React.Component {
             </tr>
             <tr>
               <td className={'textCenter screen' + this.props.screenIndex}>
-                Good Luck!
+                <b>Good Luck!</b>
               </td>
             </tr>
           </tbody>
@@ -677,31 +677,44 @@ export default class Results extends React.Component {
         {(this.state.w3Con === false || window.ethAdd === null || window.ethAdd === undefined) &&
           <div>
             <br/>
-            <h3 className={"centred screen" + this.props.screenIndex}>
-              No Ethereum Address Detected!
-            </h3>
-            <p className='centred'>
-              <a className={"centred screen" + this.props.screenIndex} style={{cursor: 'pointer'}} onClick={()=>this.openModal()}>
-                Click here for connection issue solutions.
-              </a>
-            </p>
+            
+            {/* If no web3... */}
+            {this.state.w3Con === false &&
+              <p className={"centred styledSpan screen" + this.props.screenIndex}>
+                No ethereum connection detected!
+                <br/>
+                <a
+                  className={"centred screen" + this.props.screenIndex}
+                  style={{cursor: 'pointer'}}
+                  onClick={()=>this.openModal()}>
+                  Learn how to get connected to interact with Etheraffle!
+                </a>
+              </p>
+            }
+
+            {/* If web3 but no eth add... */}
+            {this.state.w3Con !== false &&
+              <p className='centred'>
+                <span className={'styledSpan screen' + this.props.screenIndex}>Cannot retrieve your ethereum address!</span>
+                <br/>
+                Please unlock your account to see your results!
+              </p>
+            }
+
+
             <Modal
              isOpen={this.state.modalIsOpen}
              onRequestClose={this.closeModal}
              contentLabel="No Ethereum Connection Modal"
-             className={"welcomeModal screen" + this.props.screenIndex}
+             className={"welcomeModalNotConnected screen" + this.props.screenIndex}
              overlayClassName={"Overlay screen" + this.props.screenIndex}
              shouldCloseOnOverlayClick={true}
             >
 
               <NotConnectedInfo screenIndex={this.props.screenIndex}/>
 
-              <p className="justify" style={{"padding": "30px"}}>
-                If you were connected before seeing this message, your connection may have dropped or you may have rejected a transaction. Please check your ethereum connection method. If you're using Metamask, please make sure you are signed in. If using Mist, please make sure you have an account connected and have authorized it to interact with the
-                <span className={"styledSpan screen" + this.props.screenIndex}>
-                  Etheraffle
-                </span>
-                ÐApp.
+              <p className="justify">
+                If you were connected before seeing this message, your connection may have dropped or you may have rejected a transaction. Please check your ethereum connection method. If you're using Metamask, please make sure you are signed in. If using Mist, please make sure you have an account connected and have authorized it to interact with the <span className={"styledSpan screen" + this.props.screenIndex}>Etheraffle</span> ÐApp.
               </p>
               <a className={"centred screen" + this.props.screenIndex} style={{cursor: 'pointer'}} onClick={()=>{window.location.reload()}}>
                 Click here to reload.

@@ -14,7 +14,7 @@ import Instant from './pages/instantraffle/instant'
 import Saturday from './pages/saturdayraffle/saturday'
 import Wednesday from './pages/wednesdayraffle/wednesday'
 import WelcomeModal from './components/modals/welcomemodal'
-import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router'
+import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 
 class App extends React.Component {
 

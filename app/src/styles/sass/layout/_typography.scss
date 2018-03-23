@@ -1,20 +1,21 @@
 a {
   text-decoration: none;
-  font-size: 1.05em;
+  //font-size: 1.05em;
   color: #717171;
   @include hoverColors();
   &.button:hover{cursor: pointer;}
   &.invert{
-    &.screen1{color: rgba(62,214,126,1); &:hover{color: #717171;}}
-    &.screen2{color: rgba(150,137,170,1); &:hover{color: #717171;}}
-    &.screen3{color: rgba(236,60,226,1); &:hover{color: #717171;}}
-    &.screen4{color: rgba(158,123,226,1); &:hover{color: #717171;}}
-    &.screen5{color: rgba(51,211,224,1); &:hover{color: #717171;}}
+    &.screen1{color: $erGreen; &:hover{color: #717171;}}
+    &.screen2{color: $erBlueGrey; &:hover{color: #717171;}}
+    &.screen3{color: $erPink; &:hover{color: #717171;}}
+    &.screen4{color: $erPurple; &:hover{color: #717171;}}
+    &.screen5{color: $erBlue; &:hover{color: #717171;}}
   }
   &.largerFont{font-size: 1.1em;}
 }
 
 h1 {
+  color: #717171;
   margin: 0px;
   text-decoration: none;
   font-size: 1.5em;
@@ -25,6 +26,7 @@ h1 {
 }
 
 h2 {
+  color: #717171;
   margin: 0px;
   text-decoration: none;
   //padding: 8px;
@@ -36,14 +38,15 @@ h2 {
 }
 
 h3 {
+  color: #717171;
   margin: 0px;
   text-decoration: none;
   font-weight: normal;
-  &.screen1 {color: rgba(62,214,126,1);}
-  &.screen2 {color: rgba(150,137,170,1);}
-  &.screen3 {color: rgba(236,60,226,1);}
-  &.screen4 {color: rgba(158,123,226,1);}
-  &.screen5 {color: rgba(51,211,224,1);}
+  &.screen1 {color: $erGreen;}
+  &.screen2 {color: $erBlueGrey;}
+  &.screen3 {color: $erPink;}
+  &.screen4 {color: $erPurple;}
+  &.screen5 {color: $erBlue;}
   &.centred {text-align: center;}
   &.underlined {text-decoration: underline;}
 }
@@ -95,11 +98,11 @@ input {
   @include hoverColors();
   &.button:hover{cursor: pointer;}
   &.invert{
-    &.screen1{color: rgba(62,214,126,1); &:hover{color: #717171;}}
-    &.screen2{color: rgba(150,137,170,1); &:hover{color: #717171;}}
-    &.screen3{color: rgba(236,60,226,1); &:hover{color: #717171;}}
-    &.screen4{color: rgba(158,123,226,1); &:hover{color: #717171;}}
-    &.screen5{color: rgba(51,211,224,1); &:hover{color: #717171;}}
+    &.screen1{color: $erGreen; &:hover{color: #717171;}}
+    &.screen2{color: $erBlueGrey; &:hover{color: #717171;}}
+    &.screen3{color: $erPink; &:hover{color: #717171;}}
+    &.screen4{color: $erPurple; &:hover{color: #717171;}}
+    &.screen5{color: $erBlue; &:hover{color: #717171;}}
   }
   &.largerFont{font-size: 1.1em;}
 }

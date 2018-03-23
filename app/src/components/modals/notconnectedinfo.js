@@ -8,9 +8,9 @@ export default class NotConnectedInfo extends React.Component {
     return(
       <div className={"modalNotConnectedInfo screen" + this.props.screenIndex}>
         <p className='noCxn'>
-          <span className={"styledSpan screen" + this.props.screenIndex}>
-            No ethereum connection detected!
-          </span>
+          <span className={"styledSpan screen" + this.props.screenIndex}>No ethereum connection detected!</span>
+          <br/>
+          Below are some options for getting connected to the ethereum network.
         </p>
 
         {/* On non-tablet screens we render desktop solutions to ethereum connection issues */}
