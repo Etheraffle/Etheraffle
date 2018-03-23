@@ -29,10 +29,8 @@ export default class Saturdayraffle extends React.Component {
   }
 
   getCallBacks(_killDiv, _placeHolder) {
-    if (this.state.killDiv !== _killDiv)
-      if (this.state.mounted) this.setState({killDiv: _killDiv})
-    if (this.state.placeHolder !== _placeHolder)
-      if (this.state.mounted) this.setState({placeHolder: _placeHolder})
+    if (this.state.killDiv !== _killDiv) if (this.state.mounted) this.setState({killDiv: _killDiv})
+    if (this.state.placeHolder !== _placeHolder) if (this.state.mounted) this.setState({placeHolder: _placeHolder})
   }
 
   render() {

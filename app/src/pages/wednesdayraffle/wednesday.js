@@ -1,7 +1,5 @@
 import React from 'react'
-import FAQ from '../faq/faq'
-import Results from '../results/results'
-import Wednesdayraffle from '../wednesdayraffle/wednesdayraffle'
+import Subnav from '../../components/subnav'
 
 export default class Wednesday extends React.Component{
 
@@ -19,62 +17,31 @@ export default class Wednesday extends React.Component{
     this.props.eventEmitter.emit("navigateScreen", {screenIndex: 3})
   }
 
-  handleClick(index) {
-    if (this.state.mounted) this.setState({subScreenIndex: index})
-  }
-
   componentWillUnmount()  {
     if (this.state.mounted) this.setState({mounted: false})
   }
 
   render() {
     return(
-      <div className="screen">
-        <div className="subNav">
-
-          <div
-            className ={this.state.subScreenIndex === 1 ? "subNav-item results active-subNav" : "subNav-item results"}
-            onClick={(index) => this.handleClick(1)} >
-            <h3 className="subScreen1">Results</h3>
-          </div>
-
-          <div className ="subNav-item spacerOne"></div>
-
-          <div
-            className ={this.state.subScreenIndex === 2 ? "subNav-item play active-subNav" : "subNav-item play"}
-            onClick={(index) => this.handleClick(2)} >
-            <h3 className="subScreen2">Play!</h3>
-          </div>
-
-          <div className ="subNav-item spacerTwo"></div>
-
-          <div
-            className ={this.state.subScreenIndex === 3 ? "subNav-item help active-subNav" : "subNav-item help"}
-            onClick={(index) => this.handleClick(3)} >
-            <h3 className="subScreen3">FAQ</h3>
+      <Subnav 
+        screenIndex={this.state.screenIndex}
+        subScreenIndex={this.state.subScreenIndex} >
+        <div className={"contentWrapper si" + this.state.screenIndex}>
+          <div className={"content ssi" + this.state.subScreenindex}>
+            <div className="aboveContent" />
+            <div className="centreContent" />
+            <div className={"belowContent screen" + this.state.screenIndex}>
+              <br/>
+              <h3 className={'centred screen' + this.state.screenIndex}>
+                Welcome to the Wednesday Raffle!
+              </h3>
+              <p className="centred">
+                Coming soon...
+              </p>
+            </div>
           </div>
         </div>
-
-        <div className="subcontent">
-          {this.state.subScreenIndex === 1 &&
-            <Results
-              screenIndex={this.state.screenIndex}
-              subScreenIndex={this.state.subScreenIndex} />
-          }
-
-          {this.state.subScreenIndex === 2 &&
-            <Wednesdayraffle
-              screenIndex={this.state.screenIndex}
-              subScreenIndex={this.state.subScreenIndex} />
-          }
-
-          {this.state.subScreenIndex === 3 &&
-            <FAQ
-              screenIndex={this.state.screenIndex}
-              subScreenIndex={this.state.subScreenIndex} />
-          }
-        </div>
-      </div>
+      </Subnav>
     )
   }
 }
