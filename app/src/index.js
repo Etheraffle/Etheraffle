@@ -1,18 +1,18 @@
 import React from 'react'
-import Nav from './nav/nav'
-import Ico from './nav/ico'
 import ReactDOM from 'react-dom'
+import Ico from './pages/ico/ico'
+import Nav from './components/nav'
 import './styles/css/main.min.css'
-import Instant from './nav/instant'
-import Contact from './nav/contact'
 import getWeb3 from './web3/getWeb3'
 import getRate from './web3/getRate'
-import Saturday from './nav/saturday'
 import { EventEmitter } from 'events'
-import Wednesday from './nav/wednesday'
 import Footer from './components/footer'
+import Contact from './pages/contact/contact'
 import logo from './images/etheraffleLogo.svg'
 import getEthAccount from './web3/getEthAccount'
+import Instant from './pages/instantraffle/instant'
+import Saturday from './pages/saturdayraffle/saturday'
+import Wednesday from './pages/wednesdayraffle/wednesday'
 import WelcomeModal from './components/modals/welcomemodal'
 import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router'
 
@@ -86,10 +86,13 @@ class App extends React.Component {
               key={this.state.key + 1}
               eventEmitter={this.eventEmitter}
               screenIndex={this.state.screenIndex} />
-              <div key={this.state.key + 2} className="main-content">
-                {React.cloneElement(this.props.children, {eventEmitter: this.eventEmitter})}
-              </div>
+            
+            {/* The content panes */}
+            <div key={this.state.key + 2} className="main-content">
+              {React.cloneElement(this.props.children, {eventEmitter: this.eventEmitter})}
             </div>
+            
+          </div>
 
           <Footer screenIndex={this.state.screenIndex} />
 
@@ -103,11 +106,11 @@ ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Saturday} />
-      <Route path="/instant"   component={Instant} />
       <Route path="/ico"       component={Ico} />
-      <Route path="/wednesday" component={Wednesday} />
+      <Route path="/instant"   component={Instant} />
       <Route path="/contact"   component={Contact} />
       <Route path="/saturday"  component={Saturday} />
+      <Route path="/wednesday" component={Wednesday} />
     </Route>
   </Router>,
   document.getElementById('root')

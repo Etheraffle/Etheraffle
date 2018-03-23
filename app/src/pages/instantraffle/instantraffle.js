@@ -4,7 +4,7 @@ import BelowContent from './belowcontent.js'
 export default (props) => {
   return(
     <div className={"contentWrapper si" + props.screenIndex}>
-      <div className={"content ssi" + props.subScreenindex}>
+      <div className={"content ssi" + props.subScreenIndex}>
         <div className="aboveContent">
         </div>
         <div className="centreContent">
