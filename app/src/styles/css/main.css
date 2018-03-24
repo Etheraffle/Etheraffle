@@ -703,6 +703,9 @@ body {
       width: 95%; }
       .main-content .contentWrapper .content .belowContent {
         padding: 0; } }
+.faqLogo {
+  width: 3em; }
+
 .accordion {
   margin: 0 1.2em 1.2em 1.2em; }
   .accordion .accordion__title {
