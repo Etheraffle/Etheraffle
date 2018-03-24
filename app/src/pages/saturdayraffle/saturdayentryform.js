@@ -64,7 +64,7 @@ export default class Saturdayentryform extends React.Component{
         if (this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true})
       } else {//Either tktPrice or ethAdd are missing...
         let txErr
-        if (!(this.state.tktPrice > 0)) txErr = "Cannot retreive ticket price from the smart contract!"
+        if (!(this.state.tktPrice > 0)) txErr = "Cannot retrieve ticket price from the smart contract!"
         if (window.ethAdd === null) txErr = "Ethereum account address inaccessible!"
         if (window.web3.version.network > 1) txErr = 'Test network detected - please connect to the main ethereum network!'
         if (this.state.mounted && this.props.killDiv !== 1) this.setState({modalIsOpen: true, w3Con: true, txHash: null, txError: txErr})
@@ -234,6 +234,8 @@ export default class Saturdayentryform extends React.Component{
                         href={"https://etherscan.io/tx/" + this.state.txHash}>
                         {this.state.txHash.substring(0, 20) + ' . . .'}
                       </a>
+                      <br/>
+                      Once your transaction has been mined your ticket will appear in the results tab - good luck!
                     </p>
                   </div>
                 }
@@ -295,7 +297,7 @@ export default class Saturdayentryform extends React.Component{
             {/* If web3 but no eth add... */}
             {this.state.w3Con !== false &&
               <p className='centred'>
-                <span className={'styledSpan screen' + this.props.screenIndex}>Cannot retreive your ethereum address!</span>
+                <span className={'styledSpan screen' + this.props.screenIndex}>Cannot retrieve your ethereum address!</span>
                 <br/>
                 Please unlock your account to play Etheraffle!
               </p>
