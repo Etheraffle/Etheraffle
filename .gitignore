@@ -13,7 +13,6 @@
 /app/coverage
 
 #app
-/app/node_modules
 /app/build
 /app/modules/apikeys.js
 
