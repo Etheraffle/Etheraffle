@@ -12,7 +12,6 @@ const express          = require('express')
 /*
 Notes:
 Tweet entries for funsies?
-use pm2 for clustering/load balancing
 */
 process.on('unhandledRejection', err => { console.log('unhandledRejection', err.stack)} )//TODO: remove!
 /* Add cors support */
@@ -79,12 +78,6 @@ app.get("/api/gas", (req,res) => {
   .then(gas => {
     res.status(200).json({safeLow: gas})
   }).catch(err => utils.errorHandler("api/gas", "App", req.body, err))
-})
-
-/* Error logging from front end */
-app.post('/api/error', (req, res) => {
-  console.log("Front end error: ", req.body.message, ", error: ", req.body.error)
-  return res.sendStatus(200)
 })
 
 app.listen(port, () => console.log("Express server started & is listening on port: " + port))
