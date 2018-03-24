@@ -9,11 +9,7 @@ const express          = require('express')
     , retrieveMatches  = require('./pathways/retrieveMatches')
     , updateOnWithdraw = require('./pathways/updateonwithdraw')
 
-/*
-Notes:
-Tweet entries for funsies?
-*/
-process.on('unhandledRejection', err => { console.log('unhandledRejection', err.stack)} )//TODO: remove!
+    process.on('unhandledRejection', err => { console.log('unhandledRejection', err.stack)} )//TODO: remove!
 /* Add cors support */
 app.use(cors())
 /* Various pathways to serve the whitepaper */
