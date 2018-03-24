@@ -5,6 +5,7 @@ import eLogo from '../../images/eLogo.svg'
 import WhatIsLot from './questions/WhatIsLot'
 import HowCanIBe from './questions/HowCanIBe'
 import HowDoILogin from './questions/HowDoILogin'
+import Accordion from '../../components/accordion'
 import WhyAreYouBetter from './questions/WhyAreYouBetter'
 import WhatIsEtheraffle from './questions/WhatIsEtheraffle'
 import HowDoIKnowIfIveWon from './questions/HowDoIKnowIfIveWon'
@@ -14,13 +15,10 @@ import IAccidentallyClosed from './questions/IAccidentallyClosed'
 import CanIEnterMoreThanOnce from './questions/CanIEnterMoreThanOnce'
 import HowDoIClaimMyWinnings from './questions/HowDoIClaimMyWinnings'
 import HowDoIKnowIfIveEntered from './questions/HowDoIKnowIfIveEntered'
-import '../../../node_modules/react-accessible-accordion/dist/react-accessible-accordion.css'
-import { Accordion, AccordionItem, AccordionItemTitle, AccordionItemBody } from 'react-accessible-accordion'
 
 
 export default (props) => {
-  let accord1 = [], acc1 = [], accord2 = [], acc2 = []
-  accord1.push(
+  let acc1 = [
     {title: 'What is Etheraffle?',
     component: WhatIsEtheraffle},
     {title: 'Why are you better than existing blockchain lotteries?',
@@ -29,24 +27,8 @@ export default (props) => {
     component: WhatIsLot},
     {title: 'How can I be a part of Etheraffle?',
     component: HowCanIBe}
-  )
-  accord1.map((item, i) => {
-    let Comp = item.component
-    return acc1.push(
-      <AccordionItem expanded={false} key={i}>
-        <AccordionItemTitle>
-          <p className={'screen' + props.screenIndex}>
-            <span className={'styledSpan screen' + props.screenIndex}><b>&#x274d;&ensp;</b></span>
-            {item.title}
-          </p>
-        </AccordionItemTitle>
-        <AccordionItemBody>
-          <Comp screenIndex={props.screenIndex} key={i*2} />
-        </AccordionItemBody>
-      </AccordionItem>
-    )
-  })
-  accord2.push(
+  ]
+  let acc2 = [
     {title: 'How do I login?',
     component: HowDoILogin},
     {title: 'How do I enter a raffle?',
@@ -65,23 +47,8 @@ export default (props) => {
     component: CanIEnterMoreThanOnce},
     {title: 'I accidentally closed the tab, am I still in the draw?',
     component: IAccidentallyClosed}
-  )
-  accord2.map((item, i) => {
-    let Comp = item.component
-    return acc2.push(
-      <AccordionItem expanded={false} key={i}>
-        <AccordionItemTitle>
-          <p className={'screen' + props.screenIndex}>
-            <span className={'styledSpan screen' + props.screenIndex}><b>&#x274d;&ensp;</b></span>
-            {item.title}
-          </p>
-        </AccordionItemTitle>
-        <AccordionItemBody>
-          <Comp screenIndex={props.screenIndex} key={i*2} />
-        </AccordionItemBody>
-      </AccordionItem>
-    )
-  })
+  ]
+
   return(
     <div className={"contentWrapper si" + props.screenIndex}>
       <div className={"content ssi" + props.subScreenIndex}>
@@ -93,17 +60,13 @@ export default (props) => {
         <p>
           Etheraffle Questions:
         </p>
-        <Accordion>
-          {acc1}
-        </Accordion>
+          <Accordion arr={acc1} screenIndex={props.screenIndex} />
         <br/>
         <img className='faqLogo' src={eLogo} alt='e Logo' />
         <p>
           Raffle Questions:
         </p>
-        <Accordion>
-          {acc2}
-        </Accordion>
+         <Accordion arr={acc2} screenIndex={props.screenIndex} />
       </div>
     </div>
   )
