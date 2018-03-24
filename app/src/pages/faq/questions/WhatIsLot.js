@@ -1,6 +1,5 @@
 import React from 'react'
 import LOTRel from './images/LOTRel.png'
-import LOT from '../../../components/lot'
 import LOTEther from './images/lotEqualsEther.png'
 
 export default (props) => {
