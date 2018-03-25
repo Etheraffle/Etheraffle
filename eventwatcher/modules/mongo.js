@@ -1,9 +1,9 @@
-const moment  = require('moment'),
-      mongo   = require('mongodb').MongoClient,
-      object  = require('mongodb').ObjectID,
-      apikeys = require('./apikeys'),
-      utils   = require('./utils'),
-      cron    = require('node-cron')
+const moment  = require('moment')
+    , mongo   = require('mongodb').MongoClient
+    , object  = require('mongodb').ObjectID
+    , apikeys = require('./apikeys')
+    , utils   = require('./utils')
+    , cron    = require('node-cron')
 
 /*Setup Connection & Initialize Batch Operations*/
 let bulkEthAdd, bulkEntries, db, batchSize = 5, counter = 0
