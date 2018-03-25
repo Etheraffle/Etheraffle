@@ -64,8 +64,7 @@ cron.schedule('0 */3 * * *', () => {
   return getWithdrawn.init(6,'./etheraffle/eventwatcher/processes/getwithdrawnprocess')
 })
 /* Retrieves any weekly events, runs 5am Sunday morning. */
-//cron.schedule('0 5 * * 0', () => {
-cron.schedule('0 5 * * 1', () => {
+cron.schedule('0 5 * * 0', () => {
   console.log("Cron: getOraclizeEventsProcess() Begun on", utils.getTime())
   return getOrac.init(7, "./etheraffle/eventwatcher/processes/getweeklyeventsprocess")
 })
