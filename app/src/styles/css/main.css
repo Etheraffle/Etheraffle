@@ -1972,7 +1972,7 @@ input {
       margin: 0 0 1em 0; } }
 @media (max-width: 1366px) {
   .welcomeModal {
-    top: 12%;
+    top: 8%;
     left: 15%;
     right: 15%;
     bottom: 12%;
