@@ -8,7 +8,7 @@ module.exports = (_latestBlock, _period, _raffleID) => {
     return getWeb3.etheraffle.LogOraclizeCallback({forRaffle: _raffleID},{fromBlock: block, toBlock: "latest"}).get((err,res) => {
       if(err || res.length == 0) return resolve(null)
       return Promise.all(res.map(x => {return getStruct(x.args.queryID)}))
-      .thenM(arr => {
+      .then(arr => {
         return resolve(
           arr.map((x,i) => {
             return obj = {
