@@ -6,19 +6,18 @@ module.exports = (_latestBlock, _period) => {
   return new Promise ((resolve, reject) => {
     return getWeb3.etheraffle.LogWinningNumbers({},{fromBlock: block, toBlock: "latest"}).get((err,res) => {
       if(err || res.length == 0) return resolve(null)
-      const resArr = []
-      for(i = 0; i < res.length; i++) {
-        obj = {
-          wNumbers:     res[i].args.wNumbers,
-          forRaffle:    JSON.parse(res[i].args.forRaffle),
-          numEntries:   JSON.parse(res[i].args.numberOfEntries),
-          prizePool:    JSON.parse(res[i].args.currentPrizePool),
-          randomSerial: JSON.parse(res[i].args.randomSerialNo),
-          atTime:       moment.unix(JSON.parse(res[i].args.atTime)).format('dddd, MMMM Do, YYYY HH:mm:ss')
-        }
-        resArr.push(obj)
-      if(i + 1 == res.length) return resolve(resArr)
-      }
+      return resolve(
+        res.map(x => {
+          return obj = {
+            wNumbers:     x.args.wNumbers,
+            forRaffle:    JSON.parse(x.args.forRaffle),
+            numEntries:   JSON.parse(x.args.numberOfEntries),
+            prizePool:    JSON.parse(x.args.currentPrizePool),
+            randomSerial: JSON.parse(x.args.randomSerialNo),
+            atTime:       moment.unix(JSON.parse(x.args.atTime)).format('dddd, MMMM Do, YYYY HH:mm:ss')
+          }
+        })
+      )
     })
   })
 }

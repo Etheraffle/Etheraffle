@@ -6,16 +6,15 @@ module.exports = (_latestBlock, _period) => {
   return new Promise ((resolve, reject) => {
     return getWeb3.etheraffle.LogReclaim({},{fromBlock: block, toBlock: "latest"}).get((err,res) => {
       if(err || res.length == 0) return resolve(null)
-      const resArr = []
-      for(i = 0; i < res.length; i++) {
-        obj = {
-          fromRaffle: JSON.parse(res[i].args.fromRaffle),
-          amount:     JSON.parse(res[i].args.amount),
-          atTime:     moment.unix(JSON.parse(res[i].args.atTime)).format('dddd, MMMM Do, YYYY HH:mm:ss')
-        }
-        resArr.push(obj)
-      if(i + 1 == res.length) return resolve(resArr)
-      }
+      return resolve(
+        res.map(x => {
+          return obj = {
+            fromRaffle: JSON.parse(x.args.fromRaffle),
+            amount:     JSON.parse(x.args.amount),
+            atTime:     moment.unix(JSON.parse(x.args.atTime)).format('dddd, MMMM Do, YYYY HH:mm:ss')
+          }
+        })
+      )
     })
   })
 }

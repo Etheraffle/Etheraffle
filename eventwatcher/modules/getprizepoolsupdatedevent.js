@@ -6,21 +6,21 @@ module.exports = (_latestBlock, _period) => {
   return new Promise ((resolve, reject) => {
     return getWeb3.etheraffle.LogPrizePoolsUpdated({},{fromBlock: block, toBlock: "latest"}).get((err,res) => {
       if(err || res.length == 0) return resolve(null)
-      const resArr = []
-      for(i = 0; i < res.length; i++) {
-        obj = {
-          forRaffle:          JSON.parse(res[i].args.forRaffle),
-          newPrizePool:       JSON.parse(res[i].args.newMainPrizePool),
-          unclaimedPrizePool: JSON.parse(res[i].args.unclaimedPrizePool),
-          threeMatchWinAmt:   JSON.parse(res[i].args.threeMatchWinAmt),
-          fourMatchWinAmt:    JSON.parse(res[i].args.fourMatchWinAmt),
-          fiveMatchWinAmt:    JSON.parse(res[i].args.fiveMatchWinAmt),
-          sixMatchWinAmt:     JSON.parse(res[i].args.sixMatchwinAmt),//note lower case W, made solicism in smart contract!
-          atTime:             moment.unix(JSON.parse(res[i].args.atTime)).format('dddd, MMMM Do, YYYY HH:mm:ss')
-        }
-        resArr.push(obj)
-      if(i + 1 == res.length) return resolve(resArr)
-      }
+      return resolve(
+        res.map(x => {
+          return obj = {
+            forRaffle:          JSON.parse(x.args.forRaffle),
+            newPrizePool:       JSON.parse(x.args.newMainPrizePool),
+            unclaimedPrizePool: JSON.parse(x.args.unclaimedPrizePool),
+            threeMatchWinAmt:   JSON.parse(x.args.threeMatchWinAmt),
+            fourMatchWinAmt:    JSON.parse(x.args.fourMatchWinAmt),
+            fiveMatchWinAmt:    JSON.parse(x.args.fiveMatchWinAmt),
+            sixMatchWinAmt:     JSON.parse(x.args.sixMatchwinAmt),//note lower case W, solicism in smart contract!
+            atTime:             moment.unix(JSON.parse(x.args.atTime)).format('dddd, MMMM Do, YYYY HH:mm:ss')
+          }
+        })
+      )
     })
   })
 }
+
