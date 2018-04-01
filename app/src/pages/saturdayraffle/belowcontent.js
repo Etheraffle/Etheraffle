@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import Promo from './promo/promo'
 
 export default class BelowContent extends React.Component {
 
@@ -45,7 +46,7 @@ export default class BelowContent extends React.Component {
                 {/* Eth account unlocked and good to go... */}
                 {(window.ethAdd !== undefined && window.ethAdd !== null) &&
                   <p className="justify">
-                   Grab your ticket to enter the draw and be in with a chance to win ether! You win by matching three of more numbers. The timer counts down until the entry closes at 7pm UTC time every Saturday, and the results are drawn two hours later - <span className={'styledSpan + screen' + this.props.screenIndex}>Good Luck!</span> By playing Etheraffle you are not only in with a chance to win ether, but also are helping to support good causes around the world! <a className={'invert screen' + this.props.screenIndex} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Want to know more?</a>
+                   Grab your ticket to enter the draw and be in with a chance to win ether! You win by matching three or more numbers. The timer counts down until the entry closes at 7pm UTC time every Saturday, and the results are drawn two hours later - <span className={'styledSpan + screen' + this.props.screenIndex}>Good Luck!</span> By playing Etheraffle you are not only in with a chance to win ether, but also are helping to support good causes around the world! <a className={'invert screen' + this.props.screenIndex} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Want to know more?</a>
                   </p>
                 }
 
@@ -60,6 +61,8 @@ export default class BelowContent extends React.Component {
 
           </div>
         }
+
+        <Promo screenIndex={this.props.screenIndex}/>
 
       </div>
     )
