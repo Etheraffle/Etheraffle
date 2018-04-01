@@ -57,7 +57,13 @@ p {
   font-size: 1.05em;
   padding: 4px;
   &.left{text-align: left;}
-  &.justify{text-align: justify;}
+  &.justify{
+    &.last {
+      -moz-text-align-last: center;
+      text-align-last: center;
+    }  
+    text-align: justify;
+  }
   &.centred{text-align: center;}
   &.rightAlign{text-align: right;}
   &.largerFont{font-size: 1.1em;}
