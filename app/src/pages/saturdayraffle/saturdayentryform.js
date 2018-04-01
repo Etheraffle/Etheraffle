@@ -112,7 +112,7 @@ export default class Saturdayentryform extends React.Component{
     buyTicket("Saturday", window.ethAdd, eNums, this.state.tktPrice)
     .then(txHash => {
       if (this.state.mounted && this.props.killDiv !== 1) this.setState({txHash: txHash})
-    }).catch(err =>{//will popup the error buying ticket modal
+    }).catch(err => {//will popup the error buying ticket modal
       if (this.state.mounted && this.props.killDiv !== 1) this.setState({w3Con: true, txHash: null})
     })
   }
