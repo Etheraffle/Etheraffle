@@ -5,6 +5,16 @@ const getWeekNo = () => {
   let birthday = 1500249600, weekDur = 604800
   return Math.trunc((moment().format('X') - birthday) / weekDur)
 }
+/* Increments weekNo at exact the contract does */
+const getExactWeekNo = (_raffle = 'Saturday') => {
+  let birthday = 1500249600, weekDur = 604800, now = moment().format('X'), rafEnd
+  if (_raffle === 'Saturday') rafEnd = 500400//7:00pm Saturdays
+  let curWeek = Math.trunc((now - birthday) / weekDur)
+  if (now - ((curWeek * weekDur) + birthday) > rafEnd) {
+    curWeek++
+  }
+  return curWeek
+}
 /* Get number of matches between chosen & winning numbers */
 const getMatches = (_entryNums, _winningNums) => {
   let matches = 0
@@ -40,6 +50,7 @@ const sortEnums = (_arr) => {
 module.exports = {
   sortEnums: sortEnums,
   getWeekNo: getWeekNo,
+  getExactWeekNo: getExactWeekNo,
   toDecimals: toDecimals,
   getMatches: getMatches
 }
