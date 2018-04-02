@@ -28,6 +28,7 @@ export default class Saturdayentryform extends React.Component{
       n1: 1, n2: 2, n3: 3, n4: 4, n5: 5, n6: 6,
       n1Arr: [], n2Arr: [], n3Arr: [], n4Arr: [], n5Arr: [], n6Arr: []
     }
+    this.getLowGas        = this.getLowGas.bind(this)
     this.openModal        = this.openModal.bind(this)
     this.closeModal       = this.closeModal.bind(this)
     this.handleChange     = this.handleChange.bind(this)
@@ -45,6 +46,16 @@ export default class Saturdayentryform extends React.Component{
   componentDidMount() {
     this.getPriceAndPrize()
     this.getOptionsArrays()
+    this.getLowGas()
+  }
+
+  getLowGas() {
+    return lowGas()
+    .then(safeLow => {
+      if (this.state.mounted) this.setState({safeLow: `${safeLow} Gwei`})
+    }).catch (err => {
+      console.log('Error retrieving safe low gas rate: ', err)
+    })
   }
 
   componentWillUnmount() {
@@ -54,10 +65,6 @@ export default class Saturdayentryform extends React.Component{
   openModal() {
     if (this.state.w3Con === true && window.web3 !== null && window.web3.isConnected() === true){//Eth connection good...
       if (this.state.tktPrice > 0 && window.ethAdd !== null){//Everything fine, buy ticket...
-
-        lowGas().then(safeLow => {
-          if (this.state.mounted) this.setState({safeLow: safeLow})
-        }).catch (err => console.log('Error retrieving safe low gas rate: ', err))
 
         this.sendTransaction()
 
