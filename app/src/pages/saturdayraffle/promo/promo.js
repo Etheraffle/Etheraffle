@@ -129,7 +129,7 @@ export default class Promo extends React.Component {
                 <br/>
 
                 <p className='justify'>
-                    Etheraffle is a truly decentralized lottery created to give huge prizes to players, sustainable ETH dividends to <span className={'styledSpan screen' + this.props.screenIndex}>LOT token</span> holders, and life-changing funding to charities. The <a className={'invert screen' + this.props.screenIndex} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Etheraffle ICO's</a> goal is to create as many LOT token holders as possible. To help achieve this, anyone who plays Etheraffle ALSO earns free LOT tokens! You can earn LOT every time you enter - so get playing! See the FAQ for how to claim and more details. 
+                    Etheraffle is a truly decentralized charitable lottery created to give huge prizes to players, sustainable ETH dividends to <span className={'styledSpan screen' + this.props.screenIndex}>LOT token</span> holders, and life-changing funding to charities. The <a className={'invert screen' + this.props.screenIndex} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Etheraffle ICO's</a> goal is to create as many LOT token holders as possible. To help achieve this, anyone who plays Etheraffle ALSO earns free LOT tokens! You can earn LOT every time you enter - so get playing! See the FAQ for how to claim and more details. 
                 </p>
             </div>
         )

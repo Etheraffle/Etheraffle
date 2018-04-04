@@ -5,7 +5,7 @@ export default (props) => {
     return(
         <div>
             <p className='justify'>
-                The <span className={'styledSpan screen' + props.screenIndex}>Etheraffle ÐApp</span> provides the first truly global, truly decentralized lottery. It is designed to give <span className={'styledSpan screen' + props.screenIndex}>huge prizes</span> to players, <span className={'styledSpan screen' + props.screenIndex}>sustainable rewards</span> to LOT holders, and <span className={'styledSpan screen' + props.screenIndex}>life-changing funding</span> to charities.
+                The <span className={'styledSpan screen' + props.screenIndex}>Etheraffle ÐApp</span> provides the first truly global, truly decentralized, charitable lottery. It is designed to give <span className={'styledSpan screen' + props.screenIndex}>huge prizes</span> to players, <span className={'styledSpan screen' + props.screenIndex}>sustainable rewards</span> to LOT holders, and <span className={'styledSpan screen' + props.screenIndex}>life-changing funding</span> to charities.
             </p>
 
             <img className='image centred' src={probVert} alt='Etheraffle problem/solution diagram' />
