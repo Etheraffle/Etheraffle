@@ -16,6 +16,11 @@ import CanIEnterMoreThanOnce from './questions/CanIEnterMoreThanOnce'
 import HowDoIClaimMyWinnings from './questions/HowDoIClaimMyWinnings'
 import HowDoIKnowIfIveEntered from './questions/HowDoIKnowIfIveEntered'
 
+import HowManyLOT from './questions/promo/HowManyLOT'
+import HowCanISeeLOT from './questions/promo/HowCanISeeLOT'
+import HowDoIClaimLOT from './questions/promo/HowDoIClaimLOT'
+import WhatIsLOTPromo from './questions/promo/WhatIsLOTPromo'
+
 
 export default (props) => {
   let acc1 = [
@@ -28,7 +33,19 @@ export default (props) => {
     {title: 'How can I be a part of Etheraffle?',
     component: HowCanIBe}
   ]
+  
   let acc2 = [
+    {title: 'What is the LOT Promotion?',
+    component: WhatIsLOTPromo},
+    {title: 'How many free LOT can I get?',
+    component: HowManyLOT},
+    {title: 'How do I claim my free LOT tokens?',
+    component: HowDoIClaimLOT},
+    {title: 'How can I see my LOT tokens in my wallet?',
+    component: HowCanISeeLOT}
+  ]
+  
+  let acc3 = [
     {title: 'How do I login?',
     component: HowDoILogin},
     {title: 'How do I enter a raffle?',
@@ -62,11 +79,17 @@ export default (props) => {
         </p>
           <Accordion arr={acc1} screenIndex={props.screenIndex} />
         <br/>
+        <LOT className='faqLogo' fill='6' />
+        <p>
+          LOT Promotion Questions:
+        </p>
+          <Accordion arr={acc2} screenIndex={props.screenIndex} />
+        <br/>
         <img className='faqLogo' src={eLogo} alt='e Logo' />
         <p>
           Raffle Questions:
         </p>
-         <Accordion arr={acc2} screenIndex={props.screenIndex} />
+         <Accordion arr={acc3} screenIndex={props.screenIndex} />
       </div>
     </div>
   )
