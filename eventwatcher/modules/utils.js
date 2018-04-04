@@ -33,7 +33,7 @@ const getBlockNum = () => {
 const getWeekNo = () => {
   const birthday = 1500249600, weekDur = 604800, raffleEndTime = 500400
   let week = Math.trunc((moment.utc().format("X") - birthday) / weekDur)
-  if(moment.utc().format('X') - ((week * weekDur) + birthday) > raffleEndTime) week++
+  if (moment.utc().format('X') - ((week * weekDur) + birthday) > raffleEndTime) week++
   return week
 }
 
@@ -49,7 +49,7 @@ const sendEmail = (_subjectStr, _htmlStr, _address) => {
       html: _htmlStr
     }
     mailgun.messages().send(emailData, (err, body) => {
-      if(!err) return resolve(true)
+      if (!err) return resolve(true)
       console.log("Error sending email! Subject: ", _subjectStr, ", body:", _htmlStr, ", error: ", err)
       return resolve(false)
     })

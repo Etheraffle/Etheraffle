@@ -5,7 +5,7 @@ module.exports = (_latestBlock, _period) => {
   let block = _latestBlock - Math.trunc((_period * 24 * 60 * 60) / 15)
   return new Promise ((resolve, reject) => {
     return getWeb3.etheraffle.LogWinningNumbers({},{fromBlock: block, toBlock: "latest"}).get((err,res) => {
-      if(err || res.length == 0) return resolve(null)
+      if (err || res.length == 0) return resolve(null)
       return resolve(
         res.map(x => {
           return obj = {
