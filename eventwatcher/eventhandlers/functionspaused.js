@@ -1,7 +1,7 @@
 const moment = require('moment')
     , utils  = require('../modules/utils')
 
-module.exports = (_data) => {
+module.exports = _data => {
   let time     = moment.unix(JSON.parse(_data.args.atTime)).format('dddd, MMMM Do, YYYY h:mm:ss A'),
       subject  = 'WARNING - Contract functions paused!'
   switch(JSON.parse(_data.args.identifier)) {
