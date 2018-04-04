@@ -547,7 +547,8 @@ body {
           flex-direction: row;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
-          justify-content: flex-end; }
+          justify-content: flex-end;
+  margin: 1em 0 1em 0; }
   .underInfo .socials {
     -ms-flex-item-align: end;
         align-self: flex-end; }
@@ -876,6 +877,65 @@ body {
     width: 100%; }
     .resultsTable td {
       font-size: 0.9em; } }
+.promo svg {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+.promo .promoLOT {
+  width: 70%;
+  margin: 0 auto 0 auto; }
+.promo .promoCounter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 1em 0 1em 0; }
+  .promo .promoCounter h1 {
+    font-size: 2.2em !important;
+    color: #e8cd2a; }
+.promo .redeemButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 20em;
+  height: 2.8em;
+  margin: 1.6em auto 0.8em auto;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: 95%;
+  background-position: center;
+  border-color: #d3d3d3;
+  -webkit-box-shadow: 5px -5px 0px 0px #d3d3d3;
+  box-shadow: 5px -5px 0px 0px #d3d3d3;
+  border-style: solid;
+  border-width: 2px; }
+  .promo .redeemButton.screen5 {
+    background-image: url("../../images/redeemBonus.svg"); }
+    .promo .redeemButton.screen5:hover {
+      border-color: #25dfdf;
+      -webkit-box-shadow: 5px -5px 0px 0px #25dfdf;
+      box-shadow: 5px -5px 0px 0px #25dfdf;
+      border-style: solid;
+      border-width: 2px; }
+  .promo .redeemButton.redeemedScreen5 {
+    cursor: default;
+    background-image: url("../../images/redeemedBonus.svg"); }
+
+@media (max-width: 450px) {
+  .promo .promoLOT {
+    width: 100%; }
+  .promo .redeemButton {
+    width: 15em;
+    height: 2.3em; } }
 .timer {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1173,6 +1233,8 @@ p {
     text-align: left; }
   p.justify {
     text-align: justify; }
+    p.justify.last {
+      text-align-last: center; }
   p.centred {
     text-align: center; }
   p.rightAlign {

@@ -1,0 +1,59 @@
+.promo {
+    svg {
+        display: flex;
+        //margin: 0 auto 0 auto;
+    }
+
+    .promoLOT {
+        width: 70%;
+        margin: 0 auto 0 auto;
+    }
+
+    .promoCounter {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin: 1em 0 1em 0;
+
+        h1 {
+            font-size: 2.2em !important;
+            color: #e8cd2a;
+        }
+    }
+
+    .redeemButton {
+        display: flex;
+        width: 20em;
+        height: 2.8em;
+        margin: 1.6em auto 0.8em auto;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-size: 95%;
+        background-position: center;
+        @include dropShadow($erLtGrey);
+
+        &.screen5 {
+        background-image: url('../../images/redeemBonus.svg');
+            &:hover{@include dropShadow($erBlue);}
+        }
+
+        &.redeemedScreen5 {
+            cursor: default;
+            background-image: url('../../images/redeemedBonus.svg');
+        }
+    }
+}
+
+@media (max-width: $mobile) {
+    .promo {
+        .promoLOT {
+            width: 100%;
+        }
+
+        .redeemButton {
+            width: 15em;
+            height: 2.3em;
+        }
+    }
+}
