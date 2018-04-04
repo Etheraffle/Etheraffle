@@ -10,7 +10,7 @@ const getAccounts = () => {
 
 const raceAccounts = () => {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {reject(new Error('Unable to retrieve ethereum account!'))}, 1000)
+    setTimeout(() => {reject(new Error('Unable to retrieve ethereum account!'))}, 2000)
   })
 }
 
