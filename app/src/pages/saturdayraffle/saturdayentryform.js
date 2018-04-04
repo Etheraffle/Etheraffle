@@ -234,10 +234,11 @@ export default class Saturdayentryform extends React.Component{
                       Ticket Bought - Good Luck!
                     </h2>
                     <p className='centred'>
-                      Your transaction hash: <a
+                      Your transaction hash : 
+                      <a
                         rel="noopener noreferrer"
                         target="_blank"
-                        className={"screen" + this.props.screenIndex}
+                        className={"invert screen" + this.props.screenIndex}
                         href={"https://etherscan.io/tx/" + this.state.txHash}>
                         {this.state.txHash.substring(0, 20) + ' . . .'}
                       </a>
