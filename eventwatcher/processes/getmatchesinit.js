@@ -32,7 +32,7 @@ const init = (_wObj, _path = './getmatchesprocess') => {
   console.log(`getMatches Process Spawned on: ${utils.getTime()}`)
   getMatches.send(_wObj)
   getMatches.on('message', msg => {
-    if (msg == "Complete" || msg == "Errored!"){
+    if (msg == "Complete" || msg == "Errored!") {
       getMatches.kill()
       console.log(`getMatches process killed with status: ${msg} on: ${utils.getTime()}`)
     } else {

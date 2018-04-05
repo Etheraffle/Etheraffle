@@ -11,7 +11,7 @@ process.on('unhandledRejection', err => {//catches errors in my catches :/
 })
 
 /* Start Process Function */
-function start(_wObj){
+function start(_wObj) {
   return mongo.init()
   .then(result => {
     if (result != true) throw new Error("Mongo init() returned false!")
@@ -27,7 +27,7 @@ function start(_wObj){
 }
 
 /* Capture non-entered raffle details into db */
-function captureZeroDetails(_wObj){
+function captureZeroDetails(_wObj) {
   _wObj["matches"] = [0,0,0,0,0,0,0]//set zeroed out non-existent details...
   _wObj["winningAmounts"] = [0,0,0,0,0,0,0]
   return mongo.updateResults(_wObj)
@@ -42,7 +42,7 @@ function captureZeroDetails(_wObj){
 }
 
 /* Capture raffle details into db */
-function captureRaffleDetails(_wObj){
+function captureRaffleDetails(_wObj) {
   return getMatchesArr(_wObj)
   .then(matchesArr => {
     _wObj["matches"] = matchesArr
@@ -64,27 +64,27 @@ function captureRaffleDetails(_wObj){
 }
 
 /* Orders entries array via their baked in entry number */
-function getOrderedEntries(_wObj){
+function getOrderedEntries(_wObj) {
   const missingNo = [], orderedEntries = new Array(_wObj.numEntries).fill(null)
-  for (let i = 0; i < _wObj.entriesArr.length; i++){//Create array with entries in their entryNum-1 index position...
+  for (let i = 0; i < _wObj.entriesArr.length; i++) {//Create array with entries in their entryNum-1 index position...
     orderedEntries[(_wObj.entriesArr[i][6]) - 1] = _wObj.entriesArr[i]
   }
-  for (let i = 0; i < _wObj.numEntries; i++){//Create array containing entryNums of absent entries...
+  for (let i = 0; i < _wObj.numEntries; i++) {//Create array containing entryNums of absent entries...
     if (orderedEntries[i] == null) missingNo.push(i + 1)//Plus one ∴ array contains entryNums, not indices!
   }
   return missingNo.length == 0 ? captureRaffleDetails(_wObj) : getMissingEntries(_wObj, missingNo)
 }
 /* Get missing entries via past events from smart contract*/
-function getMissingEntries(_wObj, _missingNo){
+function getMissingEntries(_wObj, _missingNo) {
   const promises = [], promRes = []
   return utils.getBlockNum()
   .then(blockStart => {
-    for (let i = 0; i < _missingNo.length; i++){
+    for (let i = 0; i < _missingNo.length; i++) {
       promises.push(getEntry(blockStart, _wObj.raffleID, _missingNo[i]))
     }
     return Promise.all(promises)
     .then(promArr => {
-      for (let i = 0; i < promArr.length; i++){//remove any nulls...
+      for (let i = 0; i < promArr.length; i++) {//remove any nulls...
         if (promArr[i] != null) promRes.push(promArr[i])
       }
       return mongo.bulkUpdate(promRes)
@@ -105,21 +105,21 @@ function getMissingEntries(_wObj, _missingNo){
   })
 }
 /* Build array of number of 6match wins, 5 match wins etc */
-function getMatchesArr(_wObj){
+function getMatchesArr(_wObj) {
   return new Promise ((resolve, reject) => {
     const matchesArr = [0,0,0,0,0,0,0]
-    for (let n = 0; n < _wObj.entriesArr.length; n++){
+    for (let n = 0; n < _wObj.entriesArr.length; n++) {
       let matches = 0
-      for (let i = 0; i < 6; i++){
-        for (let j = 0; j < 6; j++){
-          if (_wObj.entriesArr[n][i] == _wObj.winningNumbers[j]){
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
+          if (_wObj.entriesArr[n][i] == _wObj.winningNumbers[j]) {
             matches++
             break
           }
         }
       }
       matchesArr[matches]++
-      if (n == _wObj.entriesArr.length - 1){
+      if (n == _wObj.entriesArr.length - 1) {
         let sum = matchesArr.reduce((a, b) => a + b, 0)
         return _wObj.entriesArr.length == sum ? resolve(matchesArr) : resolve([0,0,0,0,0,0,0])
       }
@@ -127,15 +127,15 @@ function getMatchesArr(_wObj){
   })
 }
 /* Get matches array using an asynchronous, non-blocking Lupus loop - SLOW! */
-function getMatchesArrLupus(_wObj){
+function getMatchesArrLupus(_wObj) {
   return new Promise ((resolve, reject) => {
     var matchesArr = [0,0,0,0,0,0,0]
     //Lupus allows very large async looping...
     lupus(0, _wObj.entriesArr.length, function(n) {
       var matches = 0
-      for (var i = 0; i < 6; i++){
-        for (var j = 0; j < 6; j++){
-          if (_wObj.entriesArr[n][i] == _wObj.winningNumbers[j]){
+      for (var i = 0; i < 6; i++) {
+        for (var j = 0; j < 6; j++) {
+          if (_wObj.entriesArr[n][i] == _wObj.winningNumbers[j]) {
             matches++
             break
           }
@@ -143,9 +143,9 @@ function getMatchesArrLupus(_wObj){
       }
       matchesArr[matches]++
       //console.log("Matches array in lupus loop: ", matchesArr)
-    },function(){//after loop finished...
+    },function() {//after loop finished...
       let sum = matchesArr.reduce((a, b) => a + b, 0)
-      if (_wObj.entriesArr.length == sum){
+      if (_wObj.entriesArr.length == sum) {
         return resolve(matchesArr)
       } else {
         return resolve([0,0,0,0,0,0,0])
@@ -154,7 +154,7 @@ function getMatchesArrLupus(_wObj){
   })
 }
 /* Calculate prizes based on number of winners in each tier */
-function getWinningAmounts(_matchesArr, _prizePool){
+function getWinningAmounts(_matchesArr, _prizePool) {
   return new Promise ((resolve, reject) => {//soldity truncates division...
     const percentOfPool = [520, 114, 47, 319]//ppt
     const winningAmounts = [0,0,0,0,0,0,0]
@@ -176,14 +176,14 @@ function getWinningAmounts(_matchesArr, _prizePool){
 /* Batch version of getMatches - UNFINISHED! */
 /*
 //The getMatches function seems to crash after a million or so goes? Chunk it up? Refeed it the previous matchesArr to continue where it left off? Maybe store the chunks then pull them out & match individually?
-function batchMatches(_wObj){
+function batchMatches(_wObj) {
   return new Promise((resolve, reject) => {
     var chunk = 100000
     var iterations = Math.trunc(_wObj.entriesArr.length / chunk)
     if (_wObj.entriesArr.length % chunk > 0 )
       iterations += 1
     var pieces = []
-    for (var i = 0; i < iterations; i++){
+    for (var i = 0; i < iterations; i++) {
       //chunk up array and store pieces in pieces..
       pieces.push(_wObj.entriesArr.slice((i * chunk), ((i * chunk) + chunk)))
     }
@@ -192,7 +192,7 @@ function batchMatches(_wObj){
     function sequentialPromises(arr, index = 0) {
       var matches = [0,0,0,0,0,0,0]
       var time = 0;
-      if (index >= arr.length){
+      if (index >= arr.length) {
         return Promise.resolve()
       } else {
         time = utils.getTimeStamp()
@@ -223,24 +223,24 @@ function batchMatches(_wObj){
     .then(results => {
       var complete = []
       //Check each piece's match array totals the number of arrays thrown at it...
-      for (var i = 0; i < results.length; i++){
+      for (var i = 0; i < results.length; i++) {
         let sum = results[i].reduce((a, b) => a + b, 0)//WILL FAIL IF PROMISEREPEAT TIMES OUT!
-        if (sum == pieces[i].length){
+        if (sum == pieces[i].length) {
           complete.push(results[i])
         } else {
           complete.push([0,0,0,0,0,0,0])//push empty array so final count will not error, but won't pass
         }
       }
-      //if (complete.length == iterations){
+      //if (complete.length == iterations) {
       //sum the individual match arrays to a final one...
       var finalMatches = [0,0,0,0,0,0,0]
-      for (var i = 0; i < complete.length; i++){
-        for (var j = 0; j < finalMatches.length; j++){
+      for (var i = 0; i < complete.length; i++) {
+        for (var j = 0; j < finalMatches.length; j++) {
           finalMatches[j] += complete[i][j]
         }
       }
       let sum = finalMatches.reduce((a, b) => a + b, 0)
-      if (_wObj.entriesArr.length == sum){
+      if (_wObj.entriesArr.length == sum) {
         return resolve(finalMatches)
       } else {//
         //handle this better? start again? I don't know?
