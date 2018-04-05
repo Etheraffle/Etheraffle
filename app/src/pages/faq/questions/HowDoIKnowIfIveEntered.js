@@ -4,7 +4,7 @@ import success from './images/etherscansuccess.jpg'
 import txhash from './images/txhash.jpg'
 import resultsTab from './images/resultstab.jpg'
 
-export default (props) => {
+export default props => {
   return(
     <div>
 

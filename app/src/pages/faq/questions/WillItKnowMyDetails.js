@@ -3,7 +3,7 @@ import resultsTab from './images/resultstab.jpg'
 
 export default class WillItKnowMyDetails extends Component {
 
-  render(){
+  render() {
     return(
       <div>
 

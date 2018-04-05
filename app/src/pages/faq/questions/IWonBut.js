@@ -4,7 +4,7 @@ import claimed from './images/claimed.jpg'
 import fail from './images/etherscanfail.jpg'
 import ContactForm from '../../../components/contactform/contactForm'
 
-export default (props) => {
+export default props => {
   return(
     <div>
       <p className="justify">

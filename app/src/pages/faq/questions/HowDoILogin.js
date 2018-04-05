@@ -3,7 +3,7 @@ import MetaMask from '../../../images/metamasklogo.jpg'
 import Mist from '../../../images/mistlogo.jpg'
 import Cipher from '../../../images/cipherLogo.png'
 
-export default (props) => {
+export default props => {
   return(
     <div>
 

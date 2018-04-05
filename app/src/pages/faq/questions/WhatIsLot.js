@@ -2,7 +2,7 @@ import React from 'react'
 import LOTRel from './images/LOTRel.png'
 import LOTEther from './images/lotEqualsEther.png'
 
-export default (props) => {
+export default props => {
     return(
         <div>
             <p className='justify'>

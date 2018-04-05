@@ -2,7 +2,7 @@ import React from 'react'
 import FAQ from '../pages/faq/faq'
 import Results from '../pages/results/results'
 
-export default class Subnav extends React.Component{
+export default class Subnav extends React.Component {
 
   constructor(props) {
     super(props)

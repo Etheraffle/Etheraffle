@@ -3,7 +3,7 @@ import qr from './images/qrCode.png'
 import pie from './images/pieChart.png'
 import bonus from './images/bonusLOT.png'
 
-export default (props) => {
+export default props => {
     return(
         <div>
             <p className='justify'>

@@ -3,7 +3,7 @@ import React from 'react'
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import {faFacebook, faTwitterSquare, faTelegram, faReddit, faGithub} from '@fortawesome/fontawesome-free-brands'
 
-export default (props) => {
+export default props => {
     return (
         <p className='socials'>
             <a 

@@ -2,7 +2,7 @@ import React from 'react'
 import LOT from '../../components/lot'
 import Subnav from '../../components/subnav'
 
-export default class Wednesday extends React.Component{
+export default class Wednesday extends React.Component {
 
   constructor(props) {
     super(props)

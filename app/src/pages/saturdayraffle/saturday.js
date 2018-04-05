@@ -2,7 +2,7 @@ import React from 'react'
 import Subnav from '../../components/subnav'
 import Saturdayraffle from '../saturdayraffle/saturdayraffle'
 
-export default class Screen5 extends React.Component{
+export default class Screen5 extends React.Component {
 
   constructor(props) {
     super(props)
