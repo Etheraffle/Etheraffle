@@ -1,10 +1,17 @@
 const {fork} = require('child_process')
     , utils  = require('../modules/utils')
 /*
-This method is called in the main eventwatcher.js file via a daily cron job. Can also be run when needed via node in this directory:
-> const whatever = require('./getweeklyeventsinit')
-> whatever.manualInit(args)
-*/
+ * @dev   Function called by cron once a day to pick up any entries the
+ *        event watcher may have missed. Requires at least one entry to
+ *        already be in the database for the raffle in question.
+ * 
+ * @param _period The period of days to look over.
+ * 
+ * @param _path   The path to the js file the forked process runs. Defaults
+ *                to correct path relative to this file.
+ * 
+ * @param _weekNo The desired week number (defaults to current week)
+ */
 const init = (_period, _path, _weekNo) => {
   const period   = _period == undefined ? 7 : _period,
         getOrac  = _path   == undefined ? fork("./getweeklyeventsprocess") : fork(_path),
