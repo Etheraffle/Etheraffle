@@ -42,7 +42,7 @@ function start(_raffleID, _period) {
                  '<b><br><br>Funds Reclaimed: </b><br><br>' + rc +
                  '<b><br><br>Prize Pool Additions: </b><br><br>' + pp
       utils.sendEmail(subj, body, 'weekly').then(res => {
-        if(res) return process.send('Complete!')
+        if (res) return process.send('Complete!')
         process.send('Send email returned false!')
         return process.send('Errored!')
       })

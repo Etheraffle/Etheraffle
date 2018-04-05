@@ -13,7 +13,7 @@ const manualInit = (_weekNo, _period) => {
   .then(block => {
     return getWinEvent(block, raffleID, period)
     .then(obj => {
-      if(obj == null) throw new Error("getWinningEvent module returned null!")
+      if (obj == null) throw new Error("getWinningEvent module returned null!")
       return init(obj, './getmatchesprocess')
     })
   }).catch(err => utils.errorHandler("manualInit", "getMatchesInit", _weekNo, err))
@@ -24,7 +24,7 @@ const init = (_wObj, _path) => {
   console.log("getMatches Process Spawned on: ", utils.getTime())
   getMatches.send(_wObj)
   getMatches.on('message', msg => {
-    if(msg == "Complete" || msg == "Errored!"){
+    if (msg == "Complete" || msg == "Errored!"){
       getMatches.kill()
       console.log("getMatches process killed with status: ", msg, " on: ", utils.getTime())
     } else {

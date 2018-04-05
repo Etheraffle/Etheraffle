@@ -12,7 +12,7 @@ const init = (_path, _weekNo) => { //requires at least one entry already in db!
   console.log("getMissingEntries Process Spawned on", utils.getTime())
   getMissingEntries.send(raffleID)
   getMissingEntries.on("message", msg => {
-    if(msg == "Complete!" || msg == "Errored!") {
+    if (msg == "Complete!" || msg == "Errored!") {
       getMissingEntries.kill()
       console.log("getMissingEntries process killed with status: ", msg, " on: ", utils.getTime())
     } else {

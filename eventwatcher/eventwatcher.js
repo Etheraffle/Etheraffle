@@ -1,20 +1,20 @@
 const cron                = require('node-cron')
     , utils               = require('./modules/utils')
+    , web3Connect         = require('./modules/getweb3')
     , getMissing          = require('./processes/getmissinginit')
+    , withdrawal          = require('./eventhandlers/withdrawal')
+    , prizePools          = require('./eventhandlers/prizepools')
+    , winningNums         = require('./eventhandlers/winningnums')
+    , ticketBought        = require('./eventhandlers/ticketbought')
     , getWithdrawn        = require('./processes/getwithdrawninit')
     , getOrac             = require('./processes/getweeklyeventsinit')
-    , ticketBought        = require('./eventhandlers/ticketbought')
-    , winningNums         = require('./eventhandlers/winningnums')
-    , prizePools          = require('./eventhandlers/prizepools')
-    , withdrawal          = require('./eventhandlers/withdrawal')
     , paused              = require('./eventhandlers/functionspaused')
-    , web3Connect         = require('./modules/getweb3')
     , web3                = web3Connect.web3
     , etheraffle          = web3Connect.etheraffle
+    , withdrawEvent       = etheraffle.LogWithdraw()
     , ticketBoughtEvent   = etheraffle.LogTicketBought()
     , winningNumbersEvent = etheraffle.LogWinningNumbers()
     , prizePoolsEvent     = etheraffle.LogPrizePoolsUpdated()
-    , withdrawEvent       = etheraffle.LogWithdraw()
     , functionsPaused     = etheraffle.LogFunctionsPaused()
 /*
 Notes:
@@ -33,23 +33,23 @@ const block = web3.eth.getBlockNumber((err, res) => {
 
 /* The Event Watchers */
 ticketBoughtEvent.watch((err, res) => {
-  if(err) return utils.errorHandler("ticketBoughtEvent", "eventwatcher", res, err), process.exit(1)
+  if (err) return utils.errorHandler("ticketBoughtEvent", "eventwatcher", res, err), process.exit(1)
   return ticketBought(res)
 })
 winningNumbersEvent.watch((err, res) => {
-  if(err) return utils.errorHandler("winningNumbersEvent", "API", "None", err), process.exit(1)
+  if (err) return utils.errorHandler("winningNumbersEvent", "API", "None", err), process.exit(1)
   return winningNums(res)
 })
 withdrawEvent.watch((err, res) => {
-  if(err) return utils.errorHandler("withdrawEvent", "API", "None", err), process.exit(1)
+  if (err) return utils.errorHandler("withdrawEvent", "API", "None", err), process.exit(1)
   return withdrawal(res)
 })
 functionsPaused.watch((err, res) => {
-  if(err) return utils.errorHandler("functionsPaused", "API", "None", err), process.exit(1)
+  if (err) return utils.errorHandler("functionsPaused", "API", "None", err), process.exit(1)
   return paused(res)
 })
 prizePoolsEvent.watch((err, res) => {//TODO: what is this function for?
-  if(err) return utils.errorHandler("prizePoolsEvent", "API", "None", err), process.exit(1)
+  if (err) return utils.errorHandler("prizePoolsEvent", "API", "None", err), process.exit(1)
   return prizePools(res)
 })
 /* Cron Jobs */

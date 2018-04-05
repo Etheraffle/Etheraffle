@@ -12,7 +12,7 @@ const init = (_period, _path) => {
   console.log("getWithdrawals Process Spawned on", utils.getTime())
   getWithdrawals.send(period)
   getWithdrawals.on("message", msg => {
-    if(msg == "Complete!" || msg == "Errored!") {//process itself emails error reports...
+    if (msg == "Complete!" || msg == "Errored!") {//process itself emails error reports...
       getWithdrawals.kill()
       console.log("getWithdrawals process killed with status: ", msg, " on: ", utils.getTime())
     } else {
