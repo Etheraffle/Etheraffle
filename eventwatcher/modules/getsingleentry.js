@@ -8,7 +8,7 @@ module.exports = (_blockStart, _raffleID, _missingNo) => {
       const raffleID = JSON.parse(res[0].args.forRaffle),
             ethAdd   = res[0].args.theEntrant,
             chosen   = []
-      for (let j = 0; j < 6; j++){chosen.push(JSON.parse(res[0].args.chosenNumbers[j]))}
+      for (let j = 0; j < 6; j++) {chosen.push(JSON.parse(res[0].args.chosenNumbers[j]))}
       chosen.push(JSON.parse(res[0].args.entryNumber), JSON.parse(res[0].args.personalEntryNumber))
       let obj = {raffleID: raffleID, ethAdd: ethAdd, chosenNumbers: chosen}
       return resolve(obj)
