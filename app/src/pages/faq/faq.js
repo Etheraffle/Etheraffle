@@ -22,7 +22,7 @@ import HowDoIClaimLOT from './questions/promo/HowDoIClaimLOT'
 import WhatIsLOTPromo from './questions/promo/WhatIsLOTPromo'
 
 
-export default (props) => {
+export default props => {
   let acc1 = [
     {title: 'What is Etheraffle?',
     component: WhatIsEtheraffle},

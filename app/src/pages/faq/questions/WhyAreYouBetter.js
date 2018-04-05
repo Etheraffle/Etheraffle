@@ -1,7 +1,7 @@
 import React from 'react'
 import compTable from './images/compTable.png'
 
-export default (props) => {
+export default props => {
     return(
         <div>
             <p className='justify'>

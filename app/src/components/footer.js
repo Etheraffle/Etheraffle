@@ -2,7 +2,7 @@ import React from 'react'
 import Socials from './socials'
 import { Link } from 'react-router'
 
-export default (props) => {
+export default props => {
     return(
         <div className="underInfo">
             <p className='info'>

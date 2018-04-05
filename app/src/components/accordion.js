@@ -2,7 +2,7 @@ import React from 'react'
 import '../../node_modules/react-accessible-accordion/dist/react-accessible-accordion.css'
 import { Accordion, AccordionItem, AccordionItemTitle, AccordionItemBody } from 'react-accessible-accordion'
 
-export default (props) => {
+export default props => {
     let acc = [] 
     props.arr.map((item, i) => {
         let Comp = item.component

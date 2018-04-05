@@ -1,7 +1,7 @@
 import React from 'react'
 import probVert from './images/probVert.png'
 
-export default (props) => {
+export default props => {
     return(
         <div>
             <p className='justify'>

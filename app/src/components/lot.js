@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default (props) => {
+export default props => {
 	let colours = ['','#28e973','#9689aa','#ec3ce0','#9e7be2','#25dfdf', '#e8cd2a',]
 	return(
 		<svg className={'LOT screen' + props.screenIndex} version="1.1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 1699.17 942.873" enableBackground="new 0 0 1699.17 942.873" height={props.height ? props.height : '2em'}>
