@@ -15,8 +15,8 @@ const getTimeStamp = () => {
 
 /* Error Handler */
 const errorHandler = (_funcName, _fileName, _funcData, _err) => {
-  let subject = "Error in " + _funcName + " function in file " + _fileName + "!"
-  let body = "On: " + getTime() + "<br><br>Error: " + _err + "<br><br>Function Data: " + JSON.stringify(_funcData)
+  let subject = `Error in ${_funcName} function in file ${_fileName}!`
+    , body    = `On: ${getTime()} <br><br>Error: ${_err} <br><br>Function Data: ${JSON.stringify(_funcData)}`
   sendEmail(subject,body)
 }
 
@@ -41,7 +41,7 @@ const getWeekNo = () => {
 const sendEmail = (_subjectStr, _htmlStr, _address) => {
   return new Promise((resolve,reject) => {
     let _add = _address == undefined ? 'admin' : _address
-    console.log("Send email triggered! Subject: ", _subjectStr, "Body: ", _htmlStr)
+    console.log(`Send email triggered! Subject: ${_subjectStr} Body: ${_htmlStr}`)
     const emailData = {
       from: "Etheraffle API <api@etheraffle.com>",
       to: _add + "@etheraffle.com",
@@ -50,7 +50,7 @@ const sendEmail = (_subjectStr, _htmlStr, _address) => {
     }
     mailgun.messages().send(emailData, (err, body) => {
       if (!err) return resolve(true)
-      console.log("Error sending email! Subject: ", _subjectStr, ", body:", _htmlStr, ", error: ", err)
+      console.log(`Error sending email! Subject: ${_subjectStr}, body: ${_htmlStr} error: ${err}`)
       return resolve(false)
     })
   })
