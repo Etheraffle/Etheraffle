@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-module.exports = (_data) => {
+module.exports = _data => {
   const obj = {
     raffleID:           JSON.parse(_data.args.forRaffle),
     sixMatchWin:        JSON.parse(_data.args.sixMatchwinAmt),
@@ -11,5 +11,5 @@ module.exports = (_data) => {
     unclaimedPrizePool: JSON.parse(_data.args.unclaimedPrizePool),
     atTime:             moment.unix(JSON.parse(_data.args.atTime)).format('dddd, MMMM Do, YYYY h:mm:ss A')
   }
-  return console.log("PrizePool event watcher: ", obj)
+  return console.log(`PrizePool event watcher: ${obj}`)
 }

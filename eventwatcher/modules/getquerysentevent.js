@@ -7,7 +7,7 @@ module.exports = (_latestBlock, _period) => {
   let block = _latestBlock - Math.trunc((_period * 24 * 60 * 60) / 15)
   return new Promise ((resolve, reject) => {
     return getWeb3.etheraffle.LogQuerySent({},{fromBlock: block, toBlock: "latest"}).get((err,res) => {
-      if(err || res.length == 0) return resolve(null)
+      if (err || res.length == 0) return resolve(null)
       return Promise.all(res.map(x => {return getStruct(x.args.queryID)}))
       .then(arr => {
         return resolve(
@@ -22,7 +22,7 @@ module.exports = (_latestBlock, _period) => {
             }
           })
         )
-      }).catch(err => {console.log('Error getting struct in getQuerySentEvents: ', err)})
+      }).catch(err => {console.log(`Error getting struct in getQuerySentEvents: ${err}`)})
     })
   })
 }
