@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-export default class Saturdayclock extends React.Component{
+export default class Saturdayclock extends React.Component {
 
   constructor(props) {
     super(props)

@@ -9,7 +9,7 @@ import getTktPrice from '../../web3/getTicketPrice'
 import loadingIcon from '../../images/loadingIconGrey.svg'
 import NotConnectedInfo from '../../components/modals/notconnectedinfo'
 
-export default class Saturdayentryform extends React.Component{
+export default class Saturdayentryform extends React.Component {
 
   constructor(props) {
     super(props)
