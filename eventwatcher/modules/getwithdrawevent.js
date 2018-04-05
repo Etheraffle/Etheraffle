@@ -4,7 +4,7 @@ module.exports = (_period, _latestBlock) => {
   let block = _latestBlock - Math.trunc((_period * 60 * 60) / 15)
   return new Promise((resolve, reject) => {
     getWeb3.etheraffle.LogWithdraw({},{fromBlock: block, toBlock: 'latest'}).get((err, res) => {
-      if (err) return reject(new Error("Error retrieving withdraw events!" + err))
+      if (err) return reject(new Error(`Error retrieving withdraw events! ${err}`))
       if (res.length == 0) return resolve(null)
       let arr = []
       for (let i = 0; i < res.length; i++) {

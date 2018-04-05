@@ -21,7 +21,7 @@ module.exports = (_latestBlock, _period, _raffleID) => {
             }
           })
         )
-      }).catch(err => {console.log('Error getting struct in getOraclizeCallbackEvent: ', err)})
+      }).catch(err => {console.log(`Error getting struct in getOraclizeCallbackEvent: ${err}`)})
     })
   })
 }

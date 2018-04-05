@@ -22,7 +22,7 @@ module.exports = (_latestBlock, _period) => {
             }
           })
         )
-      }).catch(err => {console.log('Error getting struct in getQuerySentEvents: ', err)})
+      }).catch(err => {console.log(`Error getting struct in getQuerySentEvents: ${err}`)})
     })
   })
 }

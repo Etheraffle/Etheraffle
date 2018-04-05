@@ -1,9 +1,9 @@
 const moment  = require('moment')
-    , mongo   = require('mongodb').MongoClient
-    , object  = require('mongodb').ObjectID
-    , apikeys = require('./apikeys')
     , utils   = require('./utils')
+    , apikeys = require('./apikeys')
     , cron    = require('node-cron')
+    , object  = require('mongodb').ObjectID
+    , mongo   = require('mongodb').MongoClient
 
 /*Setup Connection & Initialize Batch Operations*/
 let bulkEthAdd, bulkEntries, db, batchSize = 5, counter = 0
@@ -33,7 +33,7 @@ const drainQueue = function(){
     let p1 = bulkEntries.execute(), p2 = bulkEthAdd.execute()
     return Promise.all([p1,p2])
     .then(([r1,r2]) => {
-      if (r1.ok != 1 || r2.ok != 1) throw new Error("Error draining entries queue! Entries: " + r1 + ", EthAdd: " + r2)
+      if (r1.ok != 1 || r2.ok != 1) throw new Error(`Error draining entries queue! Entries: ${r1}, EthAdd: ${r2}`)
       bulkEntries = db.collection("entries").initializeUnorderedBulkOp()
       bulkEthAdd = db.collection("ethAdd").initializeUnorderedBulkOp()
       counter = 0
@@ -53,7 +53,7 @@ const batchInsertion = function(_data){
   if (counter % batchSize != 0) return
   else return drainQueue()
   .then(result => {
-    if (result != true) throw new Error("Error in batchEthAdd Mongo function!: " + JSON.stringify(result))
+    if (result != true) throw new Error(`Error in batchEthAdd Mongo function!: ${JSON.stringify(result)}`)
     else return
   }).catch(err => utils.errorHandler("batchInsertion", "Mongo", _data, err))
 }
@@ -71,7 +71,7 @@ const bulkUpdate = function(_arr){
   }
   return Promise.all([bEth.execute(),bEnt.execute()])
   .then(([r1,r2]) => {
-    if (r1.ok != 1 || r2.ok != 1) throw new Error("Error executing bulkUpdate! ethAdd: " + r1 + ", entries: " + r2)
+    if (r1.ok != 1 || r2.ok != 1) throw new Error(`Error executing bulkUpdate! ethAdd: ${r1} entries: ${r2}`)
     return true
   }).catch(err => utils.errorHandler("bulkUpdate", "Mongo", _arr, err))
 }
@@ -92,12 +92,12 @@ const getEntriesArr = function(_raffleID){
 const updateResults = function(_wObj){
   return db.collection("entries").update({"raffleID" : _wObj.raffleID},
     {$set :
-      {"entriesArr" :                 _wObj.entriesArr,
-        "resultsArr.prizePool" :      _wObj.prizePool,
-        "resultsArr.matches" :        _wObj.matches,
-        "resultsArr.winningNumbers" : _wObj.winningNumbers,
-        "resultsArr.winningAmounts" : _wObj.winningAmounts,
-        "resultsArr.timeStamp" :      utils.getTimeStamp()}},{upsert : true})
+      {"entriesArr":                 _wObj.entriesArr,
+        "resultsArr.prizePool":      _wObj.prizePool,
+        "resultsArr.matches":        _wObj.matches,
+        "resultsArr.winningNumbers": _wObj.winningNumbers,
+        "resultsArr.winningAmounts": _wObj.winningAmounts,
+        "resultsArr.timeStamp":      utils.getTimeStamp()}},{upsert : true})
   .then(res => {
     //return result.result.nModified == 1 || result.result.ok == 1 ? true : false
     return res.result.nModified == 1 ? true : res.result.ok == 1 ? true : false
@@ -137,7 +137,7 @@ const getUserEntries = function(_ethAdd, _raffleID){
   .then(res => {
     return res == null ? null : res.entries[_raffleID] == undefined ? null : res.entries[_raffleID]
   }).catch(err => {
-    utils.errorHandler("getUserEntries", "Mongo", "ethAdd:" + _ethAdd + " raffleID: " + _raffleID, err)
+    utils.errorHandler("getUserEntries", "Mongo", `ethAdd: ${_ethAdd}, raffleID: ${_raffleID}`, err)
     return null
   })
 }
