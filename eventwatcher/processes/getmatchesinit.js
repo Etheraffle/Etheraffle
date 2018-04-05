@@ -21,14 +21,14 @@ const manualInit = (_weekNo, _period) => {
 /* Else running processes call this function instead */
 const init = (_wObj, _path) => {
   const getMatches = _path == undefined ? fork('./getmatchesprocess') : fork(_path)
-  console.log("getMatches Process Spawned on: ", utils.getTime())
+  console.log(`getMatches Process Spawned on: ${utils.getTime()}`)
   getMatches.send(_wObj)
   getMatches.on('message', msg => {
     if (msg == "Complete" || msg == "Errored!"){
       getMatches.kill()
-      console.log("getMatches process killed with status: ", msg, " on: ", utils.getTime())
+      console.log(`getMatches process killed with status: ${msg} on: ${utils.getTime()}`)
     } else {
-      console.log("getMatches process says: ", msg)
+      console.log(`getMatches process says: ${msg}`)
     }
   })
 }

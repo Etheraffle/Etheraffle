@@ -9,14 +9,14 @@ const init = (_period, _path, _weekNo) => {
   const period   = _period == undefined ? 7 : _period,
         getOrac  = _path   == undefined ? fork("./getweeklyeventsprocess") : fork(_path),
         raffleID = _weekNo == undefined ? (utils.getWeekNo() - 1) : _weekNo
-  console.log("getWeeklyEvents Process Spawned on", utils.getTime())
+  console.log(`getWeeklyEvents Process Spawned on ${utils.getTime()}`)
   getOrac.send([raffleID, period])
   getOrac.on("message", msg => {
     if (msg == "Complete!" || msg == "Errored!") {
       getOrac.kill()
-      console.log("getWeeklyEvents process killed with status: ", msg, " on: ", utils.getTime())
+      console.log(`getWeeklyEvents process killed with status: ${msg}, on: ${utils.getTime()}`)
     } else {
-      console.log("getWeeklyEvents process says: ", msg)
+      console.log(`getWeeklyEvents process says: ${msg}`)
     }
   })
 }

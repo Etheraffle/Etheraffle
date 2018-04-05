@@ -9,14 +9,14 @@ where args can be ommitted
 const init = (_period, _path) => {
   const period = _period == undefined ? 6 : _period,
         getWithdrawals = _path == undefined ? fork("./getwithdrawnprocess") : fork(_path)
-  console.log("getWithdrawals Process Spawned on", utils.getTime())
+  console.log(`getWithdrawals Process Spawned on ${utils.getTime()}`)
   getWithdrawals.send(period)
   getWithdrawals.on("message", msg => {
     if (msg == "Complete!" || msg == "Errored!") {//process itself emails error reports...
       getWithdrawals.kill()
-      console.log("getWithdrawals process killed with status: ", msg, " on: ", utils.getTime())
+      console.log(`getWithdrawals process killed with status: ${msg}, on: ${utils.getTime()}`)
     } else {
-      console.log("getWithdrawals process says: ", msg)
+      console.log(`getWithdrawals process says: ${msg}`)
     }
   })
 }

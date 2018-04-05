@@ -46,7 +46,7 @@ function captureRaffleDetails(_wObj){
   return getMatchesArr(_wObj)
   .then(matchesArr => {
     _wObj["matches"] = matchesArr
-    console.log("Get matches array in captureRaffleDetails: ", matchesArr, ", on ", utils.getTime())
+    console.log(`Get matches array in captureRaffleDetails: ${matchesArr}, on ${utils.getTime()}`)
     return getWinningAmounts(matchesArr, _wObj.prizePool)
     .then(winningAmounts => {
       _wObj["winningAmounts"] = winningAmounts

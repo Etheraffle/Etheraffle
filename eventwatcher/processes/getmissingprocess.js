@@ -36,7 +36,7 @@ function fillMissingEntries(_raffleID) {
       return getMissingEntryNums(entriesArr, numEntries)
       .then(missingNo => {
         if (missingNo.length == 0){
-          process.send("No missing entries for raffle: " + _raffleID)
+          process.send(`No missing entries for raffle: ${_raffleID}`)
           return process.send("Complete!")
         }
         return getMissingEntries( _raffleID, missingNo)
@@ -49,35 +49,10 @@ function fillMissingEntries(_raffleID) {
     })
   }).catch(err => {
     utils.errorHandler("fillMissingEntries", "getMissingEntries", _raffleID, err)
-    process.send("getMissingProcess errored: " + err)
+    process.send(`getMissingProcess errored: ${err}`)
     return process.send("Errored!")
   })
 }
-/*
-function fillMissingEntries(_raffleID){ OLD WORKING VERSION
-  return mongo.init()
-  .then(res => {
-    if (res != true) throw new Error("Mongo init() returned false!")
-    return mongo.getEntriesArr(_raffleID)
-    .then(entriesArr => {
-      if (entriesArr == null) process.send("No entries found for raffle: " + _raffleID), return process.send("Complete!")
-      else return getMissingEntryNums(entriesArr)
-      .then(missingNo => {
-        if (missingNo.length == 0) process.send("No missing entries for raffle: " + _raffleID), return process.send("Complete!")
-        return getMissingEntries( _raffleID, missingNo)
-        .then(res => {
-          if (res == true) process.send("Missing entries filled succesfully!"), return process.send("Complete!")
-          return process.send("Errored!")
-        })
-      })
-    })
-  }).catch(err => {
-    utils.erroHandler("fillMissingEntries", "getMissingEntries", _raffleID, err)
-    process.send("Errored!")
-  })
-}
-*/
-
 /* Loop over entries array finding absent entries */
 function getMissingEntryNums(_entriesArr, _numEntries) {
   return new Promise((resolve,reject) => {
@@ -91,21 +66,6 @@ function getMissingEntryNums(_entriesArr, _numEntries) {
     return resolve(missingNo)
   })
 }
-/*
-function getMissingEntryNums(_entriesArr){ - OLD WORKING VERSION
-  return new Promise((resolve,reject) => {
-    let tempArr = [], missingNo = []
-    for (let i = 0; i < _entriesArr.length; i++){//create array filled with undefined or entryNums
-      tempArr[_entriesArr[i][6]] = _entriesArr[i][6]
-    }
-    for (let i = 1; i < tempArr.length; i++){//push into missingNo the index of the undefineds
-      if (tempArr[i] == undefined) missingNo.push(i)
-    }
-    return resolve(missingNo)
-  })
-}
-*/
-
 /* Use missing entries array to seach blockchain for those entries */
 function getMissingEntries(_raffleID, _missingNo) {
   const promises = [], promRes = []
@@ -125,7 +85,7 @@ function getMissingEntries(_raffleID, _missingNo) {
       })
     })
   }).catch(err => {
-    utils.errorHandler("getMissingEntries", "getMissingEntries", _raffleID + _missingNo, err)
+    utils.errorHandler("getMissingEntries", "getMissingEntries", `${_raffleID} + ${_missingNo}`, err)
     return process.send("Errored!")
   })
 }
