@@ -34,7 +34,7 @@ export default class Saturdayclock extends React.Component{
   }
 
   componentDidMount() {
-    if(this.state.mounted) this.setState({time: this.secondsToTime(this.state.seconds)})
+    if (this.state.mounted) this.setState({time: this.secondsToTime(this.state.seconds)})
     this.startTimer()
   }
 
@@ -61,7 +61,7 @@ export default class Saturdayclock extends React.Component{
     }
     if (seconds === 0) {
       clearInterval(this.timer)
-      if (this.state.mounted){
+      if (this.state.mounted) {
         this.setState({killDiv: 1})
         if (this.props.mounted) this.props.callBacks(this.state.killDiv, this.state.placeHolder)
       }
@@ -69,7 +69,7 @@ export default class Saturdayclock extends React.Component{
     if (this.state.time.m === -1) {//stops the refresh on zero bug affecting it
       clearInterval(this.timer)
       let objClear = {"d": 0, "h": 0, "m": 0, "s": "00"}//string here since the timer otherwise flicks from 00 to 0
-      if (this.state.mounted){
+      if (this.state.mounted) {
         this.setState({killDiv: 1, time: objClear})//kills the entry form
         if (this.props.mounted) this.props.callBacks(this.state.killDiv, this.state.placeHolder)
       }
@@ -78,7 +78,7 @@ export default class Saturdayclock extends React.Component{
 
   componentWillUnmount() {
     clearInterval(this.timer)
-    if(this.state.mounted) this.setState({mounted: false})
+    if (this.state.mounted) this.setState({mounted: false})
   }
 
   render() {

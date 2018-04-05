@@ -37,7 +37,7 @@ class App extends React.Component {
     })
   }
 
-  componentDidMount(){
+  componentDidMount() {
     getWeb3()
     .then(web3 => {
       window.web3 = web3
@@ -65,7 +65,7 @@ class App extends React.Component {
     if (this.state.mounted === true) this.setState({screenIndex})
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     if (this.state.mounted === true) this.setState({mounted: false})
   }
 

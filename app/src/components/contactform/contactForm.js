@@ -40,7 +40,7 @@ export default class ContactForm extends Component {
       })
     }).catch(err => {
       console.log("Error updating details: ", err.stack)
-      if(this.state.canSubmit) this.setState({database: 0})//database down...
+      if (this.state.canSubmit) this.setState({database: 0})//database down...
     })
   }
 

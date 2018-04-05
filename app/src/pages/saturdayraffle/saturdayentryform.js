@@ -63,8 +63,8 @@ export default class Saturdayentryform extends React.Component{
   }
 
   openModal() {
-    if (this.state.w3Con === true && window.web3 !== null && window.web3.isConnected() === true){//Eth connection good...
-      if (this.state.tktPrice > 0 && window.ethAdd !== null){//Everything fine, buy ticket...
+    if (this.state.w3Con === true && window.web3 !== null && window.web3.isConnected() === true) {//Eth connection good...
+      if (this.state.tktPrice > 0 && window.ethAdd !== null) {//Everything fine, buy ticket...
 
         this.sendTransaction()
 
@@ -114,7 +114,7 @@ export default class Saturdayentryform extends React.Component{
     })
   }
 
-  sendTransaction(){
+  sendTransaction() {
     let eNums = [this.state.n1,this.state.n2,this.state.n3,this.state.n4,this.state.n5, this.state.n6]
     buyTicket("Saturday", window.ethAdd, eNums, this.state.tktPrice)
     .then(txHash => {
@@ -124,7 +124,7 @@ export default class Saturdayentryform extends React.Component{
     })
   }
 
-  getOptionsArrays(changedNum, newNum){
+  getOptionsArrays(changedNum, newNum) {
     const selectedArr = [this.state.n1, this.state.n2, this.state.n3, this.state.n4, this.state.n5, this.state.n6]
     if (changedNum === "n1") selectedArr[0] = newNum
     if (changedNum === "n2") selectedArr[1] = newNum
@@ -133,15 +133,15 @@ export default class Saturdayentryform extends React.Component{
     if (changedNum === "n5") selectedArr[4] = newNum
     if (changedNum === "n6") selectedArr[5] = newNum
     const allOptionsArr = []
-    for (let j = 0; j < 6; j++){
+    for (let j = 0; j < 6; j++) {
       const optionsArr = []
-      for (let i = 0; i < 49; i++){
+      for (let i = 0; i < 49; i++) {
         if (selectedArr.indexOf(i + 1) < 0) optionsArr.push(<option key={"num" + j + (i+1)}>{i + 1}</option>)
       }
       optionsArr.unshift(<option key={"num" + j + "0"}>{selectedArr[j]}</option>)
       allOptionsArr.push(optionsArr)
     }
-    if(this.state.mounted)
+    if (this.state.mounted)
       this.setState({
         n1Arr: allOptionsArr[0], n1: selectedArr[0],
         n2Arr: allOptionsArr[1], n2: selectedArr[1],

@@ -42,7 +42,7 @@ export default class Results extends React.Component {
   this.raffleWinClaimed = this.raffleWinClaimed.bind(this)
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({mounted: true})
     if (window.web3 !== null && window.web3.isConnected() === true) this.setState({w3Con: true, ethAdd: window.ethAdd})
   }
@@ -52,10 +52,10 @@ export default class Results extends React.Component {
   }
 
   openModal(e) {
-    if(window.web3 !== null && window.ethAdd !== null && window.ethAdd !== undefined && window.web3.isConnected() === true) {
+    if (window.web3 !== null && window.ethAdd !== null && window.ethAdd !== undefined && window.web3.isConnected() === true) {
       /* Fetch low gas price from api */
       lowGas().then(safeLow => {
-        if(this.state.mounted) this.setState({safeLow: safeLow})
+        if (this.state.mounted) this.setState({safeLow: safeLow})
       }).catch (err => console.log('Error retrieving safe low gas rate: ', err))
       /* Get Prize */
       this.getPrize(
@@ -131,23 +131,23 @@ export default class Results extends React.Component {
       body: JSON.stringify({ethAdd: window.ethAdd})
     })
     .then(res => {
-      if(res.status === 503) return this.setState({database: 503})
-      if(res.status !== 200) return this.setState({database: 0})
+      if (res.status === 503) return this.setState({database: 503})
+      if (res.status !== 200) return this.setState({database: 0})
       return res.json()
       .then(json => {
-        if(json.raffleIDs === undefined) {//None entered...
-          if(this.state.mounted) this.setState({numRaffles: null})
+        if (json.raffleIDs === undefined) {//None entered...
+          if (this.state.mounted) this.setState({numRaffles: null})
         } else {
           //console.log("db res: ", json)
-          if(this.state.mounted) this.setState({numRaffles: json.raffleIDs.length, data: json})
-          if(window.innerWidth < 450) return this.parseMobile(json)//no tooltips to rebuild
+          if (this.state.mounted) this.setState({numRaffles: json.raffleIDs.length, data: json})
+          if (window.innerWidth < 450) return this.parseMobile(json)//no tooltips to rebuild
           this.parseResults(json)
           ReactTooltip.rebuild()
         }
       })
     }).catch(err => {
       console.log("Error retrieving results: ", err)
-      if(this.state.mounted) this.setState({database: 0})
+      if (this.state.mounted) this.setState({database: 0})
     })
   }
 
@@ -246,12 +246,12 @@ export default class Results extends React.Component {
 
   getTableResArr(resultsArr, raffleID, entriesArr) {
     const tableResultsArr =[]
-    for (let i = 0; i < entriesArr.length; i++){//loop over entries array building an object at each iteration...
+    for (let i = 0; i < entriesArr.length; i++) {//loop over entries array building an object at each iteration...
       let matches, prize, amountWei, withdrawn, txHash, txHashTimeStamp, entryNum = entriesArr[i][7], entryNumArr = entriesArr[i], chosenNumbers = entriesArr[i].slice(0,6)
-      for (let j = 0; j < chosenNumbers.length; j++){
+      for (let j = 0; j < chosenNumbers.length; j++) {
         if (chosenNumbers[j] < 10) chosenNumbers[j] = "0" + chosenNumbers[j]//add leading zeros
       }
-      if (resultsArr.timeStamp === null){//no results drawn yet...
+      if (resultsArr.timeStamp === null) {//no results drawn yet...
         matches = "Pending"
         prize   = "Pending"
       } else {//results drawn...
@@ -259,11 +259,11 @@ export default class Results extends React.Component {
         prize     = utils.toDecimals(window.web3.fromWei(resultsArr.winningAmounts[matches],'ether'), 3)
         amountWei = resultsArr.winningAmounts[matches]
       }
-      if (matches < 3){//no prize
+      if (matches < 3) {//no prize
         withdrawn       = null
         txHash          = null
         txHashTimeStamp = null
-      } else if (entriesArr[i].length > 8){//prize won & withdrawn
+      } else if (entriesArr[i].length > 8) {//prize won & withdrawn
         withdrawn       = true
         txHash          = entriesArr[i][8]
         txHashTimeStamp = entriesArr[i][9]
@@ -380,7 +380,7 @@ export default class Results extends React.Component {
     return tRows
   }
 
-  toDollars(_amount){
+  toDollars(_amount) {
     if (window.exRate !== null && window.exRate > 0) {
       let num = utils.toDecimals((window.web3.fromWei(_amount, "ether") * window.exRate), 2)
       return '<br>Approximately $' + num + '!'
@@ -664,7 +664,7 @@ export default class Results extends React.Component {
     return table
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.setState({mounted: false})
   }
 
