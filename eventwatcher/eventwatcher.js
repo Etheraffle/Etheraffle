@@ -14,8 +14,8 @@ const cron                = require('node-cron')
     , withdrawEvent       = etheraffle.LogWithdraw()
     , ticketBoughtEvent   = etheraffle.LogTicketBought()
     , winningNumbersEvent = etheraffle.LogWinningNumbers()
-    , prizePoolsEvent     = etheraffle.LogPrizePoolsUpdated()
     , functionsPaused     = etheraffle.LogFunctionsPaused()
+    , prizePoolsEvent     = etheraffle.LogPrizePoolsUpdated()
 /*
 Notes:
 If this is run as a cluster, the cron jobs will get executed for each cluster there is running. 
