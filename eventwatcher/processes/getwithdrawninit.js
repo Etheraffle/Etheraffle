@@ -11,11 +11,10 @@ const {fork} = require('child_process')
  * @param _path       Path to file the forked process will run - defaults 
  *                    to path relative to this file.
  */
-const init = (_period, _path) => {
-  const period = _period == undefined ? 6 : _period,
-        getWithdrawals = _path == undefined ? fork("./getwithdrawnprocess") : fork(_path)
+const init = (_period = 6, _path = './getwithdrawnprocess') => {
+  const getWithdrawals = fork(_path)
   console.log(`getWithdrawals Process Spawned on ${utils.getTime()}`)
-  getWithdrawals.send(period)
+  getWithdrawals.send(_period)
   getWithdrawals.on("message", msg => {
     if (msg == "Complete!" || msg == "Errored!") {//process itself emails error reports...
       getWithdrawals.kill()
