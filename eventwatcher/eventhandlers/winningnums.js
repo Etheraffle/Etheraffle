@@ -5,7 +5,7 @@ module.exports = _data => {
       , raffleID    = JSON.parse(_data.args.forRaffle)
       , numEntries  = JSON.parse(_data.args.numberOfEntries)
       , prizePool   = JSON.parse(_data.args.currentPrizePool)
-  for(let i = 0; i < 6; i++){winningNums[i] = JSON.parse(_data.args.wNumbers[i])}
+  for (let i = 0; i < 6; i++){winningNums[i] = JSON.parse(_data.args.wNumbers[i])}
   const obj = {
     raffleID:       raffleID,
     prizePool:      prizePool,

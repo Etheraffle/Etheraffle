@@ -4,7 +4,7 @@ const moment = require('moment')
 module.exports = _data => {
   let time     = moment.unix(JSON.parse(_data.args.atTime)).format('dddd, MMMM Do, YYYY h:mm:ss A'),
       subject  = 'WARNING - Contract functions paused!'
-  switch(JSON.parse(_data.args.identifier)) {
+  switch (JSON.parse(_data.args.identifier)) {
     case 1:
       body = `Oraclize total was greater than the prize pool!<br><br>At: ${time}`
       break
