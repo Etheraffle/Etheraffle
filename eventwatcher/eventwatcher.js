@@ -28,7 +28,7 @@ require('events').EventEmitter.defaultMaxListeners = 15
 
 /* Test for live eth connection */
 const block = web3.eth.getBlockNumber((err, res) => {
-  return !err ? console.log("Block:",res,"on",utils.getTime()) : console.log("Error retrieving block number: ", err)
+  return !err ? console.log(`Block: ${res} on ${utils.getTime()}`) : console.log(`Error retrieving block number: ${err}`)
 })
 
 /* The Event Watchers */
@@ -55,16 +55,16 @@ prizePoolsEvent.watch((err, res) => {//TODO: what is this function for?
 /* Cron Jobs */
 /* Retrieves any missing entries once a day @ 5:30 am */
 cron.schedule('30 5 * * *', () => {
-  console.log("Cron: getMissingProcess() Begun on", utils.getTime())
+  console.log(`Cron: getMissingProcess() Begun on ${utils.getTime()}`)
   return getMissing.init("./etheraffle/eventwatcher/processes/getmissingprocess")
 })
 /* Retrieves any manual withdrawals, runs every 3 hours */
 cron.schedule('0 */3 * * *', () => {
-  console.log("Cron: getWithdrawnProcess() Begun on", utils.getTime())
+  console.log(`Cron: getWithdrawnProcess() Begun on ${utils.getTime()}`)
   return getWithdrawn.init(6,'./etheraffle/eventwatcher/processes/getwithdrawnprocess')
 })
 /* Retrieves any weekly events, runs 5am Sunday morning. */
 cron.schedule('0 5 * * 0', () => {
-  console.log("Cron: getOraclizeEventsProcess() Begun on", utils.getTime())
+  console.log(`Cron: getOraclizeEventsProcess() Begun on ${utils.getTime()}`)
   return getOrac.init(7, "./etheraffle/eventwatcher/processes/getweeklyeventsprocess")
 })
