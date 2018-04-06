@@ -3,7 +3,7 @@ import getTicketPrice from './getTicketPrice'
 import utils          from '../components/utils'
 import satCont        from './etheraffleSatContract'
 /* Sorts entry numbers then enters raffle. Returns txHash or rejects with error */
-export default (_which, _user, _eNums) => {
+export default (_web3, _which, _user, _eNums) => {
   return new Promise((resolve, reject) => {
     let cont, price
     getTicketPrice(_which)
@@ -14,7 +14,7 @@ export default (_which, _user, _eNums) => {
       .then(etheraffle => {
         let eNums = utils.sortEnums(_eNums)
           , data  = etheraffle.enterRaffle.getData(eNums, 0)
-        window.web3.eth.sendTransaction({
+        _web3.eth.sendTransaction({
           value: price,
           data:  data,
           from:  _user,
