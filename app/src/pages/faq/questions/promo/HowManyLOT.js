@@ -1,5 +1,4 @@
 import React from 'react'
-import dates from '../../../saturdayraffle/promo/icoDates'
 import mMaskLOT from './images/metamaskLOT.png'
 
 export default props => (
