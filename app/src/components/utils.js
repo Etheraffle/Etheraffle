@@ -35,7 +35,7 @@ const toDecimals = (_num, _fixed) => {
   return _num.toString().match(re)[0]
 }
 /* Bubbles sorts entry numbers into ascending order ready for the smart contract */
-const sortEnums = (_arr) => {
+const sortEnums = _arr => {
   for (let i = _arr.length - 1; i >= 0; i--) {
     for (let j = 1; j <= i; j++) {
       if (_arr[j - 1] > _arr[j]) {
