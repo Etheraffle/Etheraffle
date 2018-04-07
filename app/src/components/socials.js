@@ -7,42 +7,42 @@ export default props => (
     <p className='socials'>
         <a 
             href='https://reddit.com/r/etheraffle/' 
-            className={'screen' + props.screenIndex} 
+            className={`screen${props.screenIndex}`} 
             target='_blank' 
             rel='noopener noreferrer'>
             <FontAwesomeIcon className='icon' icon={faReddit}  />
         </a>
         <a 
             href='https://facebook.com/etheraffle' 
-            className={'screen' + props.screenIndex} 
+            className={`screen${props.screenIndex}`} 
             target='_blank' 
             rel='noopener noreferrer'>
             <FontAwesomeIcon className='icon' icon={faFacebook}  />
         </a>
         <a 
             href='https://t.me/etheraffle' 
-            className={'screen' + props.screenIndex} 
+            className={`screen${props.screenIndex}`} 
             target='_blank' 
             rel='noopener noreferrer'>
             <FontAwesomeIcon className='icon' icon={faTelegram}  />
         </a>
         <a 
             href='https://twitter.com/etheraffle' 
-            className={'screen' + props.screenIndex} 
+            className={`screen${props.screenIndex}`} 
             target='_blank' 
             rel='noopener noreferrer'>
             <FontAwesomeIcon className='icon' icon={faTwitterSquare}  />
         </a>
         <a 
             href='https://github.com/etheraffle' 
-            className={'screen' + props.screenIndex} 
+            className={`screen${props.screenIndex}`} 
             target='_blank' 
             rel='noopener noreferrer'>
             <FontAwesomeIcon className='icon' icon={faGithub}  />
         </a>
         <a 
             href='https://etheraffle.com/ico' 
-            className={'screen' + props.screenIndex} 
+            className={`screen${props.screenIndex}`} 
             target='_blank' 
             rel='noopener noreferrer'>
             <LOT screenIndex={props.screenIndex}/>       
