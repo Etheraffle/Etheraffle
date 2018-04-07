@@ -2,7 +2,7 @@ import React from 'react'
 import claim from './images/claim.jpg'
 import claimed from './images/claimed.jpg'
 import fail from './images/etherscanfail.jpg'
-import ContactForm from '../../../components/contactform/contactForm'
+import ContactForm from '../../../pages/contact/contact'
 
 export default props => {
   return(
@@ -22,7 +22,7 @@ export default props => {
       <p className="justify">
         By clicking anywhere on the <i>Claimed</i> cell, those popup details will be copied to your clipboard. If you take the "Transaction Hash" and visit
         <a
-          className={'invert screen' + props.screenIndex}
+          className={`invert screen${props.screenIndex}`}
           target="_blank"
           rel="noopener noreferrer"
           href='http://etherscan.io'>
