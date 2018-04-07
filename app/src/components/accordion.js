@@ -9,8 +9,8 @@ export default props => {
         return acc.push(
             <AccordionItem key={i}>
                 <AccordionItemTitle>
-                    <p className={'screen' + props.screenIndex}>
-                        <span className={'styledSpan screen' + props.screenIndex}><b>&#x274d;&ensp;</b></span>
+                    <p className={`screen${props.screenIndex}`}>
+                        <span className={`styledSpan screen${props.screenIndex}`}><b>&#x274d;&ensp;</b></span>
                         {item.title}
                     </p>
                 </AccordionItemTitle>
