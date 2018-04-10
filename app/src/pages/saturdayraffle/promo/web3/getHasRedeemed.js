@@ -1,11 +1,9 @@
 import utils from '../../../../components/utils'
 import getContInst from './getContInst'
 /* Returns bool or rejects with err (weekNo defaults to current exact week) */
-export default (_address, _weekNo = utils.getExactWeekNo()) => {
+export default (_web3, _address, _weekNo = utils.getExactWeekNo()) => {
   return new Promise((resolve, reject) => {
-    if (window.web3 === null || window.web3.isConnected() === false)
-      return reject(new Error("Failed to find out if redeemed - no web3 connection!"))
-    return getContInst()
+    return getContInst(_web3)
     .then(promo => {
       promo.hasRedeemed.call(_address, _weekNo, (err,res) => {
         return !err ? resolve(res) : reject(err)
