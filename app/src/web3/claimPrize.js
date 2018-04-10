@@ -5,8 +5,8 @@ import satCont     from './etheraffleSatContract'
 export default (_web3, _which, _user, _raffleID, _entryNum) => {
   return new Promise((resolve, reject) => {
     let cont
-    if (_which === "Saturday") cont = satCont
-    getContInst(_which)
+    if (_which === "Saturday" || _which === 5) cont = satCont
+    getContInst(_web3, _which)
     .then(etheraffle => {
       let data  = etheraffle.withdrawWinnings.getData(_raffleID, _entryNum)
       _web3.eth.sendTransaction({
