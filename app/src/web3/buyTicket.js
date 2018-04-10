@@ -6,11 +6,11 @@ import satCont        from './etheraffleSatContract'
 export default (_web3, _which, _user, _eNums) => {
   return new Promise((resolve, reject) => {
     let cont, price
-    getTicketPrice(_which)
+    getTicketPrice(_web3, _which)
     .then(res => {
       price = res
-      if (_which === "Saturday") cont = satCont
-      getContInst(_which)
+      if (_which === 'Saturday' || _which === 5) cont = satCont
+      getContInst(_web3, _which)
       .then(etheraffle => {
         let eNums = utils.sortEnums(_eNums)
           , data  = etheraffle.enterRaffle.getData(eNums, 0)
