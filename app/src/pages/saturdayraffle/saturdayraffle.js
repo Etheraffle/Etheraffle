@@ -1,119 +1,88 @@
 import React from 'react'
 import moment from 'moment'
 import BelowContent from './belowcontent'
-import Saturdayclock from './saturdayclock'
-import Loading from '../../components/loadingIcon'
-import Saturdayentryform from './saturdayentryform'
+import Subnav from '../../components/subnav'
+import Countdown from '../../components/countdown'
+import SaturdayEntryForm from './saturdayEntryForm'
 import closedButton from '../../images/closedButton.svg'
+import { ScreenContext } from '../../contexts/screenContext'
 
-export default class Saturdayraffle extends React.Component {
+export default class SaturdayRaffle extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      killDiv: 1,
-      mounted: false,
-      placeHolder: 1
+      closed:    false,
+      closedFor: 5 * 60 * 60,     // Length of time (in seconds) the raffle is closed for
+      endTime:   'Saturday 19:00' // Raffle deadline
     }
-    this.endTime      = 'Saturday 19:00'//Raffle deadline
-    this.closedFor    = 5 * 60 * 60//length of time (s) raffle is closed for
-    this.getCallBacks = this.getCallBacks.bind(this)
+    this.toggleEntry = this.toggleEntry.bind(this)
   }
 
-  componentWillMount() {
-    this.setState({mounted: true})
-  }
-
-  componentWillUnmount() {
-    this.setState({mounted: false})
-  }
-
-  getCallBacks(_killDiv, _placeHolder) {
-    if (this.state.killDiv !== _killDiv) if (this.state.mounted) this.setState({killDiv: _killDiv})
-    if (this.state.placeHolder !== _placeHolder) if (this.state.mounted) this.setState({placeHolder: _placeHolder})
+  toggleEntry(_status) {
+    this.setState({closed: _status})
   }
 
   render() {
-    return(
-      <div className={"contentWrapper si" + this.props.screenIndex}>
-        <div className={"content ssi" + this.props.subScreenIndex}>
-
-          <div className="aboveContent">
+    return (
+      <ScreenContext.Consumer>{screen => (
+        <Subnav screenIndex={screen.screenIndex} subScreenIndex={screen.subScreenIndex} >
+          <div className={"contentWrapper si" + screen.screenIndex}>
+            <div className={"content ssi" + screen.subScreenIndex}>
+              <h1 className='centred'>Welcome to the {window.innerWidth <= 450 ? <br/> : ''} <span className={`styledSpan screen${screen.screenIndex}`}>Saturday Raffle!</span></h1>
+              <br/>
+              <Countdown endTime={this.state.endTime} closedFor={this.state.closedFor} render={time => {
+                if (time.closed && !this.state.closed) this.toggleEntry(true)
+                if (!time.closed && this.state.closed) this.toggleEntry(false)
+                return (
+                  <Clock time={time} screenIndex={screen.screenIndex} />
+                )}}
+              />
+              {this.state.closed 
+                ? <Closed screenIndex={screen.screenIndex} /> 
+                : <SaturdayEntryForm screenIndex={screen.screenIndex} />}
+              <BelowContent screenIndex={screen.screenIndex} closed={this.state.closed} />
+            </div>
           </div>
-
-          <div className="centreContent">
-            {window.innerWidth <= 400 &&
-              <h2 className='centred'>
-                Welcome to the <span className={'styledSpan screen' + this.props.screenIndex}>Saturday Raffle!</span>
-              </h2>
-            }
-
-            <br />
-
-            <Saturdayclock
-              callBacks={this.getCallBacks}
-              screenIndex={this.props.screenIndex}
-              mounted={this.state.mounted}
-              endTime={this.endTime}
-              closedFor={this.closedFor}/>
-
-              {window.innerWidth > 400 &&
-              <h1 className='centred'>
-                Welcome to the <span className={'styledSpan screen' + this.props.screenIndex}>Saturday Raffle!</span>
-              </h1>
-            }
-
-
-            {(this.state.placeHolder === 1) &&
-              <div className={"entryFormLoading screen" + this.props.screenIndex}>
-
-                <Loading />
-
-                <p>
-                  Checking connection status...
-                </p>
-
-              </div>
-            }
-
-            {(this.state.killDiv === 0 &&  this.state.placeHolder === 0) &&
-              <Saturdayentryform
-                screenIndex={this.props.screenIndex}
-                killDiv={this.state.killDiv}/>
-            }
-
-            {(this.state.killDiv === 1 && this.state.placeHolder === 0) &&
-              <div className='entryFormClosed'>
-                <img className={'closedButton screen' + this.props.screenIndex} src={closedButton} alt='Entry closed!' />
-
-                {window.innerWidth < 450 &&
-                  <p className='centred'>
-                    Next draw opens:
-                    <br/>
-                    <span className={'styledSpan screen' + this.props.screenIndex}>
-                      {moment().day('Sunday').format('dddd, MMMM Do [at] 00:00')}
-                    </span>
-                  </p>
-                }
-
-                {window.innerWidth >= 450 &&
-                  <p className='centred'>
-                    Next draw opens:
-                    <span className={'styledSpan screen' + this.props.screenIndex}>
-                      &nbsp;{moment().day('Sunday').format('dddd, MMMM Do [at] 00:00')}&nbsp;
-                    </span>
-                  </p>
-                }
-
-              </div>
-            }
-
-          </div>
-
-          <BelowContent screenIndex={this.props.screenIndex} />
-
-        </div>
-      </div>
+        </Subnav>
+      )}</ScreenContext.Consumer>
     )
   }
+}
+
+const Closed = props => (
+	<div className='entryFormClosed'>
+		<img className={'closedButton screen' + props.screenIndex} src={closedButton} alt='Entry closed!' />
+		<p className='centred'>
+			Next draw opens: {window.innerWidth >= 450 ? '' : <br/>}<span className={'styledSpan screen' + props.screenIndex}>{moment().day('Sunday').add(7,'days').format('dddd, MMMM Do [at] 00:00')}</span>
+		</p>
+	</div>
+)
+
+const Clock = props => {
+	let sI = props.screenIndex
+	  , d  = props.time.d === 1    ? 'DAY'  : 'DAYS'
+	  , h  = props.time.h === 1    ? 'HOUR' : 'HOURS'
+	  , m  = props.time.m === 1    ? 'MIN'  : 'MINS'
+	  , s  = props.time.s === '01' ? 'SEC'  : 'SECS'
+	return (
+		<div className='timer'>
+			<div   className={`timers screen${sI} tD`}>
+				<div className={`timerTime screen${sI}`}>{props.time.d}</div>
+				<div className={`timerTitle screen${sI}`}>{d}</div>
+			</div>
+			<div   className={`timers screen${sI} tH`}>
+				<div className={`timerTime screen${sI}`}>{props.time.h}</div>
+				<div className={`timerTitle screen${sI}`}>{h}</div>
+			</div>
+			<div   className={`timers screen${sI} tM`}>
+				<div className={`timerTime screen${sI}`}>{props.time.m}</div>
+				<div className={`timerTitle screen${sI}`}>{m}</div>
+			</div>
+			<div   className={`timers screen${sI} tS`}>
+				<div className={`timerTime screen${sI}`}>{props.time.s}</div>
+				<div className={`timerTitle screen${sI}`}>{s}</div>
+			</div>
+		</div>
+	)
 }
