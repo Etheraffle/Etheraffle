@@ -1,77 +1,59 @@
 import React from 'react'
 import FAQ from '../pages/faq/faq'
 import Results from '../pages/results/results'
+import { ScreenContext } from '../contexts/screenContext';
 
-export default class Subnav extends React.Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      mounted: false,
-      subScreenIndex: this.props.subScreenIndex
-    }
-  }
-
-  componentWillMount() {
-    this.setState({mounted: true})
-  }
-
-  handleClick(index) {
-    if (this.state.mounted) this.setState({subScreenIndex: index})
-  }
-
-  componentWillUnmount()  {
-    if (this.state.mounted) this.setState({mounted: false})
-  }
-
-  render() {
-    return(
+export default props => (
+  <ScreenContext.Consumer>
+    {screen => (
       <div className="screen">
         <div className="subNav">
 
           <div
-            className ={this.state.subScreenIndex === 1 ? "subNav-item results active-subNav" : "subNav-item results"}
-            onClick={(index) => this.handleClick(1)}>
+            className={screen.subScreenIndex === 1 ? "subNav-item results active-subNav" : "subNav-item results"}
+            onClick={screen.Results}>
             <h3 className="subScreen1">Results</h3>
           </div>
 
           <div className ="subNav-item spacerOne"></div>
 
           <div
-            className ={this.state.subScreenIndex === 2 ? "subNav-item play active-subNav" : "subNav-item play"}
-            onClick={(index) => this.handleClick(2)}>
+            className={screen.subScreenIndex === 2 ? "subNav-item play active-subNav" : "subNav-item play"}
+            onClick={screen.Play}>
             <h3 className="subScreen2">Play!</h3>
           </div>
 
           <div className ="subNav-item spacerTwo"></div>
 
           <div
-            className ={this.state.subScreenIndex === 3 ? "subNav-item help active-subNav" : "subNav-item help"}
-            onClick={(index) => this.handleClick(3)}>
+            className={screen.subScreenIndex === 3 ? "subNav-item help active-subNav" : "subNav-item help"}
+            onClick={screen.FAQ}>
             <h3 className="subScreen3">FAQ</h3>
           </div>
         </div>
 
         <div className="subcontent">
-          {this.state.subScreenIndex === 1 &&
+
+          {screen.subScreenIndex === 1 &&
             <Results
-              screenIndex={this.props.screenIndex}
-              subScreenIndex={this.state.subScreenIndex} />
+              screenIndex={screen.screenIndex}
+              subScreenIndex={screen.subScreenIndex} />
           }
 
-          {this.state.subScreenIndex === 2 &&
+          {screen.subScreenIndex === 2 &&
             <div>
-              {this.props.children}
+              {props.children}
             </div>
           }
 
-          {this.state.subScreenIndex === 3 &&
+          {screen.subScreenIndex === 3 &&
             <FAQ
-              screenIndex={this.props.screenIndex}
-              subScreenIndex={this.state.subScreenIndex} />
+              screenIndex={screen.screenIndex}
+              subScreenIndex={screen.subScreenIndex} />
           }
         </div>
-      </div>
-    )
-  }
-}
+
+    </div>
+    )}
+  </ScreenContext.Consumer>
+)
