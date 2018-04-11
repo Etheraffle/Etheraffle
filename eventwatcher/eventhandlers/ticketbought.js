@@ -7,7 +7,7 @@ module.exports = _data => {
       , raffleID      = JSON.parse(_data.args.forRaffle)
       , entryNumber   = JSON.parse(_data.args.entryNumber)
       , personalENum  = JSON.parse(_data.args.personalEntryNumber)
-      , entriesStr    = "entries." + raffleID
+      , entriesStr    = `entries.${raffleID}`
       , chosenNumbers = []
       , obj = {}
   for (let i = 0; i < 6; i++) {chosenNumbers.push(JSON.parse(_data.args.chosenNumbers[i]))}
