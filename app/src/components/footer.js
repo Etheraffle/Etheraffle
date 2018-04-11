@@ -7,7 +7,7 @@ export default props => (
         {screen => (
             <div className="underInfo">
                 <p className='info'>
-                    <b>&#x274d;</b> v 0.9.2 Beta <b>&#x274d;</b>
+                    <b>&#x274d;</b> v 0.9.3 Beta <b>&#x274d;</b>
                     &nbsp;
                     <a 
                         className={`screen${screen.screenIndex}`} 
