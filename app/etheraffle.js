@@ -4,10 +4,8 @@ const express          = require('express')
     , cors             = require('cors')
     , bodyParser       = require('body-parser')
     , utils            = require('./modules/utils')
-    , getLowGas        = require('./pathways/getlowgas')
     , retrieveResults  = require('./pathways/retrieveResults')
     , retrieveMatches  = require('./pathways/retrieveMatches')
-    , updateOnWithdraw = require('./pathways/updateonwithdraw')
 
     process.on('unhandledRejection', err => { console.log('unhandledRejection', err.stack)} )//TODO: remove!
 /* Add cors support */
@@ -52,28 +50,12 @@ app.post("/api/ethaddress", (req,res) => {
   }).catch(err => utils.errorHandler("/api/ethaddress", "App", req.body, err))
 })
 
-/* Update user results on withdraw */
-app.post("/api/updateonwithdraw", (req,res) => {
-  return updateOnWithdraw(req.body)
-  .then(bool => {
-    return bool == true ? res.status(200).json({message:"Success!"}) : res.status(500).json({message:"Fail!"})
-  }).catch(err => utils.errorHandler("api/updateonwithdraw", "App", req.body, err))
-})
-
 /* Contact form emails */
 app.post("/api/contactform", (req,res) => {
   return utils.sendEmail('Contact Form Submission', 'From: ' + req.body.email + '<br><br>Query: ' + req.body.query, 'support')
   .then(bool => {
     res.status(200).json({success: bool})
   }).catch(err => utils.errorHandler("api/contactform", "App", req.body, err))
-})
-
-/* Get Safe Low Gas */
-app.get("/api/gas", (req,res) => {
-  return getLowGas()
-  .then(gas => {
-    res.status(200).json({safeLow: gas})
-  }).catch(err => utils.errorHandler("api/gas", "App", req.body, err))
 })
 
 app.listen(port, () => console.log("Express server started & is listening on port: " + port))
