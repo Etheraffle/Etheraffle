@@ -9,10 +9,11 @@ module.exports = (_period, _latestBlock) => {
       let arr = []
       for (let i = 0; i < res.length; i++) {
         let obj = {
+          ethAdd   : res[i].args.toWhom,
+          txHash   : res[i].transactionHash,
           timeStamp: JSON.parse(res[i].args.atTime),
           raffleID : JSON.parse(res[i].args.forRaffle),
-          entryNum : JSON.parse(res[i].args.forEntryNumber),
-          ethAdd   : res[i].args.toWhom
+          entryNum : JSON.parse(res[i].args.forEntryNumber)
         }
         arr.push(obj)
       }
