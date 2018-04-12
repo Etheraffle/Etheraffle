@@ -7,9 +7,9 @@ import Contact from './pages/contact/contact'
 import logo from './images/etheraffleLogo.svg'
 import Instant from './pages/instantraffle/instant'
 import { EthProvider } from './contexts/ethContext'
-import Saturday from './pages/saturdayRaffle/saturdayRaffle'
 import Wednesday from './pages/wednesdayraffle/wednesday'
 import WelcomeModal from './components/modals/welcomemodal'
+import Saturday from './pages/saturdayRaffle/saturdayRaffle'
 import { ScreenProvider, ScreenContext } from './contexts/screenContext'
 
 const App = () => (
