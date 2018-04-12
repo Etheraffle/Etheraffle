@@ -33,6 +33,10 @@ export default class BigTables extends React.Component {
     this.parseResults(this.props.data)
     this.getLowGas()
   }
+  
+  componentDidUpdate() {
+    ReactTooltip.rebuild()
+  }
 
   getLowGas() {
     return lowGas()
@@ -64,7 +68,6 @@ export default class BigTables extends React.Component {
   sendTransaction(_raffleID, _entryNum, _entryNumArr) {
     return claimPrize(this.props.eth.web3, this.props.screenIndex, this.props.eth.ethAdd, _raffleID, _entryNum).then(txHash => {
       this.setState({txHash: txHash})
-      //return this.updateDetails(txHash, raffleID, entryNum, entryNumArr, window.ethAdd)
     }).catch(err => {
       console.log(`Error sending ethereum transaction: ${err}`)
       this.setState({txHash: null }) // Will pop up the error modal
@@ -259,13 +262,13 @@ export default class BigTables extends React.Component {
 	render() {
 		return (
       <div className='resultsPage' >
-        <ReactTooltip className={`customTheme screen${this.props.screenIndex}`} effect='solid' multiline={true} />
         <p className='centred'>Your ethereum address:<br/><span className={`styledSpan screen${this.props.screenIndex}`}>{`${this.props.eth.ethAdd.substring(0,20)} . . .`}</span></p>
         { 
           this.state.tableArr.length === 1 
           ? <p className='centred'>Here is the latest raffle result for your address:</p>
           : <p className="centred">Here are the latest <span className={`styledSpan largerFont screen${this.props.screenIndex}`}>{this.state.tableArr.length}</span> raffle results for your address:</p>
         }
+        <ReactTooltip className={`customTheme screen${this.props.screenIndex}`} effect='solid' multiline={true} />
         <div className='resultsTable'>
           {this.state.tableArr}
         </div>
