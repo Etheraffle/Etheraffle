@@ -317,14 +317,10 @@ export default class SmallTables extends React.Component {
                 <br/>
                 Transaction Hash:
                 <br/>
-                <a
-                  className={`screen${this.props.screenIndex}`}
-                  rel='noopener noreferrer'
-                  target= '_blank'
-                  href={`https://www.etherscan.io/tx/${_o['txHash']}`}
-                >
-                 <b>{`${_o['txHash'].substring(0,20)}. . .`}</b>
-                </a>
+                {_o['txHash']
+                  ? <a className={`screen${this.props.screenIndex}`} rel='noopener noreferrer' target= '_blank' href={`https://www.etherscan.io/tx/${_o['txHash']}`} ><b>{`${_o['txHash'].substring(0,20)}. . .`}</b></a>
+                  : <b>Not captured!</b>
+                }
               </td>
             </tr>
           </tbody>
@@ -334,7 +330,6 @@ export default class SmallTables extends React.Component {
   }
 
 	render() {
-    console.log(`table arrays in state ${this.state.tableArr}`)
 		return (
 			<div className='resultsPage' >
 				<p className='centred'>Your ethereum address:<br/><span className={`styledSpan screen${this.props.screenIndex}`}>{`${this.props.eth.ethAdd.substring(0,20)} . . .`}</span></p>
