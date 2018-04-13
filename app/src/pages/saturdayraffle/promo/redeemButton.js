@@ -74,7 +74,7 @@ export default class RedeemButton extends React.Component {
     }
     
     render() {
-        return(
+        return (
             <div>
                 {/* Redeem Button */}
                 {!this.state.redeemed &&
