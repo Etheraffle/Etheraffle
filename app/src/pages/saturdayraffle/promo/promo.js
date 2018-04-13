@@ -47,7 +47,7 @@ export default class Promo extends React.Component {
   }
 
 	render() {
-		return(
+		return (
 			<div className='promo'>
 				<br/>
 				<h2 className={`centred screen${this.props.screenIndex}`}>LOT Token Promotion!</h2>

@@ -7,7 +7,7 @@ export default props => (
   <ScreenContext>
     {screen => {
       const {screenIndex: sI, subScreenIndex: ssI} = screen 
-      return(
+      return (
         <Subnav screenIndex={sI} subScreenIndex={ssI} >
           <div className={`contentWrapper si${sI}`}>
             <div className={`content ssi${ssI}`}>
