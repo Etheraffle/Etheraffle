@@ -8,7 +8,6 @@ export default props => (
         <p className='justify'>
             The <a className={'invert screen' + props.screenIndex} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Etheraffle ICO</a> is currently ongoing and is your chance to purchase the LOT token and take your part in this truly decentralized, altruistic version of the future.
         </p>
-        
         <img className='image centred' src={pie} alt='Lot token ICO Pie Chart' />
         <p className='justify'>
             Etheraffle's ICO structure is comprised of three tiers: Tier 1 runs for two weeks, tier 2 for three weeks and tier 3 for four weeks. During Tier 1, you receive <span className={'styledSpan screen' + props.screenIndex}>100,000 LOT</span> per ether, in tier 2 <span className={'styledSpan screen' + props.screenIndex}>90,000 LOT</span> per ether and in tier 3, <span className={'styledSpan screen' + props.screenIndex}>80,000 LOT</span> per ether.
