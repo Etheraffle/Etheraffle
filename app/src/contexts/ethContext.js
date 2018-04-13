@@ -34,7 +34,7 @@ export class EthProvider extends React.Component {
 	}
 
 	render() {
-		return(
+		return (
 			<EthContext.Provider value={{
 				web3:    this.state.web3,
 				ethAdd:  this.state.ethAdd,

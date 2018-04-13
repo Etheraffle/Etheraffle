@@ -13,7 +13,7 @@ export class ScreenProvider extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <ScreenContext.Provider value={{
           screenIndex:    this.state.screenIndex,
           subScreenIndex: this.state.subScreenIndex,

@@ -15,7 +15,7 @@ import IAccidentallyClosed from './questions/IAccidentallyClosed'
 import CanIEnterMoreThanOnce from './questions/CanIEnterMoreThanOnce'
 import HowDoIClaimMyWinnings from './questions/HowDoIClaimMyWinnings'
 import HowDoIKnowIfIveEntered from './questions/HowDoIKnowIfIveEntered'
-
+/* Promo Q's */
 import HowManyLOT from './questions/promo/HowManyLOT'
 import HowCanISeeLOT from './questions/promo/HowCanISeeLOT'
 import HowDoIClaimLOT from './questions/promo/HowDoIClaimLOT'
@@ -66,7 +66,7 @@ export default props => {
     component: IAccidentallyClosed}
   ]
 
-  return(
+  return (
     <div className={"contentWrapper si" + props.screenIndex}>
       <div className={"content ssi" + props.subScreenIndex}>
         <h3 className={'centred screen' + props.screenIndex}>
