@@ -21,7 +21,7 @@ export default props => {
         )
     })
 
-    return(
+    return (
         <Accordion>
             {acc}
         </Accordion>
