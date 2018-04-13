@@ -93,7 +93,7 @@ export default class RedeemButton extends React.Component {
     
     render() {
         console.log('redeem button weekNo array: ', this.state.weekNos, ' selected weekNo: ', this.state.weekNo)
-        return(
+        return (
             <div>
                 {/* Redeem Button */}
                 <div className={'redeemButton screen' + this.props.screenIndex} onClick={() => this.openModal()} />
