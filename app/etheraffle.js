@@ -1,12 +1,11 @@
-import cors from 'cors'
-import express from 'express'
-import utils from './modules/utils'
-import bodyParser from 'body-parser'
-import retrieveResults from './pathways/retrieveResults'
-import retrieveMatches from './pathways/retrieveMatches'
-
-const app              = express()
-    , port             = 3000
+const express = require('express')
+    , app = express()
+    , port = 3000
+    , cors = require('cors')
+    , utils = require('./modules/utils')
+    , bodyParser = require('body-parser')
+    , retrieveResults = require('./pathways/retrieveResults')
+    , retrieveMatches = require('./pathways/retrieveMatches')
 
 process.on('unhandledRejection', err => { console.log('unhandledRejection', err.stack)} )//TODO: remove!
 /* Add cors support */
