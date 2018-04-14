@@ -34,7 +34,7 @@ export default class HowDoIClaimLOT extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 {/* No eth connection/locked */}
                 {(window.ethAdd === null || window.ethAdd === undefined || this.state.entries === null || this.state.entries === 'Error') &&
