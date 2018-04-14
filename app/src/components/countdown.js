@@ -9,7 +9,7 @@ export default class Saturdayclock extends React.Component {
 
 	constructor(props) {
 		super(props)
-			this.state = {
+		this.state = {
 			time: {},
 			mounted: false,
 			seconds: this.getDownSeconds()
@@ -45,7 +45,7 @@ export default class Saturdayclock extends React.Component {
 	}
 
 	getDownSeconds() {
-		let endTime = moment(this.props.endTime, 'dddd HH:mm').format('X')
+		let endTime = moment.utc(this.props.endTime, 'dddd HH:mm').format('X')
 		, dS = endTime - moment().format('X')
 		return dS > 0 ? dS : dS + this.props.closedFor > 0 ? 0 : dS + 604800//one week in s
 	}
