@@ -56,7 +56,7 @@ export default class Promo extends React.Component {
             this.props.eth.loading   ? <Loading /> 
             : !this.props.eth.web3   ? <NoCxn    screenIndex={this.props.screenIndex} closed={this.props.closed} />
             : !this.props.eth.ethAdd ? <Locked   screenIndex={this.props.screenIndex} closed={this.props.closed} />
-            : this.props.eth.ethAdd  ? <Unlocked screenIndex={this.props.screenIndex} closed={this.props.closed} state={this.state}/>
+            : this.props.eth.ethAdd  ? <Unlocked screenIndex={this.props.screenIndex} closed={this.props.closed} state={this.state} eth={this.props.eth} />
             : <NoCxn screenIndex={this.props.screenIndex} closed={this.props.closed} />
           }
         </React.Fragment>
@@ -110,7 +110,8 @@ const Unlocked = props => (
               reward={props.state.reward} 
               entries={props.state.entries} 
               tktPrice={props.state.tktPrice}
-              screenIndex={props.screenIndex} />
+              screenIndex={props.screenIndex}
+              eth={props.eth} />
           </div>
         }
       </React.Fragment>
