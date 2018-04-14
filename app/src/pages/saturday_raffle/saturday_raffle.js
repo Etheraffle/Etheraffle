@@ -1,9 +1,9 @@
 import React from 'react'
 import moment from 'moment'
-import BelowContent from './belowContent'
+import BelowContent from './below_content'
 import Subnav from '../../components/subnav'
 import Countdown from '../../components/countdown'
-import SaturdayEntryForm from './saturdayEntryForm'
+import SaturdayEntryForm from './saturday_entry_form'
 import closedButton from '../../images/closedButton.svg'
 import { ScreenContext } from '../../contexts/screenContext'
 
