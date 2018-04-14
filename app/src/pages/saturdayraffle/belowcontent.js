@@ -19,7 +19,7 @@ export default props => (
 )
 
 const Loading = props => (
-  <img className='loadingIcon' src={LoadingIcon} alt='Loading icon' />
+  <img className='loadingIcon' src={LoadingIcon} style={{'display':'flex','margin':'1em auto 1em auto'}} alt='Loading icon' />
 )
 
 const NoCxn = props => (
