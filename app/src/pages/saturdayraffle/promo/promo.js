@@ -6,6 +6,7 @@ import hasRedeemed from './web3/getHasRedeemed'
 import getNumEntries from './web3/getNumEntries'
 import getTktPrice from '../../../web3/getTicketPrice'
 import LoadingIcon from '../../../images/loadingIconGrey.svg'
+import { ScreenContext } from '../../../contexts/screenContext'
 
 
 export default class Promo extends React.Component {
@@ -14,9 +15,10 @@ export default class Promo extends React.Component {
 		super(props)
 		this.state = {
 			reward: null,
+      loading: true,
 			entries: null,
 			redeemed: null,
-			tktPrice: null
+      tktPrice: null
     }
     this.getDetails = this.getDetails.bind(this)
 	}
@@ -34,8 +36,9 @@ export default class Promo extends React.Component {
         return getNumEntries(this.props.eth.web3, this.props.eth.ethAdd)
         .then(entries => {
           this.setState({
-            tktPrice: this.props.eth.web3.fromWei(price, 'ether'),
+            loading:  false,
             entries:  entries,
+            tktPrice: this.props.eth.web3.fromWei(price, 'ether'),
             reward:   entries * dates.rate * this.props.eth.web3.fromWei(price, 'ether')
           })
         })
@@ -61,16 +64,20 @@ export default class Promo extends React.Component {
           }
         </React.Fragment>
         <br/>
-        <p className='justify'>
-          Etheraffle is a truly decentralized charitable lottery created to give huge prizes to players, sustainable ETH dividends to <span className={`styledSpan screen${this.props.screenIndex}`}>LOT token</span> holders, and life-changing funding to charities. The <a className={`invert screen${this.props.screenIndex}`} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Etheraffle ICO's</a> goal is to create as many LOT token holders as possible. To help achieve this, anyone who plays Etheraffle ALSO earns free LOT tokens! You can earn LOT every time you enter - so get playing! See the FAQ for how to claim and more details. 
-        </p>
+        <ScreenContext.Consumer>
+          {({FAQ}) => (
+            <p className='justify'>
+              Etheraffle is a truly decentralized charitable lottery created to give huge prizes to players, sustainable ETH dividends to <span className={`styledSpan screen${this.props.screenIndex}`}>LOT token</span> holders, and life-changing funding to charities. The <a className={`invert screen${this.props.screenIndex}`} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Etheraffle ICO's</a> goal is to create as many LOT token holders as possible. To help achieve this, anyone who plays Etheraffle ALSO earns free LOT tokens! You can earn LOT every time you enter - so get playing! See the <span className={`styledSpan screen${this.props.screenIndex}`} style={{'cursor':'pointer'}} onClick={FAQ}>FAQ</span> for how to claim and more details. 
+            </p>
+          )}
+        </ScreenContext.Consumer>
 			</div>
 		)
 	}
 }
 
 const Loading = props => (
-  <img className='loadingIcon' src={LoadingIcon} alt='Loading icon' />
+  <img className='loadingIcon' src={LoadingIcon} style={{'display':'flex','margin':'1em auto 1em auto'}} alt='Loading icon' />
 )
 
 const NoCxn = props => (
@@ -91,48 +98,56 @@ const Locked = props => (
 
 const Unlocked = props => (
   <React.Fragment>
-    {(
-      props.state.entries  === null &&
-      props.state.reward   === null &&
-      props.state.redeemed === null
-    ) &&
-      <img className='loadingIcon centred' src={LoadingIcon} alt='Loading icon' />
-    }
-
-    {props.state.entries !== 'Error' &&
-      <React.Fragment>
-        {!props.state.redeemed &&
-          <div className='promoLOT'>
-            <PromoCounter>
-              <h1>&ensp;x&ensp;{props.state.reward}!</h1>
-            </PromoCounter>
-            <Redeem 
-              reward={props.state.reward} 
-              entries={props.state.entries} 
-              tktPrice={props.state.tktPrice}
-              screenIndex={props.screenIndex}
-              eth={props.eth} />
-          </div>
-        }
-      </React.Fragment>
-    }
-
-    {props.state.entries === 'Error' &&
-      <div className='promoLOT'>
-        <PromoCounter />
-        <p className='centred'>Error retreiving data from the smart-contract!</p>
-      </div>
-    }
-
-    {props.state.redeemed &&
-      <div className='promoLOT'>
-        <PromoCounter>
-          <h1>&ensp;x&ensp;{props.state.reward}!</h1>
-        </PromoCounter>
-        <p className='centred'>
-        <span className={'styledSpan screen' + props.screenIndex}>Congratulations!</span> - You've redeemed the promo LOT tokens you earnt this week! Come back next week to start earning more!
-        </p>
-      </div>
+    {
+      props.closed ? <Closed />
+      : props.state.loading ? <Loading />
+      : props.state.entries === 'Error' ? <Error />
+      : props.state.redeemed ? <Redeemed reward={props.state.reward} screenIndex={props.screenIndex} />
+      : <NotRedeemed 
+          eth={props.eth}
+          reward={props.state.reward} 
+          entries={props.state.entries} 
+          tktPrice={props.state.tktPrice}
+          screenIndex={props.screenIndex} />
     }
   </React.Fragment>
+)
+
+const Closed = props => (
+  <div className='promoLOT'>
+    <PromoCounter />
+    <p className='centred'>Entry is closed whilst the results are drawn. Come back tomorrow to start earning free LOT tokens in the next raffle!</p>
+  </div>
+)
+
+const Redeemed = props => (
+  <div className='promoLOT'>
+    <PromoCounter>
+      <h1>&ensp;x&ensp;{props.reward}!</h1>
+    </PromoCounter>
+    <p className='centred'>
+    <span className={`styledSpan screen${props.screenIndex}`}>Congratulations!</span> - You've redeemed the promo LOT tokens you earnt this week! Come back next week to start earning more!
+    </p>
+  </div>
+)
+
+const NotRedeemed = props => (
+  <div className='promoLOT'>
+    <PromoCounter>
+      <h1>&ensp;x&ensp;{props.reward}!</h1>
+    </PromoCounter>
+    <Redeem 
+      reward={props.reward} 
+      entries={props.entries} 
+      tktPrice={props.tktPrice}
+      screenIndex={props.screenIndex}
+      eth={props.eth} />
+  </div>
+)
+
+const Error = props => (
+  <div className='promoLOT'>
+    <PromoCounter />
+    <p className='centred'>Error retreiving data from the smart-contract!</p>
+  </div>
 )
