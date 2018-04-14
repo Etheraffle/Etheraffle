@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import BelowContent from './belowcontent'
+import BelowContent from './belowContent'
 import Subnav from '../../components/subnav'
 import Countdown from '../../components/countdown'
 import SaturdayEntryForm from './saturdayEntryForm'
