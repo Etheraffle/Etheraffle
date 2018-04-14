@@ -8,7 +8,7 @@ const getWeekNo = () => {
 /* Increments weekNo at exact the contract does */
 const getExactWeekNo = (_raffle = 'Saturday') => {
   let birthday = 1500249600, weekDur = 604800, now = moment().format('X'), rafEnd
-  if (_raffle === 'Saturday') rafEnd = 500400//7:00pm Saturdays
+  if (_raffle === 'Saturday') rafEnd = 500400//7:00pm in seconds from 00:00 on Saturdays
   let curWeek = Math.trunc((now - birthday) / weekDur)
   if (now - ((curWeek * weekDur) + birthday) > rafEnd) {
     curWeek++
