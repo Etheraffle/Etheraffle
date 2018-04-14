@@ -1,7 +1,7 @@
 import React from 'react'
 import Promo from './promo/promo'
-import { EthContext } from '../../contexts/ethContext'
-import LoadingIcon from '../../images/loadingIconGrey.svg'
+import { EthContext } from '../../contexts/eth_context'
+import LoadingIcon from '../../images/loading_icon_grey.svg'
 
 export default props => (
   <EthContext.Consumer>{eth => (

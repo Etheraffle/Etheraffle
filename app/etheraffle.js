@@ -4,8 +4,8 @@ const express = require('express')
     , cors = require('cors')
     , utils = require('./modules/utils')
     , bodyParser = require('body-parser')
-    , retrieveResults = require('./pathways/retrieveResults')
-    , retrieveMatches = require('./pathways/retrieveMatches')
+    , retrieveResults = require('./pathways/retrieve_results')
+    , retrieveMatches = require('./pathways/retrieve_matches')
 
 process.on('unhandledRejection', err => { console.log('unhandledRejection', err.stack)} )//TODO: remove!
 /* Add cors support */

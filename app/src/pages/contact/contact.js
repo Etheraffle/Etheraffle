@@ -1,8 +1,8 @@
 import React from 'react'
 import Input from './input'
 import Formsy from 'formsy-react'
-import TextArea from './textArea'
-import { ScreenContext } from '../../contexts/screenContext'
+import TextArea from './text_area'
+import { ScreenContext } from '../../contexts/screen_context'
 
 export default class Contact extends React.Component {
 

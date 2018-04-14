@@ -1,8 +1,8 @@
 import React from 'react'
 import Modal from 'react-modal'
-import redeemBonus from './web3/redeemBonus'
-import lowGas from '../../../web3/getLowGas'
-import LoadingIcon from '../../../images/loadingIconGrey.svg'
+import redeemBonus from './web3/redeem_bonus'
+import lowGas from '../../../web3/get_low_gas'
+import LoadingIcon from '../../../images/loading_icon_grey.svg'
 
 export default class RedeemButton extends React.Component {
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import Modal from 'react-modal'
 import Raffle from '../../components/raffle'
-import { EthContext } from '../../contexts/ethContext'
-import LoadingIcon from '../../images/loadingIconGrey.svg'
-import NotConnectedInfo from '../../components/modals/notconnectedinfo'
+import { EthContext } from '../../contexts/eth_context'
+import LoadingIcon from '../../images/loading_icon_grey.svg'
+import NotConnectedInfo from '../../components/modals/not_connected_info'
 
 export default props => (
   <EthContext.Consumer>{eth => (

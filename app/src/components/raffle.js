@@ -1,12 +1,12 @@
 import React from 'react'
 import utils from './utils'
 import Modal from 'react-modal'
-import lowGas from '../web3/getLowGas'
+import lowGas from '../web3/get_low_gas'
 import ReactTooltip from 'react-tooltip'
-import buyTicket from '../web3/buyTicket'
-import getPrizePool from '../web3/getPrizePool'
-import getTktPrice from '../web3/getTicketPrice'
-import LoadingIcon from '../images/loadingIconGrey.svg'
+import buyTicket from '../web3/buy_ticket'
+import getPrizePool from '../web3/get_prize_pool'
+import getTktPrice from '../web3/get_ticket_price'
+import LoadingIcon from '../images/loading_icon_grey.svg'
 
 //Require eth object props, raffle day, & pick from props and screenIndex
 //TODO: implement prop types to enforce the above

@@ -2,11 +2,11 @@ import React from 'react'
 import Redeem from './redeem'
 import dates from './ico_dates'
 import PromoCounter from './promo_counter'
-import hasRedeemed from './web3/getHasRedeemed'
-import getNumEntries from './web3/getNumEntries'
-import getTktPrice from '../../../web3/getTicketPrice'
-import LoadingIcon from '../../../images/loadingIconGrey.svg'
-import { ScreenContext } from '../../../contexts/screenContext'
+import hasRedeemed from './web3/get_has_redeemed'
+import getNumEntries from './web3/get_num_entries'
+import getTktPrice from '../../../web3/get_ticket_price'
+import LoadingIcon from '../../../images/loading_icon_grey.svg'
+import { ScreenContext } from '../../../contexts/screen_context'
 
 
 export default class Promo extends React.Component {

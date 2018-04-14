@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScreenContext } from '../contexts/screenContext'
+import { ScreenContext } from '../contexts/screen_context'
 
 export default props => (
   <ScreenContext>

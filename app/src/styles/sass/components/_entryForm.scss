@@ -40,7 +40,7 @@
     @include dropShadow($erLtGrey);
 
     &.screen5 {
-      background-image: url('../../images/buyTicket.svg');
+      background-image: url('../../images/buy_ticket.svg');
       &:hover{@include dropShadow($erBlue);}
     }
   }
@@ -121,6 +121,7 @@
 
 @media (max-width: $laptop) {
   .entryForm {
+    
     .entryButton {
       width: 16em;
       height: 2.5em;

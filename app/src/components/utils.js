@@ -50,7 +50,7 @@ const sortEnums = _arr => {
 module.exports = {
   sortEnums: sortEnums,
   getWeekNo: getWeekNo,
-  getExactWeekNo: getExactWeekNo,
   toDecimals: toDecimals,
-  getMatches: getMatches
+  getMatches: getMatches,
+  getExactWeekNo: getExactWeekNo
 }

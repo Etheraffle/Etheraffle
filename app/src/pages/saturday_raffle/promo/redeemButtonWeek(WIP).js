@@ -4,7 +4,7 @@ import redeemBonus from './redeemBonus'
 import utils from '../../../components/utils'
 import getLowGas from '../../../web3/getLowGas'
 import loadingIcon from '../../../images/loadingIconGrey.svg'
-import NotConnectedInfo from '../../../components/modals/notconnectedinfo'
+import NotConnectedInfo from '../../../components/modals/not_connected_info'
 
 export default class RedeemButton extends React.Component {
 

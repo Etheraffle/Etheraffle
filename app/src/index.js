@@ -4,13 +4,13 @@ import Nav from './components/nav'
 import './styles/css/main.min.css'
 import Footer from './components/footer'
 import Contact from './pages/contact/contact'
-import logo from './images/etheraffleLogo.svg'
+import logo from './images/etheraffle_logo.svg'
 import Instant from './pages/instant_raffle/instant'
-import { EthProvider } from './contexts/ethContext'
+import { EthProvider } from './contexts/eth_context'
 import Wednesday from './pages/wednesday_raffle/wednesday'
-import WelcomeModal from './components/modals/welcomemodal'
+import WelcomeModal from './components/modals/welcome_modal'
 import Saturday from './pages/saturday_raffle/saturday_raffle'
-import { ScreenProvider, ScreenContext } from './contexts/screenContext'
+import { ScreenProvider, ScreenContext } from './contexts/screen_context'
 
 const App = () => (
   <EthProvider>

@@ -1,11 +1,11 @@
 import React from 'react'
 import moment from 'moment'
 import BelowContent from './below_content'
-import Subnav from '../../components/subnav'
+import Subnav from '../../components/sub_nav'
 import Countdown from '../../components/countdown'
 import SaturdayEntryForm from './saturday_entry_form'
-import closedButton from '../../images/closedButton.svg'
-import { ScreenContext } from '../../contexts/screenContext'
+import closedButton from '../../images/closed_button.svg'
+import { ScreenContext } from '../../contexts/screen_context'
 
 export default class SaturdayRaffle extends React.Component {
 

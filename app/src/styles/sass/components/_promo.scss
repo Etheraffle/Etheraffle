@@ -34,13 +34,13 @@
         @include dropShadow($erLtGrey);
 
         &.screen5 {
-        background-image: url('../../images/redeemBonus.svg');
+        background-image: url('../../images/redeem_bonus.svg');
             &:hover{@include dropShadow($erBlue);}
         }
 
         &.redeemedScreen5 {
             cursor: default;
-            background-image: url('../../images/redeemedBonus.svg');
+            background-image: url('../../images/redeemed_bonus.svg');
         }
     }
 }

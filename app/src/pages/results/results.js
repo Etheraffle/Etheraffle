@@ -1,10 +1,10 @@
 import React from 'react'
 import Modal from 'react-modal'
-import BigTables from './bigTables'
-import SmallTables from './smallTables'
-import { EthContext } from '../../contexts/ethContext'
-import LoadingIcon from '../../images/loadingIconGrey.svg'
-import NotConnectedInfo from '../../components/modals/notconnectedinfo'
+import BigTables from './big_tables'
+import SmallTables from './small_tables'
+import { EthContext } from '../../contexts/eth_context'
+import LoadingIcon from '../../images/loading_icon_grey.svg'
+import NotConnectedInfo from '../../components/modals/not_connected_info'
 
 export default props => (
   <div className={"contentWrapper si" + props.screenIndex}>

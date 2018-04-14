@@ -919,7 +919,7 @@ body {
   border-style: solid;
   border-width: 2px; }
   .promo .redeemButton.screen5 {
-    background-image: url("../../images/redeemBonus.svg"); }
+    background-image: url("../../images/redeem_bonus.svg"); }
     .promo .redeemButton.screen5:hover {
       border-color: #25dfdf;
       -webkit-box-shadow: 5px -5px 0px 0px #25dfdf;
@@ -928,7 +928,7 @@ body {
       border-width: 2px; }
   .promo .redeemButton.redeemedScreen5 {
     cursor: default;
-    background-image: url("../../images/redeemedBonus.svg"); }
+    background-image: url("../../images/redeemed_bonus.svg"); }
 
 @media (max-width: 450px) {
   .promo .promoLOT {
@@ -1447,7 +1447,7 @@ input {
     border-style: solid;
     border-width: 2px; }
     .entryForm .entryButton.screen5 {
-      background-image: url("../../images/buyTicket.svg"); }
+      background-image: url("../../images/buy_ticket.svg"); }
       .entryForm .entryButton.screen5:hover {
         border-color: #25dfdf;
         -webkit-box-shadow: 5px -5px 0px 0px #25dfdf;
