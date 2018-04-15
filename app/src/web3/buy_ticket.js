@@ -5,19 +5,16 @@ import satCont        from './etheraffle_sat_contract'
 /* Sorts entry numbers then enters raffle. Returns txHash or rejects with error */
 export default (_web3, _which, _user, _eNums) => {
   return new Promise((resolve, reject) => {
-    let cont, price
-    getTicketPrice(_web3, _which)
-    .then(res => {
-      price = res
-      if (_which === 'Saturday' || _which === 5) cont = satCont
-      getContInst(_web3, _which)
-      .then(etheraffle => {
+    let cont
+    if (_which === 'Saturday' || _which === 5) cont = satCont()
+    getTicketPrice(_web3, _which).then(price => {
+      getContInst(_web3, _which).then(etheraffle => {
         let eNums = utils.sortEnums(_eNums)
           , data  = etheraffle.enterRaffle.getData(eNums, 0)
         _web3.eth.sendTransaction({
-          value: price,
           data:  data,
           from:  _user,
+          value: price,
           to:    cont.cAdd,
           gas:   cont.gasForEntry
         },(err, txHash) => {
