@@ -36,15 +36,10 @@ export default class WelcomeModal extends React.Component {
             isOpen={this.state.modalIsOpen}
             shouldCloseOnOverlayClick={true}
             onRequestClose={this.closeModal}
-            overlayClassName={`Overlay screen${sI}`}
-            >
+            overlayClassName={`Overlay screen${sI}`} >
             <img className='welcomeLogoBig' src={window.innerWidth > 450 ? bigLogo : smallLogo} alt='Modal Welcome Logo'/>
-            <h2 className={`screen${sI}`}>
-              Welcome to Etheraffle - The World's First Truly Decentralized Charitable Lottery!
-            </h2>
-            <p className='centre'>
-              So join in, buy a ticket and win big all whilst helping good causes worldwide!
-            </p>
+            <h2 className={`screen${sI}`}>Welcome to Etheraffle - The World's First Truly Decentralized Charitable Lottery!</h2>
+            <p className='centre'>So join in, buy a ticket and win big all whilst helping good causes worldwide!</p>
             {
                 eth.loading ? <Loading sI={sI} />
               : !eth.web3   ? <NoCxn   sI={sI} closeModal={this.closeModal} />
@@ -98,9 +93,7 @@ const Locked = props => (
 const Play = props => (
   <div className={`modalConnectedInfo screen${props.sI}`}>
     <img className={`playButton screen${props.sI}`} src={require(`../../images/play${props.sI}.svg`)} alt='Play Button' onClick={props.closeModal} />
-    <p>
-      Ethereum Connection Detected - Have Fun!
-    </p>
+    <p>Ethereum Connection Detected - Have Fun!</p>
     <p className='boilerplate justify'>
       By clicking "play" or interacting with Etheraffle beyond these terms of use, you confirm that you are at least 18 years of age and you represent, warrant and agree to ensure that your use of our services will comply with all applicable laws, statutes and regulations in your location. Etheraffle.com is not responsible for any illegal or unauthorized use of our services by you.
     </p>
