@@ -75,7 +75,7 @@ export default class Raffle extends React.Component {
     let p1 = getPrizePool(this.props.eth.web3, this.props.day)
       , p2 = getTktPrice(this.props.eth.web3, this.props.day)
     return Promise.all([p1, p2])
-    .then(([prize,price]) => {
+    .then(([prize, price]) => {
       let pool     = this.props.eth.web3.fromWei(prize, 'ether')
         , tkt      = this.props.eth.web3.fromWei(price, 'ether')
         , err      = 'Exchange rate currently unavailable'
