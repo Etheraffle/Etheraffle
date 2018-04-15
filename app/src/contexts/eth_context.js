@@ -37,12 +37,12 @@ export class EthProvider extends React.Component {
 		}).catch(err => console.log(`Error retreiving exchange rate: ${err}`))
 	}
 	
-  	pollAccounts(_web3) {
+  pollAccounts(_web3) {
 		setInterval(() => {
 			let newAdd = _web3.eth.accounts[0] === undefined ? null : _web3.eth.accounts[0] // set undefined to null for next line
 			if (newAdd !== this.state.ethAdd) window.location.reload()
 		}, 500)
-  	}
+  }
 
 	render() {
 		return (
