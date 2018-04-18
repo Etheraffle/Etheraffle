@@ -9,6 +9,7 @@ export default class RedeemButton extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+      key: 'init',
 			txErr: null,
 			safeLow: null,
 			redeemed: false,
@@ -53,14 +54,12 @@ export default class RedeemButton extends React.Component {
 	}
 
 	redeemBonusTX() {
-    return this.props.weekNo // True if coming from FAQ where weekNo might not be CURRENT
-    ? redeemBonus(this.props.eth.web3, this.props.eth.ethAdd, this.props.weekNo) 
-    : redeemBonus(this.props.eth.web3, this.props.eth.ethAdd)
+    return redeemBonus(this.props.eth.web3, this.props.eth.ethAdd, this.props.weekNo)
 		.then(txHash => {
-			this.setState({txHash: txHash, redeemed: true})
+			this.setState({txHash: txHash, redeemed: true, key: Math.random()})
 		}).catch(err => {
 			console.log('Error redeeming bonus: ', err)
-			this.setState({txHash: null, txErr: err.msg})
+			this.setState({txHash: null, txErr: err.msg, key: Math.random()})
 		})
 	}
 	
@@ -78,7 +77,8 @@ export default class RedeemButton extends React.Component {
 					contentLabel='Redeem LOT Modal'
 					className={`ticketBoughtModal screen${this.props.screenIndex}`}
 					overlayClassName={`Overlay screen${this.props.screenIndex}`}
-					shouldCloseOnOverlayClick={true}>
+					shouldCloseOnOverlayClick={true}
+          key={this.state.key}>
           {
             this.state.txHash === 'pending'
             ? <Pending screenIndex={this.props.screenIndex} safeLow={this.state.safeLow} />
