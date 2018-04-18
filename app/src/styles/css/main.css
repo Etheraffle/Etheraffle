@@ -1429,7 +1429,8 @@ input {
       padding: 0.3em 0.5em 0.3em 0.5em; }
       .entryForm .pickNumbersForm .numberPicker select {
         /* Stops cipher bg being grey */
-        background-color: white !important; }
+        background-color: white !important;
+        outline: none !important; }
   .entryForm .entryButton {
     display: -webkit-box;
     display: -ms-flexbox;
