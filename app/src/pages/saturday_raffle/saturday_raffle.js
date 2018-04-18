@@ -27,8 +27,8 @@ export default class SaturdayRaffle extends React.Component {
     return (
       <ScreenContext.Consumer>{screen => (
         <Subnav screenIndex={screen.screenIndex} subScreenIndex={screen.subScreenIndex} >
-          <div className={"contentWrapper si" + screen.screenIndex}>
-            <div className={"content ssi" + screen.subScreenIndex}>
+          <div className={`contentWrapper si${screen.screenIndex}`}>
+            <div className={`content ssi${screen.subScreenIndex}`}>
               <h1 className='centred'>Welcome to the {window.innerWidth <= 450 ? <br/> : ''} <span className={`styledSpan screen${screen.screenIndex}`}>Saturday Raffle!</span></h1>
               <br/>
               <Countdown endTime={this.state.endTime} closedFor={this.state.closedFor} render={time => {
@@ -52,9 +52,9 @@ export default class SaturdayRaffle extends React.Component {
 
 const Closed = props => (
 	<div className='entryFormClosed'>
-		<img className={'closedButton screen' + props.screenIndex} src={closedButton} alt='Entry closed!' />
+		<img className={`closedButton screen${props.screenIndex}`} src={closedButton} alt='Entry closed!' />
 		<p className='centred'>
-			Next draw opens: {window.innerWidth >= 450 ? '' : <br/>}<span className={'styledSpan screen' + props.screenIndex}>{moment().day('Sunday').add(7,'days').format('dddd, MMMM Do [at] 00:00')}</span>
+			Next draw opens: {window.innerWidth >= 450 ? '' : <br/>}<span className={`styledSpan screen${props.screenIndex}`}>{moment().day('Sunday').add(7,'days').format('dddd, MMMM Do [at] 00:00')}</span>
 		</p>
 	</div>
 )
