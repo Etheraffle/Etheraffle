@@ -20,9 +20,11 @@ import HowManyLOT from './questions/promo/how_many_lot'
 import HowCanISeeLOT from './questions/promo/how_can_i_see_lot'
 import WhatIsLOTPromo from './questions/promo/what_is_lot_promo'
 import HowDoIClaimLOT from './questions/promo/how_do_i_claim_lot'
+import ClaimPrevious from './questions/promo/can_i_claim_previous_weeks'
 
 
 export default props => {
+  /* LOT FAQ */
   let acc1 = [
     {title: 'What is Etheraffle?',
     component: WhatIsEtheraffle},
@@ -33,7 +35,7 @@ export default props => {
     {title: 'How can I be a part of Etheraffle?',
     component: HowCanIBe}
   ]
-  
+  /* Promo FAQ */
   let acc2 = [
     {title: 'What is the LOT Promotion?',
     component: WhatIsLOTPromo},
@@ -41,10 +43,12 @@ export default props => {
     component: HowManyLOT},
     {title: 'How do I claim my free LOT tokens?',
     component: HowDoIClaimLOT},
+    {title: 'Can I claim from previous weeks?',
+    component: ClaimPrevious},
     {title: 'How can I see my LOT tokens in my wallet?',
     component: HowCanISeeLOT}
   ]
-  
+  /* Main FAQ */
   let acc3 = [
     {title: 'How do I login?',
     component: HowDoILogin},
@@ -67,29 +71,21 @@ export default props => {
   ]
 
   return (
-    <div className={"contentWrapper si" + props.screenIndex}>
-      <div className={"content ssi" + props.subScreenIndex}>
-        <h3 className={'centred screen' + props.screenIndex}>
-            Frequently Asked Questions
-        </h3>
+    <div className={`contentWrapper si${props.screenIndex}`}>
+      <div className={`content ssi${props.subScreenIndex}`}>
+        <h3 className={'centred screen' + props.screenIndex}>Frequently Asked Questions</h3>
         <br/>
         <LOT className='faqLogo' fill={props.screenIndex} />
-        <p>
-          Etheraffle Questions:
-        </p>
-          <Accordion arr={acc1} screenIndex={props.screenIndex} />
+        <p>Etheraffle Questions:</p>
+        <Accordion arr={acc1} screenIndex={props.screenIndex} />
         <br/>
         <LOT className='faqLogo' fill='6' />
-        <p>
-          LOT Promotion Questions:
-        </p>
-          <Accordion arr={acc2} screenIndex={props.screenIndex} />
+        <p>LOT Promotion Questions:</p>
+        <Accordion arr={acc2} screenIndex={props.screenIndex} />
         <br/>
         <img className='faqLogo' src={eLogo} alt='e Logo' />
-        <p>
-          Raffle Questions:
-        </p>
-         <Accordion arr={acc3} screenIndex={props.screenIndex} />
+        <p>Raffle Questions:</p>
+        <Accordion arr={acc3} screenIndex={props.screenIndex} />
       </div>
     </div>
   )
