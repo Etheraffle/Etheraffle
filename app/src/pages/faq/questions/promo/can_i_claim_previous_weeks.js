@@ -7,7 +7,6 @@ import dates from '../../../saturday_raffle/promo/ico_dates'
 import { EthContext } from '../../../../contexts/eth_context'
 import RedeemButton from '../../../saturday_raffle/promo/redeem_button'
 import PromoCounter from '../../../saturday_raffle/promo/promo_counter'
-import RedeemButtonFAQ from '../../../saturday_raffle/promo/redeem_button_faq'
 import hasRedeemed from '../../../saturday_raffle/promo/web3/get_has_redeemed'
 import getNumEntries from '../../../saturday_raffle/promo/web3/get_num_entries'
 
