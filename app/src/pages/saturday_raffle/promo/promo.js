@@ -2,10 +2,10 @@ import React from 'react'
 import Redeem from './redeem'
 import dates from './ico_dates'
 import PromoCounter from './promo_counter'
+import Loading from '../../../components/loading'
 import hasRedeemed from './web3/get_has_redeemed'
 import getNumEntries from './web3/get_num_entries'
 import getTktPrice from '../../../web3/get_ticket_price'
-import LoadingIcon from '../../../images/loading_icon_grey.svg'
 import { ScreenContext } from '../../../contexts/screen_context'
 
 
@@ -14,9 +14,9 @@ export default class Promo extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			reward: null,
-      loading: true,
-			entries: null,
+			reward:   null,
+      loading:  true,
+			entries:  null,
 			redeemed: null,
       tktPrice: null
     }
@@ -67,7 +67,7 @@ export default class Promo extends React.Component {
         <ScreenContext.Consumer>
           {({FAQ}) => (
             <p className='justify'>
-              Etheraffle is a truly decentralized charitable lottery created to give huge prizes to players, sustainable ETH dividends to <span className={`styledSpan screen${this.props.screenIndex}`}>LOT token</span> holders, and life-changing funding to charities. The <a className={`invert screen${this.props.screenIndex}`} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Etheraffle ICO's</a> goal is to create as many LOT token holders as possible. To help achieve this, anyone who plays Etheraffle ALSO earns free LOT tokens! You can earn LOT every time you enter - so get playing! See the <span className={`styledSpan screen${this.props.screenIndex}`} style={{'cursor':'pointer'}} onClick={FAQ}>FAQ</span> for how to claim and more details. 
+              Etheraffle is a truly decentralized charitable lottery created to give huge prizes to players, sustainable ETH dividends to <span className={`styledSpan screen${this.props.screenIndex}`}>LOT token</span> holders, and life-changing funding to charities. The <a className={`invert screen${this.props.screenIndex}`} href='https://etheraffle.com/ico' target='_blank' rel='noopener noreferrer'>Etheraffle ICO's</a> goal is to create as many LOT token holders as possible. To help achieve this, anyone who plays Etheraffle ALSO earns free LOT tokens! You can earn LOT every time you enter - so get playing! See the <span className={`styledSpan screen${this.props.screenIndex}`} style={{'cursor':'pointer'}} onClick={FAQ}>FAQ</span> for how to redeem your LOT tokens and for more details. 
             </p>
           )}
         </ScreenContext.Consumer>
@@ -75,10 +75,6 @@ export default class Promo extends React.Component {
 		)
 	}
 }
-
-const Loading = props => (
-  <img className='loadingIcon' src={LoadingIcon} style={{'display':'flex','margin':'1em auto 1em auto'}} alt='Loading icon' />
-)
 
 const NoCxn = props => (
   <div className='promoLOT'>
