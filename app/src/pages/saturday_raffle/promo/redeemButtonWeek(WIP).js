@@ -78,13 +78,13 @@ export default class RedeemButton extends React.Component {
     }
 
     getOptionsArr(_weekNo) {
-        let arr   = Array.from(Array(utils.getExactWeekNo())).map((e,i) => i+1)// Create full array again
-          , index = arr.indexOf(_weekNo)// find index of chosen week
-          , options = []
-        arr.splice(index, 1)
-        options = arr.map(x => <option key={`weekNum${x}`}>{x}</option>)
-        if (this.state.mounted) this.setState({weekNos: options, weekNo: _weekNo})
-        console.log('poop', this.state.weekNos, ' _weekNo', _weekNo)
+      let arr   = Array.from(Array(utils.getExactWeekNo())).map((e,i) => i+1)// Create full array again
+        , index = arr.indexOf(_weekNo)// find index of chosen week
+        , options = []
+      arr.splice(index, 1)
+      options = arr.map(x => <option key={`weekNum${x}`}>{x}</option>)
+      if (this.state.mounted) this.setState({weekNos: options, weekNo: _weekNo})
+      console.log('poop', this.state.weekNos, ' _weekNo', _weekNo)
     }
 
     handleChange(event) {
