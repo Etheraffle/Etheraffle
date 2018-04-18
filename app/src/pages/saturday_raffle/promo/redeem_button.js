@@ -49,11 +49,13 @@ export default class RedeemButton extends React.Component {
 	}
 	
 	closeModal() {
-		this.setState({modalIsOpen: false, txHash: 'pending'})// reset the txHash
+		this.setState({modalIsOpen: false, txHash: 'pending'}) // Reset the txHash
 	}
 
 	redeemBonusTX() {
-		return redeemBonus(this.props.eth.web3, this.props.eth.ethAdd)
+    return this.props.weekNo // True if coming from FAQ where weekNo might not be CURRENT
+    ? redeemBonus(this.props.eth.web3, this.props.eth.ethAdd, this.props.weekNo) 
+    : redeemBonus(this.props.eth.web3, this.props.eth.ethAdd)
 		.then(txHash => {
 			this.setState({txHash: txHash, redeemed: true})
 		}).catch(err => {
@@ -67,7 +69,7 @@ export default class RedeemButton extends React.Component {
 			<React.Fragment>
 				{/* Redeem Button */}
         {this.state.redeemed
-          ?<div className={'redeemButton redeemedScreen' + this.props.screenIndex} />
+          ? <div className={'redeemButton redeemedScreen' + this.props.screenIndex} />
           : <div className={'redeemButton screen' + this.props.screenIndex} onClick={() => this.openModal()} />
         }
 				<Modal
@@ -124,8 +126,8 @@ const Error = props => (
   <div>
     <h2 className={`screen${props.screenIndex}`}>Error creating transaction!</h2>
     {props.txErr 
-    ? <p className='justify last'>{props.txErr}</p> 
-    : <p className='justify last'>You may have rejected the transaction, or your connection may have dropped. Please check your ethereum client and make sure your account is unlocked.</p>
+      ? <p className='justify last'>{props.txErr}</p> 
+      : <p className='justify last'>You may have rejected the transaction, or your connection may have dropped. Please check your ethereum client and make sure your account is unlocked.</p>
     }
   </div>
 )
