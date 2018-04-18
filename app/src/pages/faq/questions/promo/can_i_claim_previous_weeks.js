@@ -34,11 +34,7 @@ const Locked = props => (
   <p>You can claim your earnt LOT tokens at any time! Unlock your account and use the form that will appear below to get redeeming!</p>
 )
 
-const Unlocked = props => (
-  <SelectWeek eth={props.eth} screenIndex={props.screenIndex} />
-)
-
-class SelectWeek extends React.Component {
+class Unlocked extends React.Component { // Week selector...
 
   constructor(props) {
     super(props)
