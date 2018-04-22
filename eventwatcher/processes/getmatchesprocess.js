@@ -150,43 +150,7 @@ function getMatchesArrLupus(_wObj) {
   })
 }
 /* Calculate prizes based on number of winners in each tier */
-function getWinningAmounts(_matchesArr, _prizePool) {
-  return new Promise ((resolve, reject) => {//soldity truncates division...
-    const percentOfPool = [520, 114, 47, 319]//ppt
-    const winningAmounts = [0,0,0,0,0,0,0]
-    if (_matchesArr[6] != 0) winningAmounts[6] = Math.trunc((_prizePool * percentOfPool[3]) / (1000 * _matchesArr[6]))
-    if (_matchesArr[5] != 0) winningAmounts[5] = Math.trunc((_prizePool * percentOfPool[2]) / (1000 * _matchesArr[5]))
-    if (_matchesArr[4] != 0) winningAmounts[4] = Math.trunc((_prizePool * percentOfPool[1]) / (1000 * _matchesArr[4]))
-    if (_matchesArr[3] != 0) winningAmounts[3] = Math.trunc((_prizePool * percentOfPool[0]) / (1000 * _matchesArr[3]))
-    let sum =
-    (
-    (winningAmounts[6] * _matchesArr[6]) +
-    (winningAmounts[5] * _matchesArr[5]) +
-    (winningAmounts[4] * _matchesArr[4]) +
-    (winningAmounts[3] * _matchesArr[3])
-    )
-    console.log(`Sum: ${sum}`)
-    return sum <= _prizePool ? resolve(winningAmounts) : resolve([0,0,0,0,0,0,0,0])
-  })
-  /* Psuedo unit test....
-  getWinningAmounts([0,0,0,10,5,2,1],1000000000000000000).then(res => console.log(res))
-  returns: [0,0,0,52000000000000000,22800000000000000,23500000000000000,319000000000000000 ]
-  Sum: 1000000000000000000
-
-
-  getWinningAmounts([0,0,0,1,0,0,0],2000000000000000000).then(res => console.log(res))
-  returns [ 0, 0, 0, 1040000000000000000, 0, 0, 0 ] // which is BAD hence the switch of method!
-  Sum: 1040000000000000000
-  */
-}
-// WIP to bring in line with solidity!
-// Unit tests:
-// getWinningAmounts([0,0,0,1,0,0,0],2000000000000000000).then(res => console.log(res))
-// = payouts arr:  [ 0, 0, 0, 168000000000000000, 0, 0, 0 ] , total:  168000000000000000 - CORRECT! (using odds not splits!)
-//
-// getWinningAmounts([0,0,0,10,5,2,1],1000000000000000000).then(res => console.log(res))
-// = payOuts arr: [0,0,0,52000000000000000,22800000000000000,23500000000000000,319000000000000000 ], total: 1000000000000000000 - CORRECT (using splits not odds)
-const getWinAmts = (_matches, _prizePool) => {
+const getWinningAmounts = (_matches, _prizePool) => {
   //let getTktPrc = () => Promise.resolve(3000000000000000) // For unit testing so I don't need web3 TODO: comment out!
   return getTktPrc().then(tktPrice => {
     return new Promise((resolve, reject) => {
@@ -198,90 +162,14 @@ const getWinAmts = (_matches, _prizePool) => {
           , splitsSingle = (_numWinners, _matchesIndex) => { return (_prizePool * pctOfPool[_matchesIndex]) / (_numWinners * 1000) }
           , payOuts = _matches.map((e,i) => i < 3 ? 0 : e == 0 ? 0 : oddsTotal(_matches[i],i) <= splitsTotal(_matches[i],i) ? oddsSingle(i) : splitsSingle(_matches[i],i))
           , total = payOuts.reduce((acc,e,i) => acc + (e * _matches[i]))
-      //console.log('payOuts arr: ', payOuts, ', total: ', total)
+      //console.log('payOuts arr:', payOuts, ', total:', total)
       return total <= _prizePool ? resolve(payOuts) : reject(new Error('Sum of wins greater than prize pool!'))
     })
   }).catch(err => utils.errorHandler('getWinningAmounts', 'get_matches_process', `matchesArr: ${_matches} & prizePool: ${_prizePool}`, err))
 }
-
-
-/* Batch version of getMatches - UNFINISHED! */
-/*
-//The getMatches function seems to crash after a million or so goes? Chunk it up? Refeed it the previous matchesArr to continue where it left off? Maybe store the chunks then pull them out & match individually?
-function batchMatches(_wObj) {
-  return new Promise((resolve, reject) => {
-    var chunk = 100000
-    var iterations = Math.trunc(_wObj.entriesArr.length / chunk)
-    if (_wObj.entriesArr.length % chunk > 0 )
-      iterations += 1
-    var pieces = []
-    for (var i = 0; i < iterations; i++) {
-      //chunk up array and store pieces in pieces..
-      pieces.push(_wObj.entriesArr.slice((i * chunk), ((i * chunk) + chunk)))
-    }
-    console.log('Length: ', pieces.length)
-
-    function sequentialPromises(arr, index = 0) {
-      var matches = [0,0,0,0,0,0,0]
-      var time = 0;
-      if (index >= arr.length) {
-        return Promise.resolve()
-      } else {
-        time = utils.getTimeStamp()
-        return getMatchesArr(arr[index], _wObj.winningNumbers)
-        .then(r => {
-          console.log
-          (
-            'Got matches: ', r,
-            ', from iteration: ', index + 1,
-            ' of: ', arr.length,
-            '. Time taken: ', (utils.getTimeStamp() - time)
-          )
-          return sequentialPromises(arr, index + 1)
-        })
-      }
-    }
-    /*
-    sequentialPromises(pieces)
-    .then(() => {
-      console.log('done')
-      return resolve()
-    })
-  })
-  */
-/*
-    sequentialPromises(pieces)
-    //how does .then work here? I'm confused!!
-    .then(results => {
-      var complete = []
-      //Check each piece's match array totals the number of arrays thrown at it...
-      for (var i = 0; i < results.length; i++) {
-        let sum = results[i].reduce((a, b) => a + b, 0)//WILL FAIL IF PROMISEREPEAT TIMES OUT!
-        if (sum == pieces[i].length) {
-          complete.push(results[i])
-        } else {
-          complete.push([0,0,0,0,0,0,0])//push empty array so final count will not error, but won't pass
-        }
-      }
-      //if (complete.length == iterations) {
-      //sum the individual match arrays to a final one...
-      var finalMatches = [0,0,0,0,0,0,0]
-      for (var i = 0; i < complete.length; i++) {
-        for (var j = 0; j < finalMatches.length; j++) {
-          finalMatches[j] += complete[i][j]
-        }
-      }
-      let sum = finalMatches.reduce((a, b) => a + b, 0)
-      if (_wObj.entriesArr.length == sum) {
-        return resolve(finalMatches)
-      } else {//
-        //handle this better? start again? I don't know?
-        return reject([0,0,0,0,0,0,0])
-      }
-    })
-  }).catch(err => {
-    utils.errorHandler('batchMatches', 'getMatches', _wObj, err)
-    process.send('Errored!')
-  })
-}
-*/
+  // Psuedo Unit tests:
+  // getWinningAmounts([0,0,0,1,0,0,0],2000000000000000000).then(res => console.log(res))
+  // = payouts arr: [0,0,0,168000000000000000,0,0,0], total: 168000000000000000 - CORRECT! (using odds not splits!)
+  //
+  // getWinningAmounts([0,0,0,10,5,2,1],1000000000000000000).then(res => console.log(res))
+  // = payOuts arr: [0,0,0,52000000000000000,22800000000000000,23500000000000000,319000000000000000], total: 1000000000000000000 - CORRECT (using splits not odds)
