@@ -184,10 +184,10 @@ const getWinAmts = (_matchesArr, _prizePool) => {
   return new Promise((resolve, reject) => {
     const pctOfPool = [0, 0, 0, 520, 114, 47, 319] // ppt
         , odds = [0, 0, 0, 56, 1032, 54200, 13983816] // Rounded down to nearest whole number
-        , winAmts = _matchesArr.map((x,i) => { return i < 3 ? 0 : x == 0 ? 0 : Math.trunc((_prizePool * pctOfPool[i]) / (1000 * _matchesArr[i]))})
-        , sum = winAmts.reduce((acc, val, i) => { return acc + (val * _matchesArr[i])})
-        console.log(`Sum: ${sum}`)
-        return sum <= _prizePool ? resolve(winAmts) : reject(new Error('Sum of wins greater than prize pool!'))
+        , winAmts = _matchesArr.map((x,i) => i < 3 ? 0 : x == 0 ? 0 : Math.trunc((_prizePool * pctOfPool[i]) / (1000 * _matchesArr[i])))
+        , sum = winAmts.reduce((acc, val, i) => acc + (val * _matchesArr[i]))
+    console.log(`Sum: ${sum}`)
+    return sum <= _prizePool ? resolve(winAmts) : reject(new Error('Sum of wins greater than prize pool!'))
   })
 }
 const oddsTotal = (_numWinners, _matchesIndex) => {
