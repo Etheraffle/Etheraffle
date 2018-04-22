@@ -168,6 +168,41 @@ function getWinningAmounts(_matchesArr, _prizePool) {
     return sum <= _prizePool ? resolve(winningAmounts) : resolve([0,0,0,0,0,0,0,0])
   })
 }
+ /* Psuedo unit test....
+  getWinningAmounts([0,0,0,10,5,2,1],1000000000000000000).then(res => console.log(res))
+  returns: [0,0,0,52000000000000000,22800000000000000,23500000000000000,319000000000000000 ]
+  Sum: 1000000000000000000
+
+
+  getWinningAmounts([0,0,0,1,0,0,0],2000000000000000000).then(res => console.log(res))
+  returns [ 0, 0, 0, 1040000000000000000, 0, 0, 0 ] // which is BAD hence the switch of method!
+  Sum: 1040000000000000000
+  */
+}
+
+// WIP to bring in line with solidity!
+const getWinAmts = (_matchesArr, _prizePool) => {
+  return new Promise((resolve, reject) => {
+    const pctOfPool = [0, 0, 0, 520, 114, 47, 319] // ppt
+        , odds = [0, 0, 0, 56, 1032, 54200, 13983816] // Rounded down to nearest whole number
+        , winAmts = _matchesArr.map((x,i) => { return i < 3 ? 0 : x == 0 ? 0 : Math.trunc((_prizePool * pctOfPool[i]) / (1000 * _matchesArr[i]))})
+        , sum = winAmts.reduce((acc, val, i) => { return acc + (val * _matchesArr[i])})
+        console.log(`Sum: ${sum}`)
+        return sum <= _prizePool ? resolve(winAmts) : reject(new Error('Sum of wins greater than prize pool!'))
+  })
+}
+const oddsTotal = (_numWinners, _matchesIndex) => {
+  return oddsSingle(_matchesIndex) * _numWinners;
+}
+const splitsTotal = (_numWinners, _matchesIndex) => {
+  return splitsSingle(_numWinners, _matchesIndex) * _numWinners;
+}
+const oddsSingle = (_matchesIndex) => {
+  return tktPrice * odds[_matchesIndex];
+}
+const splitsSingle = (_numWinners, _matchesIndex) => {
+  return (prizePool * pctOfPool[_matchesIndex]) / (_numWinners * 1000);
+}
 
 /* Batch version of getMatches - UNFINISHED! */
 /*
