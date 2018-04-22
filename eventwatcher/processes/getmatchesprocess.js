@@ -1,7 +1,8 @@
 //const lupus = require('lupus')
-const mongo    = require('../modules/mongo')
-    , utils    = require('../modules/utils')
-    , getEntry = require('../modules/getsingleentry')
+const mongo     = require('../modules/mongo')
+    , utils     = require('../modules/utils')
+    , getTktPrc = require('../modules/get_tkt_price')
+    , getEntry  = require('../modules/getsingleentry')
 
 process.on('message', (wObj) => {
   start(wObj)
@@ -178,30 +179,31 @@ function getWinningAmounts(_matchesArr, _prizePool) {
   Sum: 1040000000000000000
   */
 }
-
 // WIP to bring in line with solidity!
-const getWinAmts = (_matchesArr, _prizePool) => {
-  return new Promise((resolve, reject) => {
-    const pctOfPool = [0, 0, 0, 520, 114, 47, 319] // ppt
-        , odds = [0, 0, 0, 56, 1032, 54200, 13983816] // Rounded down to nearest whole number
-        , winAmts = _matchesArr.map((x,i) => i < 3 ? 0 : x == 0 ? 0 : Math.trunc((_prizePool * pctOfPool[i]) / (1000 * _matchesArr[i])))
-        , sum = winAmts.reduce((acc, val, i) => acc + (val * _matchesArr[i]))
-    console.log(`Sum: ${sum}`)
-    return sum <= _prizePool ? resolve(winAmts) : reject(new Error('Sum of wins greater than prize pool!'))
-  })
+// Unit tests:
+// getWinningAmounts([0,0,0,1,0,0,0],2000000000000000000).then(res => console.log(res))
+// = payouts arr:  [ 0, 0, 0, 168000000000000000, 0, 0, 0 ] , total:  168000000000000000 - CORRECT! (using odds not splits!)
+//
+// getWinningAmounts([0,0,0,10,5,2,1],1000000000000000000).then(res => console.log(res))
+// = payOuts arr: [0,0,0,52000000000000000,22800000000000000,23500000000000000,319000000000000000 ], total: 1000000000000000000 - CORRECT (using splits not odds)
+const getWinAmts = (_matches, _prizePool) => {
+  //let getTktPrc = () => Promise.resolve(3000000000000000) // For unit testing so I don't need web3 TODO: comment out!
+  return getTktPrc().then(tktPrice => {
+    return new Promise((resolve, reject) => {
+      const pctOfPool = [0, 0, 0, 520, 114, 47, 319] // ppt
+          , odds = [0, 0, 0, 56, 1032, 54200, 13983816] // Rounded down to nearest whole number
+          , oddsSingle   = (_matchesIndex) => { return tktPrice * odds[_matchesIndex] }
+          , oddsTotal    = (_numWinners, _matchesIndex) => { return oddsSingle(_matchesIndex) * _numWinners }
+          , splitsTotal  = (_numWinners, _matchesIndex) => { return splitsSingle(_numWinners, _matchesIndex) * _numWinners }
+          , splitsSingle = (_numWinners, _matchesIndex) => { return (_prizePool * pctOfPool[_matchesIndex]) / (_numWinners * 1000) }
+          , payOuts = _matches.map((e,i) => i < 3 ? 0 : e == 0 ? 0 : oddsTotal(_matches[i],i) <= splitsTotal(_matches[i],i) ? oddsSingle(i) : splitsSingle(_matches[i],i))
+          , total = payOuts.reduce((acc,e,i) => acc + (e * _matches[i]))
+      //console.log('payOuts arr: ', payOuts, ', total: ', total)
+      return total <= _prizePool ? resolve(payOuts) : reject(new Error('Sum of wins greater than prize pool!'))
+    })
+  }).catch(err => utils.errorHandler('getWinningAmounts', 'get_matches_process', `matchesArr: ${_matches} & prizePool: ${_prizePool}`, err))
 }
-const oddsTotal = (_numWinners, _matchesIndex) => {
-  return oddsSingle(_matchesIndex) * _numWinners;
-}
-const splitsTotal = (_numWinners, _matchesIndex) => {
-  return splitsSingle(_numWinners, _matchesIndex) * _numWinners;
-}
-const oddsSingle = (_matchesIndex) => {
-  return tktPrice * odds[_matchesIndex];
-}
-const splitsSingle = (_numWinners, _matchesIndex) => {
-  return (prizePool * pctOfPool[_matchesIndex]) / (_numWinners * 1000);
-}
+
 
 /* Batch version of getMatches - UNFINISHED! */
 /*
