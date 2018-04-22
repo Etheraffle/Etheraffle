@@ -24,7 +24,7 @@ const start = (_raffleID, _period) => {
       , p7 = getPPUp(block, _period)
     return Promise.all([p1,p2,p3,p4,p5,p6,p7])
     .then(all => {
-      let arr  = all.map(x => { return x == null ? `None found in the last ${_period} days!` : JSON.stringify(x).replace(/,/g,'<br/>') })
+      let arr  = all.map(x => { return x == null ? `None found in the last ${_period} days!` : JSON.stringify(x).replace(/","/g,'"<br/>"') })
         , subj = `Weekly events from the past: ${_period} days for raffleID: ${_raffleID}`,
           body = `<b>Queries Sent: </b><br><br> ${arr[0]}
                   <b><br><br>Callbacks Received: </b><br><br> ${arr[1]}
