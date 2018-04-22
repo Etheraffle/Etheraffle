@@ -9,60 +9,55 @@ process.on('message', (wObj) => {
 process.on('unhandledRejection', err => {//catches errors in my catches :/
   console.log('unhandledRejection', err.stack)//TODO: remove!
 })
-
-/* Start Process Function */
 function start(_wObj) {
   return mongo.init()
   .then(result => {
-    if (result != true) throw new Error("Mongo init() returned false!")
+    if (result != true) throw new Error('Mongo init() returned false!')
     return mongo.getEntriesArr(_wObj.raffleID)
     .then(entriesArr => {
-      _wObj["entriesArr"] = entriesArr == null  ? [] : entriesArr
+      _wObj['entriesArr'] = entriesArr == null  ? [] : entriesArr
       return _wObj.numEntries > 0 ? getOrderedEntries(_wObj) : captureZeroDetails(_wObj)
     })
   }).catch(err => {
-    utils.errorHandler("start", "getMatches", _wObj, err)
-    process.send("Errored!")
+    utils.errorHandler('start', 'getMatches', _wObj, err)
+    process.send('Errored!')
   })
 }
-
 /* Capture non-entered raffle details into db */
 function captureZeroDetails(_wObj) {
-  _wObj["matches"] = [0,0,0,0,0,0,0]//set zeroed out non-existent details...
-  _wObj["winningAmounts"] = [0,0,0,0,0,0,0]
+  _wObj['matches'] = [0,0,0,0,0,0,0]//set zeroed out non-existent details...
+  _wObj['winningAmounts'] = [0,0,0,0,0,0,0]
   return mongo.updateResults(_wObj)
   .then(res => {
-    if (res != true) throw new Error("Mongo update returned false!")
-    console.log("Zero details captured successfully via child process.")
-    return process.send("Complete")
+    if (res != true) throw new Error('Mongo update returned false!')
+    console.log('Zero details captured successfully via child process.')
+    return process.send('Complete')
   }).catch(err => {
-    utils.errorHandler("captureZeroDetails", "getMatches", _wObj, err)
-    process.send("Errored!")
+    utils.errorHandler('captureZeroDetails', 'getMatches', _wObj, err)
+    process.send('Errored!')
   })
 }
-
 /* Capture raffle details into db */
 function captureRaffleDetails(_wObj) {
   return getMatchesArr(_wObj)
   .then(matchesArr => {
-    _wObj["matches"] = matchesArr
+    _wObj['matches'] = matchesArr
     console.log(`Get matches array in captureRaffleDetails: ${matchesArr}, on ${utils.getTime()}`)
     return getWinningAmounts(matchesArr, _wObj.prizePool)
     .then(winningAmounts => {
-      _wObj["winningAmounts"] = winningAmounts
+      _wObj['winningAmounts'] = winningAmounts
       return mongo.updateResults(_wObj)
       .then(result => {
-        if (result != true) throw new Error("Error: In captureRaffleDetails,  updateResults() returned false!")
-        console.log("Raffle details captured succesfully via child process.")
-        return process.send("Complete")
+        if (result != true) throw new Error('Error: In captureRaffleDetails,  updateResults() returned false!')
+        console.log('Raffle details captured succesfully via child process.')
+        return process.send('Complete')
       })
     })
   }).catch(err => {
-    utils.errorHandler("captureRaffleDetails", "getMatches", _wObj, err)
-    process.send("Errored!")
+    utils.errorHandler('captureRaffleDetails', 'getMatches', _wObj, err)
+    process.send('Errored!')
   })
 }
-
 /* Orders entries array via their baked in entry number */
 function getOrderedEntries(_wObj) {
   const missingNo = [], orderedEntries = new Array(_wObj.numEntries).fill(null)
@@ -89,19 +84,19 @@ function getMissingEntries(_wObj, _missingNo) {
       }
       return mongo.bulkUpdate(promRes)
       .then(res => {
-        if (res != true) throw new Error("Bulk updates function in Mongo didn't return true!")
+        if (res != true) throw new Error('Bulk updates function in Mongo didn\'t return true!')
         return mongo.getEntriesArr(_wObj.raffleID)
         .then(newEntriesArr => {
           //if db returns null for some reason, no error thrown and the cycle is started again...
           //need to rethink, and handle this error somehow!
-          if (newEntriesArr != null) _wObj["entriesArr"] = newEntriesArr
+          if (newEntriesArr != null) _wObj['entriesArr'] = newEntriesArr
           return newEntriesArr.length != _wObj.numEntries ? getOrderedEntries(_wObj) : captureRaffleDetails(_wObj)
         })
       })
     })
   }).catch(err => {
-    utils.errorHandler("getMissingEntries", "getMatches", _wObj + _missingNo, err)
-    process.send("Errored!")
+    utils.errorHandler('getMissingEntries', 'getMatches', _wObj + _missingNo, err)
+    process.send('Errored!')
   })
 }
 /* Build array of number of 6match wins, 5 match wins etc */
@@ -142,7 +137,7 @@ function getMatchesArrLupus(_wObj) {
         }
       }
       matchesArr[matches]++
-      //console.log("Matches array in lupus loop: ", matchesArr)
+      //console.log('Matches array in lupus loop: ', matchesArr)
     },function() {//after loop finished...
       let sum = matchesArr.reduce((a, b) => a + b, 0)
       if (_wObj.entriesArr.length == sum) {
@@ -169,6 +164,7 @@ function getWinningAmounts(_matchesArr, _prizePool) {
     (winningAmounts[4] * _matchesArr[4]) +
     (winningAmounts[3] * _matchesArr[3])
     )
+    console.log(`Sum: ${sum}`)
     return sum <= _prizePool ? resolve(winningAmounts) : resolve([0,0,0,0,0,0,0,0])
   })
 }
@@ -187,7 +183,7 @@ function batchMatches(_wObj) {
       //chunk up array and store pieces in pieces..
       pieces.push(_wObj.entriesArr.slice((i * chunk), ((i * chunk) + chunk)))
     }
-    console.log("Length: ", pieces.length)
+    console.log('Length: ', pieces.length)
 
     function sequentialPromises(arr, index = 0) {
       var matches = [0,0,0,0,0,0,0]
@@ -200,10 +196,10 @@ function batchMatches(_wObj) {
         .then(r => {
           console.log
           (
-            "Got matches: ", r,
-            ", from iteration: ", index + 1,
-            " of: ", arr.length,
-            ". Time taken: ", (utils.getTimeStamp() - time)
+            'Got matches: ', r,
+            ', from iteration: ', index + 1,
+            ' of: ', arr.length,
+            '. Time taken: ', (utils.getTimeStamp() - time)
           )
           return sequentialPromises(arr, index + 1)
         })
@@ -212,7 +208,7 @@ function batchMatches(_wObj) {
     /*
     sequentialPromises(pieces)
     .then(() => {
-      console.log("done")
+      console.log('done')
       return resolve()
     })
   })
@@ -248,8 +244,8 @@ function batchMatches(_wObj) {
       }
     })
   }).catch(err => {
-    utils.errorHandler("batchMatches", "getMatches", _wObj, err)
-    process.send("Errored!")
+    utils.errorHandler('batchMatches', 'getMatches', _wObj, err)
+    process.send('Errored!')
   })
 }
 */
