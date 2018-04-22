@@ -12,7 +12,7 @@ process.on('unhandledRejection', err => {//catches errors in my catches :/
 function start(_wObj) {
   return mongo.init()
   .then(result => {
-    if (result != true) throw new Error('Mongo init() returned false!')
+    if (!result) throw new Error('Mongo init() returned false!')
     return mongo.getEntriesArr(_wObj.raffleID)
     .then(entriesArr => {
       _wObj['entriesArr'] = entriesArr == null  ? [] : entriesArr
@@ -29,7 +29,7 @@ function captureZeroDetails(_wObj) {
   _wObj['winningAmounts'] = [0,0,0,0,0,0,0]
   return mongo.updateResults(_wObj)
   .then(res => {
-    if (res != true) throw new Error('Mongo update returned false!')
+    if (!res) throw new Error('Mongo update returned false!')
     console.log('Zero details captured successfully via child process.')
     return process.send('Complete')
   }).catch(err => {
@@ -48,7 +48,7 @@ function captureRaffleDetails(_wObj) {
       _wObj['winningAmounts'] = winningAmounts
       return mongo.updateResults(_wObj)
       .then(result => {
-        if (result != true) throw new Error('Error: In captureRaffleDetails,  updateResults() returned false!')
+        if (!result) throw new Error('Error: In captureRaffleDetails,  updateResults() returned false!')
         console.log('Raffle details captured succesfully via child process.')
         return process.send('Complete')
       })
@@ -84,7 +84,7 @@ function getMissingEntries(_wObj, _missingNo) {
       }
       return mongo.bulkUpdate(promRes)
       .then(res => {
-        if (res != true) throw new Error('Bulk updates function in Mongo didn\'t return true!')
+        if (!res) throw new Error('Bulk updates function in Mongo didn\'t return true!')
         return mongo.getEntriesArr(_wObj.raffleID)
         .then(newEntriesArr => {
           //if db returns null for some reason, no error thrown and the cycle is started again...
@@ -167,8 +167,7 @@ function getWinningAmounts(_matchesArr, _prizePool) {
     console.log(`Sum: ${sum}`)
     return sum <= _prizePool ? resolve(winningAmounts) : resolve([0,0,0,0,0,0,0,0])
   })
-}
- /* Psuedo unit test....
+  /* Psuedo unit test....
   getWinningAmounts([0,0,0,10,5,2,1],1000000000000000000).then(res => console.log(res))
   returns: [0,0,0,52000000000000000,22800000000000000,23500000000000000,319000000000000000 ]
   Sum: 1000000000000000000
