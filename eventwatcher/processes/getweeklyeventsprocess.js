@@ -6,15 +6,13 @@ const utils    = require('../modules/utils')
     , getCBack = require('../modules/getoraclizecallbackevent')
     , getPAdd  = require('../modules/getprizepooladditionevent')
     , getPPUp  = require('../modules/getprizepoolsupdatedevent')
-
 process.on('message', ([_raffleID, _period]) => {
   start(_raffleID, _period)
 })
 process.on('unhandledRejection', err => {
   console.log('unhandledRejection', err.stack)//TODO: remove!
 })
-
-function start(_raffleID, _period) {
+const start = (_raffleID, _period) => {
   return utils.getBlockNum()
   .then(block => {
     let p1 = getQuery(block, _period)
@@ -25,26 +23,18 @@ function start(_raffleID, _period) {
       , p6 = getWNums(block, _period)
       , p7 = getPPUp(block, _period)
     return Promise.all([p1,p2,p3,p4,p5,p6,p7])
-    .then(([r1,r2,r3,r4,r5,r6,r7]) => {
-      let qs   = r1 == null ? `None found in last ${_period} days!` : JSON.stringify(r1),
-          cb   = r2 == null ? `None found in last ${_period} days!` : JSON.stringify(r2),
-          fd   = r3 == null ? `None found in last ${_period} days!` : JSON.stringify(r3),
-          rc   = r4 == null ? `None found in last ${_period} days!` : JSON.stringify(r4),
-          pp   = r5 == null ? `None found in last ${_period} days!` : JSON.stringify(r5),
-          wn   = r6 == null ? `None found in last ${_period} days!` : JSON.stringify(r6),
-          up   = r7 == null ? `None found in last ${_period} days!` : JSON.stringify(r7),
-          subj = `Weekly events from the past: ${_period} days for raffleID: ${_raffleID}`,
-          body = `<b>Queries Sent: </b><br><br> ${qs}
-                  <b><br><br>Callbacks Received: </b><br><br> ${cb}
-                  <b><br><br>Winning Numbers: </b><br><br> ${wn}
-                  <b><br><br>PrizePools Updated: </b><br><br> ${up}
-                  <b><br><br>Funds Disbursed: </b><br><br> ${fd}
-                  <b><br><br>Funds Reclaimed: </b><br><br> ${rc}
-                  <b><br><br>Prize Pool Additions: </b><br><br> ${pp}`
+    .then(all => {
+      let arr  = rll.map(x => { return x == null ? `None found in the last ${_period} days!` : JSON.stringify(x).replace(/,/g,'<br/>') })
+        , subj = `Weekly events from the past: ${_period} days for raffleID: ${_raffleID}`,
+          body = `<b>Queries Sent: </b><br><br> ${arr[0]}
+                  <b><br><br>Callbacks Received: </b><br><br> ${arr[1]}
+                  <b><br><br>Winning Numbers: </b><br><br> ${arr[5]}
+                  <b><br><br>PrizePools Updated: </b><br><br> ${arr[6]}
+                  <b><br><br>Funds Disbursed: </b><br><br> ${arr[2]}
+                  <b><br><br>Funds Reclaimed: </b><br><br> ${arr[3]}
+                  <b><br><br>Prize Pool Additions: </b><br><br> ${arr[4]}`
       utils.sendEmail(subj, body, 'weekly').then(res => {
-        if (res) return process.send('Complete!')
-        process.send('Send email returned false!')
-        return process.send('Errored!')
+        return res ? process.send('Complete!') : process.send('Errored - send email returned false!')
       })
     })
   }).catch(err => {
