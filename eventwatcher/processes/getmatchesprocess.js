@@ -100,7 +100,7 @@ function getMissingEntries(_wObj, _missingNo) {
     process.send('Errored!')
   })
 }
-/* Build array of number of 6match wins, 5 match wins etc */
+/* Build array of number of 6 match wins, 5 match wins etc */
 function getMatchesArr(_wObj) {
   return new Promise ((resolve, reject) => {
     const matchesArr = [0,0,0,0,0,0,0]
