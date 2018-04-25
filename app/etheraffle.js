@@ -20,7 +20,7 @@ app.use('/ethrelief/whitepaper', (req,res) => {
 /* Requests to etheraffle.com/ico picks up the ico react app static files from this location */
 app.use('/ico', express.static(`${__dirname}/../../ico/build/`))
 /* Public folder for serving static images/miscellany */
-app.use('/public', express.static(`${__dirname}/public/`));
+app.use('/public', express.static(`${__dirname}/public/`))
 /* All other reqs pick up this app's build */
 app.use(express.static(__dirname + '/build/'))
 app.use(bodyParser.urlencoded({extended: true}))
