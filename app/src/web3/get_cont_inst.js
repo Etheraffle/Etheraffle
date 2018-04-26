@@ -6,7 +6,7 @@ export default (_web3, _which, _weekNo = utils.getExactWeekNo()) => {
   return new Promise((resolve, reject) => {
     let cont
     if (_which === 'Free') cont = freeCont()
-    if (_which === 'Saturday' || _which === 5) cont = satCont(_weekNo)
+    else if (_which === 'Saturday' || _which === 5) cont = satCont(_weekNo)
     let cAdd  = cont.cAdd
       , cABI  = _web3.eth.contract(cont.ABI)
     return resolve(cABI.at(cAdd))
