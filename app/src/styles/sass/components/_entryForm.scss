@@ -35,9 +35,9 @@
     height: 4em;
     margin: 0.5em;
     cursor: pointer;
-    background-repeat: no-repeat;
     background-size: 85%;
     background-position: center;
+    background-repeat: no-repeat;
     @include dropShadow($erLtGrey);
 
     &.screen5 {
@@ -91,7 +91,7 @@
     .entryButton {
       width: 16em;
       height: 2.6em;
-      background-size: 98%;
+      background-size: 95%;
       padding: 0.1em;
     }
 
