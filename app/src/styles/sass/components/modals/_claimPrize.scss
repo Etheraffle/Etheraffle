@@ -1,17 +1,18 @@
 .claimPrizeModal {
-  display: flex;
-  @include screenDropShadows();
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  outline: none;
   top: 12%;
   left: 30%;
   right: 30%;
   bottom: 50%;
-  background-color: white;
   padding: 3em;
+  display: flex;
+  outline: none;
+  text-align: center;
+  position: absolute;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  @include screenDropShadows();
 
   h2 {
     font-size: 1.5em;
@@ -80,9 +81,11 @@
     right: 8%;
     bottom: 20%;
     padding: 1.5em;
+    
     h2 {
       font-size: 1em;
     }
+    
     p {
       font-size: 0.8em;
     }
