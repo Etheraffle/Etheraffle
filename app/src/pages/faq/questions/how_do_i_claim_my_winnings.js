@@ -5,7 +5,7 @@ import claimed from './images/claimed.jpg'
 export default () => (
   <React.Fragment>
     <p className="justify">
-      Any winning tickets associated with your ethereum address will be easily spotted byt the "Claim Prize" button which appears in the results tab. If a ticket you've bought matches three or more numbers to the winning numbers drawn at the end of the raffle, congratulations, you've won ether! To claim your prize, simply click that "Claim Prize" button that appears alongside your winning ticket:
+      Any winning tickets associated with your ethereum address will be easily spotted byt the "Claim Prize" button which appears in the results tab. If a ticket you've bought matches two or more numbers to the winning numbers drawn at the end of the raffle, congratulations, you've won a prize! To claim, simply click that "Claim Prize" button that appears alongside your winning ticket:
     </p>
     <img className='image border centred' src={claim} alt='The Claim Prize button'/>
     <p className="justify">
