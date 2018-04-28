@@ -4,8 +4,8 @@ import Modal from 'react-modal'
 import utils from '../../components/utils'
 import lowGas from '../../web3/get_low_gas'
 import claimPrize from '../../web3/claim_prize'
-import LoadingIcon from '../../images/loading_icon_grey.svg'
-import { ScreenContext } from '../../contexts/screen_context'
+// import LoadingIcon from '../../images/loading_icon_grey.svg'
+// import { ScreenContext } from '../../contexts/screen_context'
 import { Pending, Success, Error } from './tx_modal_components'
 
 
