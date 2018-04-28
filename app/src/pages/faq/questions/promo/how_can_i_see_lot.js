@@ -13,7 +13,7 @@ export default props => (
 			</h3>
 			<br/>
 			<p className='justify'>
-			For example in Metamask:
+			  For example in Metamask:
 			<br/>
 			<br/>
 			<img className='image border centred' src={mm} alt='How to watch the token in metamask'/>
