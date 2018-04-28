@@ -2,6 +2,7 @@ import React from 'react'
 import LOT from '../../components/lot'
 import IWonBut from './questions/i_won_but'
 import eLogo from '../../images/e_logo.svg'
+import FreeLOT from '../../components/free_lot'
 import WhatIsLot from './questions/what_is_lot'
 import HowCanIBe from './questions/how_can_i_be'
 import Accordion from '../../components/accordion'
@@ -21,7 +22,10 @@ import HowCanISeeLOT from './questions/promo/how_can_i_see_lot'
 import WhatIsLOTPromo from './questions/promo/what_is_lot_promo'
 import HowDoIClaimLOT from './questions/promo/how_do_i_claim_lot'
 import ClaimPrevious from './questions/promo/can_i_claim_previous_weeks'
-
+/* FreeLOT Q's */
+import what_is_free from './questions/free_lot/what_is_free'
+import how_do_i_get_freelot from './questions/free_lot/how_do_i_get_freelot'
+import how_do_i_use_freelot from './questions/free_lot/how_do_i_use_freelot'
 
 export default props => {
   /* LOT FAQ */
@@ -69,6 +73,15 @@ export default props => {
     {title: 'I accidentally closed the tab, am I still in the draw?',
     component: IAccidentallyClosed}
   ]
+  /* FreeLOT FAQ */
+  let acc4 = [
+    {title: 'What is FreeLOT?',
+    component: what_is_free},
+    {title: 'How do I get FreeLOT?',
+    component: how_do_i_get_freelot},
+    {title: 'How do I use my FreeLOT',
+    component: how_do_i_use_freelot}
+  ]
 
   return (
     <div className={`contentWrapper si${props.screenIndex}`}>
@@ -82,6 +95,10 @@ export default props => {
         <LOT className='faqLogo' fill='6' />
         <p>LOT Promotion Questions:</p>
         <Accordion arr={acc2} screenIndex={props.screenIndex} />
+        <br/>
+        <FreeLOT className='faqLogo' fill={props.screenIndex} />
+        <p>FreeLOT Coupon Questions:</p>
+        <Accordion arr={acc4} screenIndex={props.screenIndex} />
         <br/>
         <img className='faqLogo' src={eLogo} alt='e Logo' />
         <p>Raffle Questions:</p>
