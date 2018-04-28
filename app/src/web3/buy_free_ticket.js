@@ -13,7 +13,7 @@ export default (_web3, _which, _user, _eNums) => {
         data:  data,
         from:  _user,
         to:    cont.cAdd,
-        gas:   cont.gasForFreeEntry
+        gas:   cont.gasForEntry
       },(err, txHash) => {
         return !err ? resolve(txHash) : reject(err)
       })
