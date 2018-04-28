@@ -11,7 +11,7 @@ const {fork} = require('child_process')
  * @param _path       Path to file the forked process will run - defaults 
  *                    to path relative to this file.
  */
-const init = (_period = 6, _path = './getwithdrawnprocess') => {
+const init = (_period = 1, _path = './getwithdrawnprocess') => {
   const getWithdrawals = fork(_path)
   console.log(`getWithdrawals Process Spawned on ${utils.getTime()}`)
   getWithdrawals.send(_period)
