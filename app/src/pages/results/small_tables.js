@@ -5,6 +5,10 @@ import utils from '../../components/utils'
 import lowGas from '../../web3/get_low_gas'
 import claimPrize from '../../web3/claim_prize'
 import LoadingIcon from '../../images/loading_icon_grey.svg'
+import { ScreenContext } from '../../contexts/screen_context'
+import { Pending, Success, Error } from './tx_modal_components'
+
+
 
 export default class SmallTables extends React.Component {
 
@@ -13,19 +17,20 @@ export default class SmallTables extends React.Component {
     this.state = {
       txErr: null,
       tableArr: [],
+      freeGo: false,
       safeLow: null,
       txHash: 'pending',
 			modalIsOpen: false
     }
-    this.raffleWin = this.raffleWin.bind(this)
-    this.getLowGas = this.getLowGas.bind(this)
-    this.openModal = this.openModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
-    this.raffleNoWin = this.raffleNoWin.bind(this)
-    this.parseResults = this.parseResults.bind(this)
-    this.parseEntries = this.parseEntries.bind(this)
-    this.raffleNotDrawn = this.raffleNotDrawn.bind(this)
-    this.sendTransaction = this.sendTransaction.bind(this)
+    this.raffleWin        = this.raffleWin.bind(this)
+    this.getLowGas        = this.getLowGas.bind(this)
+    this.openModal        = this.openModal.bind(this)
+    this.closeModal       = this.closeModal.bind(this)
+    this.raffleNoWin      = this.raffleNoWin.bind(this)
+    this.parseResults     = this.parseResults.bind(this)
+    this.parseEntries     = this.parseEntries.bind(this)
+    this.raffleNotDrawn   = this.raffleNotDrawn.bind(this)
+    this.sendTransaction  = this.sendTransaction.bind(this)
     this.raffleWinClaimed = this.raffleWinClaimed.bind(this)
   }
 
@@ -44,11 +49,11 @@ export default class SmallTables extends React.Component {
   openModal(e) {
     if (this.props.eth.ethAdd) {
       this.sendTransaction(
-        e.target.getAttribute("data-raffleid"),
-        e.target.getAttribute("data-entrynum"),
-        e.target.getAttribute("data-entrynumarr")
+        e.target.getAttribute('data-raffleid'),
+        e.target.getAttribute('data-entrynum'),
+        e.target.getAttribute('data-entrynumarr')
       )
-      this.setState({modalIsOpen: true})
+      this.setState({modalIsOpen: true, freeGo: e.target.getAttribute('data-matches') === '2'})
     } else {
       let txErr ='Error creating ethereum transaction - please check your connection and try again!'
       if (!this.props.eth.ethAdd) 
@@ -62,19 +67,19 @@ export default class SmallTables extends React.Component {
   }
 
   sendTransaction(_raffleID, _entryNum, _entryNumArr) {
-    return claimPrize(this.props.eth.web3, this.props.screenIndex, this.props.eth.ethAdd, _raffleID, _entryNum).then(txHash => {
+    return claimPrize(this.props.eth.web3, 'Saturday', this.props.eth.ethAdd, _raffleID, _entryNum).then(txHash => {
       this.setState({txHash: txHash})
     }).catch(err => {
       console.log(`Error sending ethereum transaction: ${err}`)
-      this.setState({txHash: null }) // Will pop up the error modal
+      this.setState({txHash: null, freeGo: false}) // Will pop up the error modal
     })
   }
 
   closeModal() {
-    this.setState({modalIsOpen: false, txHash: 'pending'})// Reset the txHash
+    this.setState({modalIsOpen: false, txHash: 'pending', freeGo: false}) // Reset the state
   }
 
-  parseResults({ raffleIDs, results, entries }) {// Loop over raffle IDs sending corresponding entry & results arrays for parsing
+  parseResults({ raffleIDs, results, entries }) { // Loop over raffle IDs sending corresponding entry & results arrays for parsing
     let tables = [], rIDs = raffleIDs.reverse()
     rIDs.forEach((e,i) => {tables.push(this.parseEntries(rIDs[i], entries[rIDs[i]], results[rIDs[i]]))})
     this.setState({tableArr: tables})
@@ -95,11 +100,14 @@ export default class SmallTables extends React.Component {
       obj['txHash']         = _entArr[i].length > 8 ? _entArr[i][8] : null
       obj['txTimeStamp']    = _entArr[i].length > 8 ? _entArr[i][9] : null
       obj['matches']        = _resObj['timeStamp'] !== null ? utils.getMatches(obj['chosenNumbers'], obj['winningNumbers']) : null
-      let num               = _resObj['timeStamp'] !== null ? obj['winningAmounts'][obj['matches']] : 0
-      obj['prize']          = _resObj['timeStamp'] !== null ? utils.toDecimals(window.web3.fromWei(num,'ether'), 3) : null
+      obj['prize']          = _resObj['timeStamp'] === null 
+                                ? null 
+                                : obj['matches'] === 2
+                                ? 'A Free Go!'
+                                : `${utils.toDecimals(window.web3.fromWei(obj['winningAmounts'][obj['matches']],'ether'), 3)} Ether!`
       /* Retrieve table html */
       if (_resObj['timeStamp'] === null) table.push(this.raffleNotDrawn(obj, i)) // Not drawn
-      else if (obj['matches'] < 3) table.push(this.raffleNoWin(obj, i)) // Drawn but no win
+      else if (obj['matches'] < 2) table.push(this.raffleNoWin(obj, i)) // Drawn but no win
       else if (!obj['claimed']) table.push(this.raffleWin(obj, i)) // Drawn, won but not claimed
       else table.push(this.raffleWinClaimed(obj, i)) // Won and claimed
       }
@@ -126,13 +134,7 @@ export default class SmallTables extends React.Component {
             </tr>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`}>
-                Chosen Numbers:<br/>
-                  {_o['chosenNumbers'][0]}&ensp;
-                  {_o['chosenNumbers'][1]}&ensp;
-                  {_o['chosenNumbers'][2]}&ensp;
-                  {_o['chosenNumbers'][3]}&ensp;
-                  {_o['chosenNumbers'][4]}&ensp;
-                  {_o['chosenNumbers'][5]}
+                Chosen Numbers:<br/>{utils.getNumStr(_o['chosenNumbers'])}
               </td>
             </tr>
             <tr>
@@ -154,32 +156,19 @@ export default class SmallTables extends React.Component {
             <tr>
               <th className={`textCenter screen${this.props.screenIndex}`}>
                 Raffle Nº {_o['rafID']} &emsp; Entry Nº {_o['entryNumber']}<br/>
-                Winning Numbers: &nbsp;
-                  {_o['winningNumbers'][0]}&ensp;
-                  {_o['winningNumbers'][1]}&ensp;
-                  {_o['winningNumbers'][2]}&ensp;
-                  {_o['winningNumbers'][3]}&ensp;
-                  {_o['winningNumbers'][4]}&ensp;
-                  {_o['winningNumbers'][5]}
+                Winning Numbers: {utils.getNumStr(_o['winningNumbers'])}
               </th>
             </tr>
           </thead>
           <tbody className={`tableHover screen${this.props.screenIndex}`}>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`}>
-                Drawn On: <br/>
-                {moment.unix(_o['rafTimeStamp']).format('dddd Do MMMM YYYY')}
+                Drawn On:<br/>{moment.unix(_o['rafTimeStamp']).format('dddd Do MMMM YYYY')}
               </td>
             </tr>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`}>
-                Chosen Numbers:<br/>
-                  {_o['chosenNumbers'][0]}&ensp;
-                  {_o['chosenNumbers'][1]}&ensp;
-                  {_o['chosenNumbers'][2]}&ensp;
-                  {_o['chosenNumbers'][3]}&ensp;
-                  {_o['chosenNumbers'][4]}&ensp;
-                  {_o['chosenNumbers'][5]}
+                Chosen Numbers:<br/>{utils.getNumStr(_o['chosenNumbers'])}
               </td>
             </tr>
             <tr>
@@ -197,41 +186,28 @@ export default class SmallTables extends React.Component {
       </div>
     )
   }
-
+  
   raffleWin(_o, i) {
+    if (_o['rafID'] <= 37) return this.raffleNoWin(_o, i) // 2 match wins from old raffles do not win a prize
     return (
       <div key={i} className={`resultsTable screen${this.props.screenIndex}`}>
         <table className={`tableFill screen${this.props.screenIndex}`}>
           <thead>
             <tr>
               <th className={`textCenter screen${this.props.screenIndex}`}>
-                Raffle Nº {_o['rafID']} &emsp; Entry Nº {_o['entryNumber']}<br/>
-                Winning Numbers: &nbsp;
-                  {_o['winningNumbers'][0]}&ensp;
-                  {_o['winningNumbers'][1]}&ensp;
-                  {_o['winningNumbers'][2]}&ensp;
-                  {_o['winningNumbers'][3]}&ensp;
-                  {_o['winningNumbers'][4]}&ensp;
-                  {_o['winningNumbers'][5]}
+                Raffle Nº {_o['rafID']} &emsp; Entry Nº {_o['entryNumber']}<br/>Winning Numbers: {utils.getNumStr(_o['winningNumbers'])}
               </th>
             </tr>
           </thead>
           <tbody className={`tableHover screen${this.props.screenIndex}`}>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`}>
-                Drawn On: <br/>
-                {moment.unix(_o['rafTimeStamp']).format('dddd Do MMMM YYYY')}
+                Drawn On:<br/>{moment.unix(_o['rafTimeStamp']).format('dddd Do MMMM YYYY')}
               </td>
             </tr>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`}>
-                Chosen Numbers: <br/>
-                  {_o['chosenNumbers'][0]}&ensp;
-                  {_o['chosenNumbers'][1]}&ensp;
-                  {_o['chosenNumbers'][2]}&ensp;
-                  {_o['chosenNumbers'][3]}&ensp;
-                  {_o['chosenNumbers'][4]}&ensp;
-                  {_o['chosenNumbers'][5]}
+                Chosen Numbers:<br/>{utils.getNumStr(_o['chosenNumbers'])}
               </td>
             </tr>
             <tr>
@@ -241,17 +217,18 @@ export default class SmallTables extends React.Component {
             </tr>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`} style={{'fontWeight':'bold'}}>
-                Prize: {_o['prize']} Ether!
+                Prize: {_o['prize']}
               </td>
             </tr>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`}>
                 <button
-                  className={`claimButton screen${this.props.screenIndex}`}
                   data-raffleid={_o['rafID']}
-                  data-entrynum={_o['entryNumber']}
+                  data-matches={_o['matches']}
                   data-entrynumarr={_o['entArr']}
-                  onClick={(e) => {this.openModal(e)}}>
+                  data-entrynum={_o['entryNumber']}
+                  onClick={(e) => {this.openModal(e)}}
+                  className={`claimButton screen${this.props.screenIndex}`} >
                   Claim Prize!
                 </button>
               </td>
@@ -269,14 +246,7 @@ export default class SmallTables extends React.Component {
           <thead>
             <tr>
               <th className={`textCenter screen${this.props.screenIndex}`}>
-                Raffle Nº {_o['rafID']} &emsp; Entry Nº {_o['entryNumber']}<br/>
-                Winning Numbers: &nbsp;
-                  {_o['winningNumbers'][0]}&ensp;
-                  {_o['winningNumbers'][1]}&ensp;
-                  {_o['winningNumbers'][2]}&ensp;
-                  {_o['winningNumbers'][3]}&ensp;
-                  {_o['winningNumbers'][4]}&ensp;
-                  {_o['winningNumbers'][5]}
+                Raffle Nº {_o['rafID']} &emsp; Entry Nº {_o['entryNumber']}<br/>Winning Numbers: {utils.getNumStr(_o['winningNumbers'])}
               </th>
             </tr>
           </thead>
@@ -289,13 +259,7 @@ export default class SmallTables extends React.Component {
             </tr>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`}>
-                Chosen Numbers: <br/>
-                  {_o['chosenNumbers'][0]}&ensp;
-                  {_o['chosenNumbers'][1]}&ensp;
-                  {_o['chosenNumbers'][2]}&ensp;
-                  {_o['chosenNumbers'][3]}&ensp;
-                  {_o['chosenNumbers'][4]}&ensp;
-                  {_o['chosenNumbers'][5]}
+                Chosen Numbers:<br/>{utils.getNumStr(_o['chosenNumbers'])}
               </td>
             </tr>
             <tr>
@@ -305,18 +269,14 @@ export default class SmallTables extends React.Component {
             </tr>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`} style={{'fontWeight':'bold'}}>
-                Prize: {_o['prize']} Ether!
+                Prize: {_o['prize']}
               </td>
             </tr>
             <tr>
               <td className={`textCenter screen${this.props.screenIndex}`}>
-                Prize claimed on:
-                <br/>
-                  <b>{moment.unix(_o['txTimeStamp']).format('dddd Do MMMM, YYYY')}</b>
-                <br/>
-                <br/>
-                Transaction Hash:
-                <br/>
+                Prize claimed on:<br/>
+                <b>{moment.unix(_o['txTimeStamp']).format('dddd Do MMMM, YYYY')}</b><br/><br/>
+                Transaction Hash:<br/>
                 {_o['txHash']
                   ? <a className={`screen${this.props.screenIndex}`} rel='noopener noreferrer' target= '_blank' href={`https://www.etherscan.io/tx/${_o['txHash']}`} ><b>{`${_o['txHash'].substring(0,20)}. . .`}</b></a>
                   : <b>Not captured!</b>
@@ -348,63 +308,19 @@ export default class SmallTables extends React.Component {
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
+          shouldCloseOnOverlayClick={true}
           contentLabel='Claim Prize Modal'
-          className={`claimPrizeModal screen${this.props.screenIndex}`}
           overlayClassName={`Overlay screen${this.props.screenIndex}`}
-          shouldCloseOnOverlayClick={true}>
+          className={`claimPrizeModal screen${this.props.screenIndex}`} >
             {
               this.state.txHash === 'pending'
-              ? <Pending screenIndex={this.props.screenIndex} safeLow={this.state.safeLow} />
+              ? <Pending screenIndex={this.props.screenIndex} safeLow={this.state.safeLow} freeGo={this.state.freeGo} />
               : this.state.txHash
-              ? <Success screenIndex={this.props.screenIndex} txHash={this.state.txHash} />
-              : <Error   screenIndex={this.props.screenIndex} txErr={this.state.txErr} />
+              ? <Success screenIndex={this.props.screenIndex} txHash={this.state.txHash} freeGo={this.state.freeGo} />
+              : <Error screenIndex={this.props.screenIndex} txErr={this.state.txErr} />
             }
         </Modal>
 			</div>
 		)
 	}
 }
-
-const Pending = props => (
-  <div>
-    <h2 className={`screen${props.screenIndex}`}>Win Claim In Progress . . .</h2>
-    <img className='loadingIcon' src={LoadingIcon} style={{'margin':'0.8em 0 0 0'}} alt='Loading icon' />
-    {props.safeLow &&
-      <p>
-        Safe low gas price: <span className={`styledSpan screen${props.screenIndex}`}>{props.safeLow}</span>
-      </p>
-    }
-  </div>
-)
-
-const Success = props => (
-  <div>
-    <h2 className={`screen${props.screenIndex}`}>Transaction Sent!</h2>
-    <p className='centred'>
-      Your transaction hash: 
-      <a
-        rel='noopener noreferrer'
-        target='_blank'
-        className={`invert screen${props.screenIndex}`}
-        href={`https://etherscan.io/tx/${props.txHash}`}>
-          { `${props.txHash.substring(0, 20)}. . .`}
-      </a><br/>
-    </p>
-    <h2 className={`screen${props.screenIndex}`}>What now?</h2>
-    <p className='justify'>
-      Click the hash above to watch your transaction being mined in to the block chain! When your transaction is received by Etheraffle's smart-contract it will pay out your prize directly into your account!
-      <br/><br/>
-      Please be patient whilst this is occuring. If after 24 hours you have not received your prize, please contact support quoting your ethereum address and this transaction hash.
-    </p>
-  </div>
-)
-
-const Error = props => (
-  <div>
-    <h2 className={`screen${props.screenIndex}`}>Error Creating Transaction!</h2>
-    {props.txErr 
-      ? <p className='justify last'>{props.txErr}</p> 
-      : <p className='justify last'>You may have rejected the transaction, or your connection may have dropped. Please check your ethereum client and make sure your account is unlocked.</p>
-    }
-  </div>
-)

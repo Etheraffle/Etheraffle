@@ -6,7 +6,7 @@ import utils from '../../components/utils'
 import lowGas from '../../web3/get_low_gas'
 import claimPrize from '../../web3/claim_prize'
 import ClipboardButton from 'react-clipboard.js'
-import LoadingIcon from '../../images/loading_icon_grey.svg'
+import { Pending, Success, Error } from './tx_modal_components'
 
 export default class BigTables extends React.Component {
 
@@ -16,16 +16,17 @@ export default class BigTables extends React.Component {
       txErr: null,
       tableArr: [],
       safeLow: null,
+      freeGo: false,
       txHash: 'pending',
       modalIsOpen: false
     }
-    this.toDollars = this.toDollars.bind(this)
-    this.getLowGas = this.getLowGas.bind(this)
-    this.openModal = this.openModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
-    this.parseResults = this.parseResults.bind(this)
-    this.getTableRows = this.getTableRows.bind(this)
-    this.getTableHeads = this.getTableHeads.bind(this)
+    this.toDollars       = this.toDollars.bind(this)
+    this.getLowGas       = this.getLowGas.bind(this)
+    this.openModal       = this.openModal.bind(this)
+    this.closeModal      = this.closeModal.bind(this)
+    this.parseResults    = this.parseResults.bind(this)
+    this.getTableRows    = this.getTableRows.bind(this)
+    this.getTableHeads   = this.getTableHeads.bind(this)
     this.sendTransaction = this.sendTransaction.bind(this)
   }
 
@@ -48,11 +49,11 @@ export default class BigTables extends React.Component {
   openModal(e) {
     if (this.props.eth.ethAdd) {
       this.sendTransaction(
-        e.target.getAttribute("data-raffleid"),
-        e.target.getAttribute("data-entrynum"),
-        e.target.getAttribute("data-entrynumarr")
+        e.target.getAttribute('data-raffleid'),
+        e.target.getAttribute('data-entrynum'),
+        e.target.getAttribute('data-entrynumarr')
       )
-      this.setState({modalIsOpen: true})
+      this.setState({modalIsOpen: true, freeGo: e.target.getAttribute('data-matches') === '2'})
     } else {
       let txErr ='Error creating ethereum transaction - please check your connection and try again!'
       if (!this.props.eth.ethAdd) 
@@ -66,16 +67,16 @@ export default class BigTables extends React.Component {
   }
 
   sendTransaction(_raffleID, _entryNum, _entryNumArr) {
-    return claimPrize(this.props.eth.web3, this.props.screenIndex, this.props.eth.ethAdd, _raffleID, _entryNum).then(txHash => {
+    claimPrize(this.props.eth.web3, 'Saturday', this.props.eth.ethAdd, _raffleID, _entryNum).then(txHash => { 
       this.setState({txHash: txHash})
     }).catch(err => {
       console.log(`Error sending ethereum transaction: ${err}`)
-      this.setState({txHash: null }) // Will pop up the error modal
+      this.setState({txHash: null, freeGo: false}) // Will pop up the error modal
     })
   }
 
   closeModal() {
-    this.setState({modalIsOpen: false, txHash: 'pending'})// Reset the txHash
+    this.setState({modalIsOpen: false, txHash: 'pending', freeGo: false}) // Reset the txHash
   }
 
   parseResults(_data) {
@@ -100,8 +101,8 @@ export default class BigTables extends React.Component {
 
   getTableHeads(raffleID, resultsArr) {
     let tableHead = []
-      , timeStamp = moment().day('Saturday').format('dddd MMMM Do YYYY')//returns next occurring saturday
-    if (resultsArr.timeStamp === null) {//results not drawn yet...
+      , timeStamp = moment().day('Saturday').format('dddd MMMM Do YYYY') // Returns next occurring saturday
+    if (resultsArr.timeStamp === null) { // Results not drawn yet...
       tableHead.push(
         <thead key={raffleID + 1}>
           <tr key={raffleID + 2}>
@@ -112,13 +113,13 @@ export default class BigTables extends React.Component {
           <tr key={raffleID + 3}>
             <th data-tip='This is your personal entry<br>number for raffle.' className={`column-entryNum textCenter screen${this.props.screenIndex}`}>Entry</th>
             <th data-tip='These are your chosen<br>numbers for this raffle.' className={`column-chosenNums textCenter screen${this.props.screenIndex}`}>Chosen Numbers</th>
-            <th data-tip='When the results are drawn<br>your number of matches will appear<br>here. Three or more means you win ether!' className={`column-matches textCenter screen${this.props.screenIndex}`}>Matches</th>
+            <th data-tip='When the results are drawn<br>your number of matches will appear<br>here. Two or more means you win a prize!' className={`column-matches textCenter screen${this.props.screenIndex}`}>Matches</th>
             <th data-tip='When the results are drawn,<br>the amount of ether your raffle<br> ticket won will appear here.' className={`column-prize textCenter screen${this.props.screenIndex}`}>Prize</th>
             <th data-tip='If you win ether, a<br>button will appear in this<br>column so you can claim it!' className={`column-claim textCenter screen${this.props.screenIndex}`}>Withdraw</th>
           </tr>
         </thead>
       )
-    } else {//results are in...
+    } else { // Results are in...
       let wN = resultsArr.winningNumbers.map(x => { return x < 10 ? `0${x}` : x })
       timeStamp = moment.unix(resultsArr.timeStamp).format('Do MMM YYYY [at] h:mm a')
       tableHead.push(
@@ -128,31 +129,16 @@ export default class BigTables extends React.Component {
               Raffle Number:&ensp;{raffleID}<br/>Winning Numbers:&ensp;{wN[0]}&ensp;{wN[1]}&ensp;{wN[2]}&ensp;{wN[3]}&ensp;{wN[4]}&ensp;{wN[5]}</th>
           </tr>
           <tr key={raffleID + 3}>
-            <th 
-              data-tip='This is how many times you<br>have entered into this raffle.' 
-              className={`column-entryNum textCenter screen${this.props.screenIndex}`}>
-              Entry
-            </th>
-            <th 
-              data-tip='These are your chosen<br>numbers for this raffle ticket.' 
-              className={`column-chosenNums textCenter screen${this.props.screenIndex}`}>
-              Chosen Numbers
-            </th>
-            <th 
-              data-tip='This is how many<br>numbers you have matched.<br>Three or more means you win ether!' 
-              className={`column-matches textCenter screen${this.props.screenIndex}`}>
-              Matches
-            </th>
-            <th 
-              data-tip='This is how much ether<br>you won with this ticket.' 
-              className={`column-prize textCenter screen${this.props.screenIndex}`}>
-              Prize
-            </th>
-            <th 
-              data-tip='If you won a prize<br>you can claim it here.' 
-              className={`column-claim textCenter screen${this.props.screenIndex}`}>
-              Withdraw
-            </th>
+            <th data-tip='This is how many times you<br>have entered into this raffle.' 
+              className={`column-entryNum textCenter screen${this.props.screenIndex}`}>Entry</th>
+            <th data-tip='These are your chosen<br>numbers for this raffle ticket.' 
+              className={`column-chosenNums textCenter screen${this.props.screenIndex}`}>Chosen Numbers</th>
+            <th data-tip='This is how many<br>numbers you have matched.<br>Two or more means you win a prize!' 
+              className={`column-matches textCenter screen${this.props.screenIndex}`}>Matches</th>
+            <th data-tip='This is the prize<br>you won with this ticket.' 
+              className={`column-prize textCenter screen${this.props.screenIndex}`}>Prize</th>
+            <th data-tip='If you won a prize<br>you can claim it here.' 
+              className={`column-claim textCenter screen${this.props.screenIndex}`}>Withdraw</th>
           </tr>
         </thead>
       )
@@ -162,7 +148,7 @@ export default class BigTables extends React.Component {
 
   getTableResArr(resultsArr, raffleID, entriesArr) {
     const tableResultsArr =[]
-    for (let i = 0; i < entriesArr.length; i++) {//loop over entries array building an object at each iteration...
+    for (let i = 0; i < entriesArr.length; i++) { // Loop over entries array building an object at each iteration...
       let matches  = resultsArr.timeStamp === null ? 'Pending' : utils.getMatches(entriesArr[i].slice(0,6), resultsArr.winningNumbers)
         , entryNum = entriesArr[i][7]
         , obj = {
@@ -170,11 +156,14 @@ export default class BigTables extends React.Component {
           entryNum: entryNum,
           entryNumArr: entriesArr[i],
           chosenNumbers: entriesArr[i].slice(0,6).map(x => { return x < 10 ? `0${x}` : x }), 
-          prize: resultsArr.timeStamp === null ? 'Pending' : utils.toDecimals(this.props.eth.web3.fromWei(resultsArr.winningAmounts[matches],'ether'), 3),
-          amount: resultsArr.timeStamp === null ? '' : resultsArr.winningAmounts[matches], 
-          withdrawn: matches < 3 ? null : entriesArr[i].length > 8 ? true : false, 
-          txHash: matches < 3 ? null : entriesArr[i].length > 8 ? entriesArr[i][8] : 'Not yet claimed...', 
-          txHashTimeStamp: matches < 3 ? null : entriesArr[i].length > 8 ? entriesArr[i][9] : ''
+          prize: resultsArr.timeStamp === null 
+            ? 'Pending'
+            : matches === 2 && raffleID > 37
+            ? 'a free go!'
+            : `${utils.toDecimals(this.props.eth.web3.fromWei(resultsArr.winningAmounts[matches],'ether'), 3)} ETH!`,
+          withdrawn: matches < 2 ? null : entriesArr[i].length > 8 ? true : false, 
+          txHash: matches < 2 ? null : entriesArr[i].length > 8 ? entriesArr[i][8] : 'Not yet claimed...', 
+          txHashTimeStamp: matches < 2 ? null : entriesArr[i].length > 8 ? entriesArr[i][9] : ''
         }
       tableResultsArr[entryNum - 1] = obj
     }
@@ -185,34 +174,34 @@ export default class BigTables extends React.Component {
     const tableResultsArr = this.getTableResArr(resultsArr, raffleID, entriesArr)
         , tRows = []
     for (let i = 0; i < tableResultsArr.length; i++) {
-      let nums = `${tableResultsArr[i].chosenNumbers[0]}  ${tableResultsArr[i].chosenNumbers[1]}  ${tableResultsArr[i].chosenNumbers[2]}  ${tableResultsArr[i].chosenNumbers[3]}  ${tableResultsArr[i].chosenNumbers[4]}  ${tableResultsArr[i].chosenNumbers[5]}`
-      if (tableResultsArr[i].matches >= 3 && tableResultsArr[i].withdrawn === false) {//claim prize button...
+      let nums = tableResultsArr[i].chosenNumbers.reduce((acc, e) => `${acc}  ${e}`)
+      if (tableResultsArr[i].matches >= 2 && !tableResultsArr[i].withdrawn && raffleID > 37) { // Claim prize button...
         tRows.push(
           <tr key={tableResultsArr[i].entryNum + raffleID}>
             <td className={`textCenter screen${this.props.screenIndex}`}><b>{tableResultsArr[i].entryNum}</b></td>
             <td className={`column-chosenNums textCenter screen${this.props.screenIndex}`}><b>{nums}</b></td>
-            <td className={'textCenter screen' + this.props.screenIndex}><b>{tableResultsArr[i].matches}</b></td>
-            <td data-tip={'Wohoo - you won!<br>Full prize amount:<br>' + this.props.eth.web3.fromWei(tableResultsArr[i].amount, 'ether') + ' Ether!' + this.toDollars(tableResultsArr[i].amount)} className={`textCenter screen${this.props.screenIndex}`}><b>{tableResultsArr[i].prize} Ether</b></td>
+            <td className={`textCenter screen${this.props.screenIndex}`}><b>{tableResultsArr[i].matches}</b></td>
+            <td data-tip={`Wohoo - you won ${tableResultsArr[i].prize}`} className={`textCenter screen${this.props.screenIndex}`}><b>{utils.capitalize(tableResultsArr[i].prize)}</b></td>
             <td className={`textCenter screen${this.props.screenIndex}`}>
-            <button
-              className={`claimButton screen${this.props.screenIndex}`}
-              data-tip={`Congratulations, you've won ether!<br>Click this button to claim your prize!`}
-              data-raffleid={raffleID}
-              data-entrynum={tableResultsArr[i].entryNum}
-              data-entrynumarr={tableResultsArr[i].entryNumArr}
-              onClick={(e) => {this.openModal(e)}}>
-              Claim Prize!
-            </button></td>
+              <button
+                data-raffleid={raffleID}
+                onClick={(e) => {this.openModal(e)}}
+                data-matches={tableResultsArr[i].matches}
+                data-entrynum={tableResultsArr[i].entryNum}
+                data-entrynumarr={tableResultsArr[i].entryNumArr} 
+                className={`claimButton screen${this.props.screenIndex}`}
+                data-tip={`Congratulations, you've won a prize!<br>Click this button to claim it!`} >Claim Prize!</button>
+            </td>
           </tr>
         )
       }
-      if (tableResultsArr[i].matches >= 3 && tableResultsArr[i].withdrawn === true) {//prize claimed with tooltip deets...
+      if (tableResultsArr[i].matches >= 2 && tableResultsArr[i].withdrawn) {// prize claimed with tooltip deets...
         tRows.push(
           <tr key={tableResultsArr[i].entryNum + raffleID}>
             <td className={`textCenter screen${this.props.screenIndex}`}>{tableResultsArr[i].entryNum}</td>
             <td className={`column-chosenNums textCenter screen${this.props.screenIndex}`}>{nums}</td>
             <td className={`textCenter screen${this.props.screenIndex}`}>{tableResultsArr[i].matches}</td>
-            <td data-tip={`Wohoo - you won!<br>Full prize amount:<br>${this.props.eth.web3.fromWei(tableResultsArr[i].amount, 'ether')} Ether!`} className={`textCenter screen${this.props.screenIndex}`}><b>{tableResultsArr[i].prize} Ether</b></td>
+            <td data-tip={`Wohoo - you won ${tableResultsArr[i].prize}`} className={`textCenter screen${this.props.screenIndex}`}><b>{utils.capitalize(tableResultsArr[i].prize)}</b></td>
             <td
               data-tip={`You claimed on:<br>${moment.unix(tableResultsArr[i].txHashTimeStamp).format('Do MMM YYYY [at] h:mm a')}<br>Your transaction hash:<br> ${tableResultsArr[i].txHash}<br> Click on 'Claimed' to copy these details to the clipboard.`}
               className={`textCenter screen${this.props.screenIndex}`}>
@@ -225,7 +214,7 @@ export default class BigTables extends React.Component {
           </tr>
         )
       }
-      if (tableResultsArr[i].matches === 'Pending') {//Results not drawn yet...
+      if (tableResultsArr[i].matches === 'Pending') { // Results not drawn yet...
         tRows.push(
           <tr key={tableResultsArr[i].entryNum + raffleID}>
             <td className={`textCenter screen${this.props.screenIndex}`}>{tableResultsArr[i].entryNum}</td>
@@ -236,13 +225,14 @@ export default class BigTables extends React.Component {
           </tr>
         )
       }
-      if (tableResultsArr[i].matches < 3) {//else drawn but unwinning ticket...
+      if ((tableResultsArr[i].matches >= 2 && !tableResultsArr[i].withdrawn && raffleID <= 37) || // Old, non-winning 2 match wins...
+          tableResultsArr[i].matches < 2) { // Raffle drawn but unwinning ticket...
         tRows.push(
           <tr key={tableResultsArr[i].entryNum + raffleID}>
             <td className={`textCenter screen${this.props.screenIndex}`}>{tableResultsArr[i].entryNum}</td>
             <td className={`textCenter screen${this.props.screenIndex}`}>{nums}</td>
             <td className={`textCenter screen${this.props.screenIndex}`}>{tableResultsArr[i].matches}</td>
-            <td className={`textCenter screen${this.props.screenIndex}`}>0 Ether</td>
+            <td className={`textCenter screen${this.props.screenIndex}`}>0 ETH</td>
             <td className={`textCenter screen${this.props.screenIndex}`}>No Prize</td>
           </tr>
         )
@@ -275,15 +265,15 @@ export default class BigTables extends React.Component {
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
+          shouldCloseOnOverlayClick={true}
           contentLabel='Claim Prize Modal'
-          className={`claimPrizeModal screen${this.props.screenIndex}`}
           overlayClassName={`Overlay screen${this.props.screenIndex}`}
-          shouldCloseOnOverlayClick={true}>
+          className={`claimPrizeModal screen${this.props.screenIndex}`}>
             {
               this.state.txHash === 'pending'
-              ? <Pending screenIndex={this.props.screenIndex} safeLow={this.state.safeLow} />
+              ? <Pending screenIndex={this.props.screenIndex} safeLow={this.state.safeLow} freeGo={this.state.freeGo} />
               : this.state.txHash
-              ? <Success screenIndex={this.props.screenIndex} txHash={this.state.txHash} />
+              ? <Success screenIndex={this.props.screenIndex} txHash={this.state.txHash} freeGo={this.state.freeGo} />
               : <Error   screenIndex={this.props.screenIndex} txErr={this.state.txErr} />
             }
         </Modal>
@@ -291,67 +281,3 @@ export default class BigTables extends React.Component {
 		)
 	}
 }
-
-// {(this.state.database === 1) &&
-//   <p className={window.innerWidth > 450 ? 'rightAlign' : 'centred'}>
-//     Showing
-//     <span className={"styledSpan largerFont screen" + this.props.screenIndex}>
-//       &ensp;{this.state.tableArr.length}&ensp;
-//     </span>
-//     results out of
-//     <span className={"styledSpan largerFont screen" + this.props.screenIndex}>
-//       &ensp;{this.state.numRaffles}&ensp;
-//     </span>
-//   </p>
-// }
-
-// {/* If more to show, this appears */}
-// {(this.state.database === 1 && this.state.numRaffles > this.state.tableArr.length) &&
-// <p className={window.innerWidth > 450 ? 'rightAlign' : 'centred'}>
-//   <a className={"button screen" + this.props.screenIndex} onClick={() => {this.getResults()}}>
-//     Click for more
-//   </a>
-// </p>
-// }
-
-const Pending = props => (
-  <div>
-    <h2 className={`screen${props.screenIndex}`}>Win Claim In Progress . . .</h2>
-    <img className='loadingIcon' src={LoadingIcon} style={{'margin':'0.8em 0 0 0'}} alt='Loading icon' />
-    {props.safeLow && 
-      <p>Safe low gas price: <span className={`styledSpan screen${props.screenIndex}`}>{props.safeLow}</span></p>
-    }
-  </div>
-)
-
-const Success = props => (
-  <div>
-    <h2 className={`screen${props.screenIndex}`}>Transaction Sent!</h2>
-    <p className='centred'>
-      Your transaction hash: 
-      <a
-        rel='noopener noreferrer'
-        target='_blank'
-        className={`invert screen${props.screenIndex}`}
-        href={`https://etherscan.io/tx/${props.txHash}`}>
-          {` ${props.txHash.substring(0, 20)}. . .`}
-      </a><br/>
-    </p>
-    <h2 className={`screen${props.screenIndex}`}>What now?</h2>
-    <p className='justify'>
-      Click the hash above to watch your transaction being mined in to the block chain! When your transaction is received by Etheraffle's smart-contract it will pay out your prize directly into your account!
-      <br/><br/>
-      Please be patient whilst this is occuring. If after 24 hours you have not received your prize, please contact support quoting your ethereum address and this transaction hash.
-    </p>
-  </div>
-)
-
-const Error = props => (
-  <div>
-    <h2 className={`screen${props.screenIndex}`}>Error Creating Transaction!</h2>
-    {props.txErr 
-      ? <p className='justify last'>{props.txErr}</p> 
-      : <p className='justify last'>You may have rejected the transaction, or your connection may have dropped. Please check your ethereum client and make sure your account is unlocked.</p>
-    }
-  </div>
-)
