@@ -51,15 +51,15 @@ prizePoolsEvent.watch((err, res) => {//TODO: what is this function for?
   return prizePools(res)
 })
 /* Cron Jobs */
-/* Retrieves any missing entries every hour */
-cron.schedule('0 */1 * * *', () => {
+/* Retrieves any missing entries, runs every 10 minutes starting at 0 mins past the hour */
+cron.schedule('0-59/10 * * * *', () => {
   console.log(`Cron: getMissingProcess() Begun on ${utils.getTime()}`)
   return getMissing.init("./etheraffle/eventwatcher/processes/getmissingprocess")
 })
-/* Retrieves any manual withdrawals, runs every 3 hours (@ half past the hour) */
-cron.schedule('30 */3 * * *', () => {
+/* Retrieves any manual withdrawals, runs every 10 minutes starting at 5 mins past the hour */
+cron.schedule('5-59/10 * * * *', () => {
   console.log(`Cron: getWithdrawnProcess() Begun on ${utils.getTime()}`)
-  return getWithdrawn.init(6,'./etheraffle/eventwatcher/processes/getwithdrawnprocess')
+  return getWithdrawn.init(1,'./etheraffle/eventwatcher/processes/getwithdrawnprocess')
 })
 /* Retrieves any weekly events, runs 1am Sunday morning. */
 cron.schedule('0 1 * * 0', () => {
