@@ -1,29 +1,35 @@
 import React from 'react'
+import moment from 'moment'
 import utils from './utils'
 import Modal from 'react-modal'
 import lowGas from '../web3/get_low_gas'
 import ReactTooltip from 'react-tooltip'
 import buyTicket from '../web3/buy_ticket'
+import averageGas from '../web3/get_average_gas'
 import getPrizePool from '../web3/get_prize_pool'
 import getTktPrice from '../web3/get_ticket_price'
+import buyFreeTicket from '../web3/buy_free_ticket'
 import LoadingIcon from '../images/loading_icon_grey.svg'
+import FreeLOTCounter from '../components/free_lot_counter'
 
-//Require eth object props, raffle day, & pick from props and screenIndex
-//TODO: implement prop types to enforce the above
+// Require eth object props, raffle day, & pick from props and screenIndex
+// TODO: implement prop types to enforce the above
+
 
 export default class Raffle extends React.Component {
   
   constructor(props) {
 		super(props)
 		this.state = {
+      gas: null,
 			txErr: null,
 			selected: [],
-			safeLow: null,
 			selections: [],
+      decided: false,
 			prizePool: '...',
 			tktPrice: '. . .',
 			txHash: 'pending',
-			modalIsOpen: false,
+      modalIsOpen: false,
 			priceDol: 'Exchange rate pending',
 			prizeDol: 'Exchange rate pending'
 		}
@@ -32,6 +38,7 @@ export default class Raffle extends React.Component {
 		this.openModal        = this.openModal.bind(this)
 		this.closeModal       = this.closeModal.bind(this)
 		this.handleChange     = this.handleChange.bind(this)
+    this.makeDecision     = this.makeDecision.bind(this)
     this.removeSelected   = this.removeSelected.bind(this)
 		this.sendTransaction  = this.sendTransaction.bind(this)
     this.getPriceAndPrize = this.getPriceAndPrize.bind(this)
@@ -44,15 +51,15 @@ export default class Raffle extends React.Component {
   }
 
   getLowGas() {
-    return lowGas()
-    .then(safeLow => {
-      this.setState({safeLow: `${safeLow} Gwei`})
+    let p = moment(moment()).format('dddd') === this.props.day ? averageGas() : lowGas() // If day of draw, show average gas not low!
+    p.then(gas => {
+      this.setState({gas: `${gas} Gwei`})
     }).catch (err => console.log(`Error retrieving safe low gas rate: ${err}`))
   }
 
-  openModal() {
+  openModal(_hasFreeLOT) {
     if (this.state.tktPrice > 0 && this.props.eth.ethAdd !== null) {
-      this.sendTransaction()
+      if (!_hasFreeLOT) this.sendTransaction() // can leave undefined
       this.setState({modalIsOpen: true})
     } else {
       let txErr ='Error creating ethereum transaction - please check your connection and try again!'
@@ -67,7 +74,7 @@ export default class Raffle extends React.Component {
   }
 
   closeModal() {
-    this.setState({modalIsOpen: false, txHash: 'pending'})// Reset the txHash
+    this.setState({modalIsOpen: false, txHash: 'pending', decided: false})// Reset the txHash & decision
     this.getPriceAndPrize()
   }
 
@@ -91,14 +98,22 @@ export default class Raffle extends React.Component {
     }).catch(err => console.log(`Err in getPriceAndPrize: ${err}`))
   }
 
-  sendTransaction() {
-    return buyTicket(this.props.eth.web3, this.props.day, this.props.eth.ethAdd, this.state.selected)
-    .then(txHash => {
+  sendTransaction(_bool) {
+    let p
+    _bool 
+      ? (p = buyFreeTicket(this.props.eth.web3, this.props.day, this.props.eth.ethAdd, this.state.selected), this.props.eth.decrementFreeLOT()) 
+      : p = buyTicket(this.props.eth.web3, this.props.day, this.props.eth.ethAdd, this.state.selected)
+    p.then(txHash => {
       this.setState({txHash: txHash})
     }).catch(err => {
       console.log(`Error sending ethereum transaction: ${err}`)
       this.setState({txHash: null})// Will popup the error buying ticket modal
     })
+  }
+
+  makeDecision(_bool) {
+    this.sendTransaction(_bool)
+    this.setState({decided: true})  
   }
 
   handleChange(event) {
@@ -145,21 +160,23 @@ export default class Raffle extends React.Component {
         <p className='centred'>
           Pick your {this.props.pick} lucky numbers - or <span onClick={this.randomise} className={`styledSpan screen${this.props.screenIndex}`} style={{'cursor':'pointer'}}>random</span> ones -  then buy your ticket to enter the draw!
         </p>
-        <div className={`entryButton screen${this.props.screenIndex}`} onClick={() => this.openModal()} />
+        <div className={`entryButton screen${this.props.screenIndex}`} onClick={() => this.openModal(this.props.eth.freeLOT)} />
         <Modal
           isOpen={this.state.modalIsOpen}
+          shouldCloseOnOverlayClick={true} 
           onRequestClose={this.closeModal}
           contentLabel='Ticket Bought Modal'
-          className={`ticketBoughtModal screen${this.props.screenIndex}`}
           overlayClassName={`Overlay screen${this.props.screenIndex}`}
-          shouldCloseOnOverlayClick={true}>
-            {
-              this.state.txHash === 'pending'
-              ? <Pending screenIndex={this.props.screenIndex} safeLow={this.state.safeLow} />
-              : this.state.txHash
-              ? <Success screenIndex={this.props.screenIndex} txHash={this.state.txHash} />
-              : <Error   screenIndex={this.props.screenIndex} txErr={this.state.txErr} />
-            }
+          className={`ticketBoughtModal screen${this.props.screenIndex}`} >
+          {
+            (this.props.eth.freeLOT > 0 && !this.state.decided)
+            ? <Options screenIndex={this.props.screenIndex} decide={this.makeDecision} freeLOT={this.props.eth.freeLOT} />
+            : this.state.txHash === 'pending'
+            ? <Pending screenIndex={this.props.screenIndex} gas={this.state.gas} day={this.props.day} />
+            : this.state.txHash
+            ? <Success screenIndex={this.props.screenIndex} txHash={this.state.txHash} />
+            : <Error   screenIndex={this.props.screenIndex} txErr={this.state.txErr} />
+          }
         </Modal>
         <p className='ticketPrice centred' data-tip={this.state.priceDol} >
           Ticket Price: <span className={"styledSpan screen" + this.props.screenIndex}>{this.state.tktPrice}</span> Ether
@@ -168,21 +185,46 @@ export default class Raffle extends React.Component {
     )
   }
 }
+
+const Options = props => (
+  <React.Fragment>
+    <FreeLOTCounter screenIndex={props.screenIndex}>
+      <h1 className={`screen${props.screenIndex}`}>&ensp;x&ensp;{props.freeLOT}!</h1>
+    </FreeLOTCounter>
+    {props.freeLOT === 1 
+      ? <React.Fragment>
+          <p>You have <span className={`styledSpan screen${props.screenIndex}`}>one</span> free entry coupon to spend!</p>
+          <p>Enter raffle for <span className={`styledSpan screen${props.screenIndex}`}>free</span> by using your coupon?</p>
+        </React.Fragment>
+      : <React.Fragment>
+          <p>You have <span className={`styledSpan screen${props.screenIndex}`}>{props.freeLOT}</span> free entry coupons to spend!</p>
+          <p>Enter raffle for <span className={`styledSpan screen${props.screenIndex}`}>free</span> by using one of your coupons?</p>
+        </React.Fragment>
+    }
+    <div className='yesNoOptions'>
+      <div className='yesNoButton yes' onClick={() => props.decide(true)} />
+      <div className='yesNoButton no'  onClick={() => props.decide(false)} />  
+    </div>
+  </React.Fragment>
+)
   
 const Pending = props => (
-  <div>
+  <React.Fragment>
     <h2 className={`screen${props.screenIndex}`}>Ticket Purchase In Progress . . .</h2>
     <img className='loadingIcon' src={LoadingIcon} style={{'margin':'0.8em 0 0 0'}} alt='Loading icon' />
-    {props.safeLow &&
-      <p>
-        Safe low gas price: <span className={`styledSpan screen${props.screenIndex}`}>{props.safeLow}</span>
-      </p>
+    {props.gas && 
+      <React.Fragment>
+        {moment(moment()).format('dddd') === props.day
+         ? <p>Recommended gas price: <span className={`styledSpan screen${props.screenIndex}`}>{props.gas}</span></p>
+         : <p>Safe low gas price: <span className={`styledSpan screen${props.screenIndex}`}>{props.gas}</span></p>
+        }
+      </React.Fragment>
     }
-  </div>
+  </React.Fragment>
 )
 
 const Success = props => (
-  <div>
+  <React.Fragment>
     <h2 className={`screen${props.screenIndex}`}>Ticket Bought - Good Luck!</h2>
     <p className='centred'>
       Your transaction hash: 
@@ -196,15 +238,15 @@ const Success = props => (
       <br/>
       Once your transaction has been mined your ticket will appear in the results tab - good luck!
     </p>
-  </div>
+  </React.Fragment>
 )
 
 const Error = props => (
-  <div>
+  <React.Fragment>
     <h2 className={`screen${props.screenIndex}`}>Error creating transaction!</h2>
     {props.txErr 
       ? <p className='justify last'>{props.txErr}</p> 
       : <p className='justify last'>You may have rejected the transaction, or your connection may have dropped. Please check your ethereum client and make sure your account is unlocked.</p>
     }
-  </div>
+  </React.Fragment>
 )
