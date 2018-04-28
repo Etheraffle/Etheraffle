@@ -12,10 +12,10 @@ export default props => (
       <EthContext.Consumer>{eth => (
         <React.Fragment>
           {
-              eth.loading   ? <Loading screenIndex={props.screenIndex} />
-            : !eth.web3     ? <NoCxn   screenIndex={props.screenIndex} />
-            : !eth.ethAdd   ? <Locked  screenIndex={props.screenIndex} />
-            : eth.ethAdd    ? <GetData screenIndex={props.screenIndex} eth={eth} />
+              eth.loading ? <Loading screenIndex={props.screenIndex} />
+            : !eth.web3   ? <NoCxn   screenIndex={props.screenIndex} />
+            : !eth.ethAdd ? <Locked  screenIndex={props.screenIndex} />
+            : eth.ethAdd  ? <GetData screenIndex={props.screenIndex} eth={eth} />
             : <NoCxn screenIndex={props.screenIndex} />
           }
         </React.Fragment>
@@ -111,9 +111,7 @@ const NoEntries = props => (
     }
   </React.Fragment>
 )
-
-
-//Renders either loading => db down => no results => or finally desktop or mobile tables
+// Renders either loading => db down => no results => or finally desktop or mobile tables
 class GetData extends React.Component {
 
   constructor(props) {
