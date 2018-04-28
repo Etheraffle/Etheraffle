@@ -1353,6 +1353,24 @@ input {
 .styledSpan.justify {
   text-align: justify; }
 
+.freeLOTCounter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 1em 0 1em 0; }
+  .freeLOTCounter h1 {
+    font-size: 2.2em !important; }
+
 .customTheme.screen1 {
   color: #3ed67e !important; }
 .customTheme.screen2 {
@@ -1439,9 +1457,9 @@ input {
     height: 4em;
     margin: 0.5em;
     cursor: pointer;
-    background-repeat: no-repeat;
     background-size: 85%;
     background-position: center;
+    background-repeat: no-repeat;
     border-color: #d3d3d3;
     -webkit-box-shadow: 5px -5px 0px 0px #d3d3d3;
     box-shadow: 5px -5px 0px 0px #d3d3d3;
@@ -1511,7 +1529,7 @@ input {
   .entryForm .entryButton {
     width: 16em;
     height: 2.6em;
-    background-size: 98%;
+    background-size: 95%;
     padding: 0.1em; }
   .entryForm .pickNumbersForm {
     margin: 0.5em; }
@@ -1911,6 +1929,53 @@ input {
 @media (max-width: 450px) {
   .claimButton {
     margin: 0.5em 0 0 0; } }
+.yesNoOptions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+  .yesNoOptions .yesNoButton {
+    width: 6em;
+    height: 3em;
+    margin: 1em;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    cursor: pointer;
+    border-color: #d3d3d3;
+    -webkit-box-shadow: 5px -5px 0px 0px #d3d3d3;
+    box-shadow: 5px -5px 0px 0px #d3d3d3;
+    border-style: solid;
+    border-width: 2px; }
+    .yesNoOptions .yesNoButton.yes {
+      background-size: 85%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("../../images/yes_button.svg"); }
+      .yesNoOptions .yesNoButton.yes:hover {
+        border-color: #28e973;
+        -webkit-box-shadow: 5px -5px 0px 0px #28e973;
+        box-shadow: 5px -5px 0px 0px #28e973;
+        border-style: solid;
+        border-width: 2px; }
+    .yesNoOptions .yesNoButton.no {
+      background-size: 85%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("../../images/no_button.svg"); }
+      .yesNoOptions .yesNoButton.no:hover {
+        border-color: #ec3ce0;
+        -webkit-box-shadow: 5px -5px 0px 0px #ec3ce0;
+        box-shadow: 5px -5px 0px 0px #ec3ce0;
+        border-style: solid;
+        border-width: 2px; }
+
 .Overlay {
   top: 0;
   left: 0;
@@ -2085,24 +2150,28 @@ input {
     .welcomeModal .playButton {
       margin: 1em 0 0.5em 0; } }
 .ticketBoughtModal {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  text-align: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  position: absolute;
-  outline: none;
   top: 18%;
   left: 30%;
   right: 30%;
-  bottom: 65%;
-  background-color: white;
-  padding: 3em; }
+  bottom: 40%;
+  padding: 3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  outline: none;
+  position: absolute;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: white; }
   .ticketBoughtModal.screen5 {
     border-color: #25dfdf;
     -webkit-box-shadow: 5px -5px 0px 0px #25dfdf;
@@ -2145,7 +2214,7 @@ input {
     top: 18%;
     left: 25%;
     right: 25%;
-    bottom: 55%; }
+    bottom: 50%; }
     .ticketBoughtModal h2 {
       font-size: 1.5em; }
     .ticketBoughtModal p {
@@ -2155,7 +2224,7 @@ input {
     top: 18%;
     left: 20%;
     right: 20%;
-    bottom: 55%; }
+    bottom: 35%; }
     .ticketBoughtModal h2 {
       font-size: 1.4em; }
     .ticketBoughtModal p {
@@ -2165,7 +2234,7 @@ input {
     top: 18%;
     left: 12%;
     right: 12%;
-    bottom: 55%;
+    bottom: 30%;
     padding: 1em; }
     .ticketBoughtModal h2 {
       font-size: 1.2em; }
@@ -2176,7 +2245,7 @@ input {
     top: 18%;
     left: 8%;
     right: 8%;
-    bottom: 35%;
+    bottom: 30%;
     padding: 1.5em; }
     .ticketBoughtModal h2 {
       font-size: 1.2em; }
@@ -2186,24 +2255,28 @@ input {
   .ticketBoughtModal {
     padding: 0.5em; } }
 .claimPrizeModal {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  text-align: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  position: absolute;
-  outline: none;
   top: 12%;
   left: 30%;
   right: 30%;
   bottom: 50%;
-  background-color: white;
-  padding: 3em; }
+  padding: 3em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  outline: none;
+  text-align: center;
+  position: absolute;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: white; }
   .claimPrizeModal.screen5 {
     border-color: #25dfdf;
     -webkit-box-shadow: 5px -5px 0px 0px #25dfdf;
