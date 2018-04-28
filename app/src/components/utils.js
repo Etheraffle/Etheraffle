@@ -1,5 +1,4 @@
 const moment = require('moment')
-
 /* Returns weekNo as defined by number of weeks since Etheraffle's birthday */
 const getWeekNo = () => {
   let birthday = 1500249600, weekDur = 604800
@@ -28,6 +27,8 @@ const getMatches = (_entryNums, _winningNums) => {
     }
   return matches
 }
+/* Turns array of numbers into a string separated by triple spaces */
+const getNumStr = _arr => _arr.reduce((acc, e) => `${acc}\xa0\xa0\xa0${e}`)
 /* Returns a decimal truncated to _fixed decimal places with NO rounding */
 const toDecimals = (_num, _fixed) => {
   if (_num === 0) return 0
@@ -47,10 +48,18 @@ const sortEnums = _arr => {
   }
   return _arr
 }
+/* Capitalizes every first letter of word in a given string */
+const capitalize = _str => {
+  return _str.replace(/\w\S*/g, (txt) => {
+    return txt.charAt(0).toUpperCase() + txt.substr(1)
+  })
+}
 module.exports = {
   sortEnums: sortEnums,
   getWeekNo: getWeekNo,
+  getNumStr: getNumStr,
   toDecimals: toDecimals,
+  capitalize: capitalize,
   getMatches: getMatches,
   getExactWeekNo: getExactWeekNo
 }
