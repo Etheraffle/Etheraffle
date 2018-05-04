@@ -1453,7 +1453,7 @@ input {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    width: 28em;
+    width: 29em;
     height: 4em;
     margin: 0.5em;
     cursor: pointer;
@@ -1468,6 +1468,30 @@ input {
     .entryForm .entryButton.screen5 {
       background-image: url("../../images/buy_ticket.svg"); }
       .entryForm .entryButton.screen5:hover {
+        border-color: #25dfdf;
+        -webkit-box-shadow: 5px -5px 0px 0px #25dfdf;
+        box-shadow: 5px -5px 0px 0px #25dfdf;
+        border-style: solid;
+        border-width: 2px; }
+  .entryForm .randomButton {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 26em;
+    height: 3.5em;
+    margin: 0.5em;
+    cursor: pointer;
+    background-size: 85%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-color: #d3d3d3;
+    -webkit-box-shadow: 5px -5px 0px 0px #d3d3d3;
+    box-shadow: 5px -5px 0px 0px #d3d3d3;
+    border-style: solid;
+    border-width: 2px; }
+    .entryForm .randomButton.screen5 {
+      background-image: url("../../images/randomise_button.svg"); }
+      .entryForm .randomButton.screen5:hover {
         border-color: #25dfdf;
         -webkit-box-shadow: 5px -5px 0px 0px #25dfdf;
         box-shadow: 5px -5px 0px 0px #25dfdf;
@@ -1527,8 +1551,13 @@ input {
   .entryForm .prizePool {
     font-size: 1.3em; }
   .entryForm .entryButton {
-    width: 16em;
+    width: 19em;
     height: 2.6em;
+    background-size: 95%;
+    padding: 0.1em; }
+  .entryForm .randomButton {
+    width: 15em;
+    height: 2.5em;
     background-size: 95%;
     padding: 0.1em; }
   .entryForm .pickNumbersForm {
@@ -1546,8 +1575,8 @@ input {
     padding: 0.6em 1.4em 0.6em 1.4em; } }
 @media (max-width: 1366px) {
   .entryForm .entryButton {
-    width: 16em;
-    height: 2.5em;
+    width: 18em;
+    height: 2.8em;
     margin: 0.5em;
     background-size: 95%; }
   .entryForm .pickNumbersForm {
@@ -1569,6 +1598,10 @@ input {
     height: 2.2em;
     margin: 0.5em 0 0.3em 0;
     background-size: 95%; }
+  .entryForm .randomButton {
+    width: 12em;
+    height: 2em;
+    margin-bottom: 0.5em; }
   .entryForm .pickNumbersForm {
     margin: 0.3em; }
     .entryForm .pickNumbersForm .numberPicker {
@@ -1587,6 +1620,10 @@ input {
       font-size: 1.25em; }
     .entryForm .entryButton {
       width: 15em;
+      margin-bottom: 0.5em; }
+    .entryForm .randomButton {
+      width: 13em;
+      height: 2em;
       margin-bottom: 0.5em; }
     .entryForm .pickNumbersForm {
       width: 10em;
@@ -1618,6 +1655,10 @@ input {
       font-size: 1.15em; }
     .entryForm .entryButton {
       width: 12em;
+      margin-bottom: 0.5em; }
+    .entryForm .randomButton {
+      width: 11.5em;
+      height: 1.8em;
       margin-bottom: 0.5em; }
     .entryForm .pickNumbersForm {
       width: 10em;
@@ -2116,7 +2157,7 @@ input {
     bottom: 9%;
     padding: 2em; }
     .welcomeModal .welcomeLogoBig {
-      height: 19%;
+      height: 17%;
       margin: 0.8em 0 0.8em 0; } }
 /* Logo changes to smaller e logo for the following ones */
 @media (max-width: 450px) {
