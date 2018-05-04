@@ -157,9 +157,9 @@ export default class Raffle extends React.Component {
             </label>
           </form>
         </div>
-        <p className='centred'>
-          Pick your {this.props.pick} lucky numbers - or <span onClick={this.randomise} className={`styledSpan screen${this.props.screenIndex}`} style={{'cursor':'pointer'}}>random</span> ones -  then buy your ticket to enter the draw!
-        </p>
+        <p className='centred'>Pick your {this.props.pick} lucky numbers above, or hit the button below for a random selection!</p>
+        <div className={`randomButton screen${this.props.screenIndex}`} onClick={this.randomise} />
+        <p className='centred'>Then purchase your ticket to enter the draw!</p>
         <div className={`entryButton screen${this.props.screenIndex}`} onClick={() => this.openModal(this.props.eth.freeLOT)} />
         <Modal
           isOpen={this.state.modalIsOpen}
