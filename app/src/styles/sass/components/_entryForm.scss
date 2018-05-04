@@ -31,7 +31,7 @@
 
   .entryButton {
     display: flex;
-    width: 28em;
+    width: 29em;
     height: 4em;
     margin: 0.5em;
     cursor: pointer;
@@ -42,6 +42,23 @@
 
     &.screen5 {
       background-image: url('../../images/buy_ticket.svg');
+      &:hover{@include dropShadow($erBlue);}
+    }
+  }
+
+  .randomButton {
+    display: flex;
+    width: 26em;
+    height: 3.5em;
+    margin: 0.5em;
+    cursor: pointer;
+    background-size: 85%;
+    background-position: center;
+    background-repeat: no-repeat;
+    @include dropShadow($erLtGrey);
+
+    &.screen5 {
+      background-image: url('../../images/randomise_button.svg');
       &:hover{@include dropShadow($erBlue);}
     }
   }
@@ -89,8 +106,15 @@
     }
 
     .entryButton {
-      width: 16em;
+      width: 19em;
       height: 2.6em;
+      background-size: 95%;
+      padding: 0.1em;
+    }
+
+    .randomButton {
+      width: 15em;
+      height: 2.5em;
       background-size: 95%;
       padding: 0.1em;
     }
@@ -124,8 +148,8 @@
   .entryForm {
     
     .entryButton {
-      width: 16em;
-      height: 2.5em;
+      width: 18em;
+      height: 2.8em;
       margin: 0.5em;
       background-size: 95%;
     }
@@ -165,6 +189,12 @@
       background-size: 95%;
     }
 
+    .randomButton {
+      width: 12em;
+      height: 2em;
+      margin-bottom: 0.5em;
+    }
+
     .pickNumbersForm {
       margin: 0.3em;
 
@@ -195,6 +225,12 @@
 
     .entryButton {
       width: 15em;
+      margin-bottom: 0.5em;
+    }
+
+    .randomButton {
+      width: 13em;
+      height: 2em;
       margin-bottom: 0.5em;
     }
 
@@ -238,6 +274,12 @@
 
     .entryButton {
       width: 12em;
+      margin-bottom: 0.5em;
+    }
+
+    .randomButton {
+      width: 11.5em;
+      height: 1.8em;
       margin-bottom: 0.5em;
     }
 
