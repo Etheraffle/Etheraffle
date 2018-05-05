@@ -86,8 +86,8 @@ export default class Raffle extends React.Component {
       let pool     = this.props.eth.web3.fromWei(prize, 'ether')
         , tkt      = this.props.eth.web3.fromWei(price, 'ether')
         , err      = 'Exchange rate currently unavailable'
-        , poolDol  = this.props.eth.exRate > 0 ? `$${utils.toDecimals(this.props.eth.exRate * pool, 2)}` : err
-        , priceDol = this.props.eth.exRate > 0 ? `$${utils.toDecimals(this.props.eth.exRate * tkt,  2)}` : err
+        , poolDol  = this.props.eth.exRate > 0 ? `$${utils.toDecimals(this.props.eth.exRate * pool, 2)} @ $${utils.toDecimals(this.props.eth.exRate, 2)} per ETH` : err
+        , priceDol = this.props.eth.exRate > 0 ? `$${utils.toDecimals(this.props.eth.exRate * tkt,  2)} @ $${utils.toDecimals(this.props.eth.exRate, 2)} per ETH` : err
       this.setState({
         tktPrice:  tkt,
         prizePool: pool,
@@ -107,7 +107,7 @@ export default class Raffle extends React.Component {
       this.setState({txHash: txHash})
     }).catch(err => {
       console.log(`Error sending ethereum transaction: ${err}`)
-      this.setState({txHash: null})// Will popup the error buying ticket modal
+      this.setState({txHash: null}) // Will popup the error buying ticket modal
     })
   }
 
