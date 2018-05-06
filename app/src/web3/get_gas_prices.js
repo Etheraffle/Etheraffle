@@ -5,10 +5,10 @@ export default () => {
     .then(res => {
       return res.json()
       .then(json => {
-        let low = json.safelow_calc / 10
-          , average = json.average / 10
-        return { average, low }
-        // return low > 0 ? resolve(gas) : reject(null)
+        return resolve({
+          average = json.average / 10,
+          low = json.safelow_calc / 10
+        })
       })
     }).catch(err => {
       return reject(err)
