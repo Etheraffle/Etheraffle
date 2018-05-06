@@ -1,4 +1,4 @@
-/* Returns either the safe low gas price or err */
+/* Returns either the safe low & average gass prices as an object, or rejects with error */
 export default () => {
   return new Promise ((resolve, reject) => {
     return fetch('https://ethgasstation.info/json/ethgasAPI.json')
