@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal'
 import redeemBonus from './web3/redeem_bonus'
-import lowGas from '../../../web3/get_low_gas'
+import getGas from '../../../web3/get_gas_prices'
 import LoadingIcon from '../../../images/loading_icon_grey.svg'
 
 export default class RedeemButton extends React.Component {
@@ -27,9 +27,8 @@ export default class RedeemButton extends React.Component {
 	}
 
 	getLowGas() {
-		return lowGas()
-		.then(safeLow => {
-		  this.setState({safeLow: `${safeLow} Gwei`})
+		return getGas().then(({ low }) => {
+		  this.setState({safeLow: `${low} Gwei`})
     }).catch (err => console.log(`Error retrieving safe low gas rate: ${err}`))
   }
 
