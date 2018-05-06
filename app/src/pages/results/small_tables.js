@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import Modal from 'react-modal'
 import utils from '../../components/utils'
-import lowGas from '../../web3/get_low_gas'
+import getGas from '../../web3/get_gas_prices'
 import claimPrize from '../../web3/claim_prize'
 // import LoadingIcon from '../../images/loading_icon_grey.svg'
 // import { ScreenContext } from '../../contexts/screen_context'
@@ -40,9 +40,8 @@ export default class SmallTables extends React.Component {
   }
   
   getLowGas() {
-    return lowGas()
-    .then(safeLow => {
-      this.setState({safeLow: `${safeLow} Gwei`})
+    return getGas().then(({ low }) => {
+      this.setState({safeLow: `${low} Gwei`})
     }).catch (err => console.log(`Error retrieving safe low gas rate: ${err}`))
   }
 
