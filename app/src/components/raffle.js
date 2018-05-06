@@ -2,10 +2,9 @@ import React from 'react'
 import moment from 'moment'
 import utils from './utils'
 import Modal from 'react-modal'
-import lowGas from '../web3/get_low_gas'
 import ReactTooltip from 'react-tooltip'
 import buyTicket from '../web3/buy_ticket'
-import averageGas from '../web3/get_average_gas'
+import getGas from '../web3/get_gas_prices'
 import getPrizePool from '../web3/get_prize_pool'
 import getTktPrice from '../web3/get_ticket_price'
 import buyFreeTicket from '../web3/buy_free_ticket'
@@ -14,7 +13,6 @@ import FreeLOTCounter from '../components/free_lot_counter'
 
 // Require eth object props, raffle day, & pick from props and screenIndex
 // TODO: implement prop types to enforce the above
-
 
 export default class Raffle extends React.Component {
   
@@ -50,10 +48,9 @@ export default class Raffle extends React.Component {
     this.removeSelected(Array.from(Array(this.props.pick + 1).keys()).slice(1))
   }
 
-  getLowGas() {
-    let p = moment(moment()).format('dddd') === this.props.day ? averageGas() : lowGas() // If day of draw, show average gas not low!
-    p.then(gas => {
-      this.setState({gas: `${gas} Gwei`})
+  getLowGas() { // Show safe low unless it's the day the raffle is drawn
+    getGas().then(({ average, low }) => {
+      this.setState({gas: moment(moment()).format('dddd') === this.props.day ? `${average} Gwei` : `${low} Gwei`})
     }).catch (err => console.log(`Error retrieving safe low gas rate: ${err}`))
   }
 
