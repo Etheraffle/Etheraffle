@@ -6,8 +6,8 @@ export default () => {
       return res.json()
       .then(json => {
         return resolve({
-          average = json.average / 10,
-          low = json.safelow_calc / 10
+          average: json.average / 10,
+          low: json.safelow_calc / 10
         })
       })
     }).catch(err => {
